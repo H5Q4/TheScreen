@@ -1,0 +1,65 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+  defaultConfig {
+    applicationId "com.github.jupittar.thescreen"
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.compileSdkVersion
+    versionCode 1
+    versionName "1.0"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+  configurations.all {
+    resolutionStrategy {
+      force rootProject.ext.libraries.supportAnnotations
+      force rootProject.ext.libraries.supportV4
+      force rootProject.ext.libraries.appcompatV7
+      force rootProject.ext.libraries.design
+      force rootProject.ext.libraries.recyclerviewV7
+    }
+  }
+}
+
+dependencies {
+  compile fileTree(include: ['*.jar'], dir: 'libs')
+  compile project(':app-common')
+  compile project(':app-core')
+  // Test
+  testCompile rootProject.ext.testLibraries.junit
+  androidTestCompile rootProject.ext.testLibraries.espresso
+  // Support
+  compile rootProject.ext.libraries.constraintLayout
+  compile rootProject.ext.libraries.supportAnnotations
+  compile rootProject.ext.libraries.supportV4
+  compile rootProject.ext.libraries.appcompatV7
+  compile rootProject.ext.libraries.design
+  compile rootProject.ext.libraries.recyclerviewV7
+  // Rx
+  compile rootProject.ext.libraries.rxjava2
+  compile rootProject.ext.libraries.rxandroid2
+  // Retrofit2
+  compile rootProject.ext.libraries.okhttp3
+  compile rootProject.ext.libraries.retrofit2
+  compile rootProject.ext.libraries.rxjava2Adapter4Retrofit2
+  compile rootProject.ext.libraries.gson
+  compile rootProject.ext.libraries.gsonConverter4Retrofit2
+  // Dagger2
+  compile rootProject.ext.libraries.dagger2
+  annotationProcessor rootProject.ext.libraries.dagger2Compiler
+
+  compile rootProject.ext.libraries.glide
+  compile rootProject.ext.libraries.logger
+}
