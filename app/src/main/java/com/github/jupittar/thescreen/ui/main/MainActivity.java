@@ -1,16 +1,28 @@
 package com.github.jupittar.thescreen.ui.main;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.github.jupittar.commlib.custom.SCViewPager;
+import com.github.jupittar.commlib.util.ToastUtils;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.ui.base.BaseActivity;
+import com.github.jupittar.thescreen.ui.movie.MoviesFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -23,6 +35,10 @@ public class MainActivity extends BaseActivity
   DrawerLayout mDrawerLayout;
   @BindView(R.id.nav_view)
   NavigationView mNavigationView;
+  @BindView(R.id.view_pager)
+  SCViewPager mViewPager;
+
+  private boolean mExit;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +48,21 @@ public class MainActivity extends BaseActivity
 
     setUpToolbar();
     setUpDrawer();
+    setUpViewPager();
   }
+
+  private void setUpViewPager() {
+    List<Fragment> fragments = new ArrayList<>();
+    fragments.add(0, MoviesFragment.newInstance(MoviesFragment.MovieTab.NOW_PLAYING));
+    fragments.add(1, MoviesFragment.newInstance(MoviesFragment.MovieTab.NOW_PLAYING));
+    ContentFragmentPageAdapter adapter = new ContentFragmentPageAdapter(
+        getSupportFragmentManager(),
+        fragments
+    );
+    mViewPager.setAdapter(adapter);
+    mViewPager.setOffscreenPageLimit(fragments.size());
+  }
+
 
   private void setUpToolbar() {
     setSupportActionBar(mToolbar);
@@ -55,6 +85,59 @@ public class MainActivity extends BaseActivity
 
   @Override
   public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-    return false;
+    int id = item.getItemId();
+    int position = 0;
+    switch (id) {
+      case R.id.nav_movie:
+        position = 0;
+        break;
+      case R.id.nav_tv:
+        position = 1;
+        break;
+    }
+    mViewPager.setCurrentItem(position);
+    mDrawerLayout.closeDrawer(GravityCompat.START);
+    return true;
+  }
+
+  @Override
+  public void onBackPressed() {
+    if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+      mDrawerLayout.closeDrawer(GravityCompat.START);
+    } else {
+      if (mExit) {
+        finish();
+      } else {
+        mExit = true;
+        ToastUtils.showShort(MainActivity.this, "再按一次退出应用");
+        new Handler().postDelayed(new Runnable() {
+          @Override
+          public void run() {
+            mExit = false;
+          }
+        }, 2000);
+      }
+
+    }
+  }
+
+  private class ContentFragmentPageAdapter extends FragmentPagerAdapter {
+
+    private List<Fragment> mFragments;
+
+    public ContentFragmentPageAdapter(FragmentManager fm, @NonNull List<Fragment> fragments) {
+      super(fm);
+      this.mFragments = fragments;
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+      return mFragments.get(position);
+    }
+
+    @Override
+    public int getCount() {
+      return mFragments.size();
+    }
   }
 }
