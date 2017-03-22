@@ -39,6 +39,7 @@ public class MainActivity extends BaseActivity
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) {
       getSupportActionBar().setDisplayShowTitleEnabled(false);
+      getSupportActionBar().setLogo(R.drawable.logo);
     }
   }
 
