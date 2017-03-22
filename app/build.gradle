@@ -59,6 +59,9 @@ dependencies {
   // Dagger2
   compile rootProject.ext.libraries.dagger2
   annotationProcessor rootProject.ext.libraries.dagger2Compiler
+  // Butterknife
+  compile rootProject.ext.libraries.butterknife
+  annotationProcessor rootProject.ext.libraries.butterknifeCompiler
 
   compile rootProject.ext.libraries.glide
   compile rootProject.ext.libraries.logger
