@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -53,13 +52,14 @@ public class MainActivity extends BaseActivity
 
   private void setUpViewPager() {
     List<Fragment> fragments = new ArrayList<>();
-    fragments.add(0, MoviesFragment.newInstance(MoviesFragment.MovieTab.NOW_PLAYING));
-    fragments.add(1, MoviesFragment.newInstance(MoviesFragment.MovieTab.NOW_PLAYING));
+    fragments.add(0, MoviesFragment.newInstance());
+    fragments.add(1, MoviesFragment.newInstance());
     ContentFragmentPageAdapter adapter = new ContentFragmentPageAdapter(
         getSupportFragmentManager(),
         fragments
     );
     mViewPager.setAdapter(adapter);
+    mViewPager.setScrollEnabled(false);
     mViewPager.setOffscreenPageLimit(fragments.size());
   }
 
@@ -125,7 +125,7 @@ public class MainActivity extends BaseActivity
 
     private List<Fragment> mFragments;
 
-    public ContentFragmentPageAdapter(FragmentManager fm, @NonNull List<Fragment> fragments) {
+    ContentFragmentPageAdapter(FragmentManager fm, @NonNull List<Fragment> fragments) {
       super(fm);
       this.mFragments = fragments;
     }

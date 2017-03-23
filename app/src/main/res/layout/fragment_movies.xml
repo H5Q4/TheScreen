@@ -1,14 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.github.jupittar.thescreen.ui.movie.MoviesFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              tools:context="com.github.jupittar.thescreen.ui.movie.MoviesFragment">
 
-  <!-- TODO: Update blank fragment layout -->
-  <TextView
-      android:id="@+id/text"
+  <android.support.design.widget.TabLayout
+      android:id="@+id/tab_layout"
+      app:tabTextColor="@color/grey_400"
+      app:tabSelectedTextColor="@android:color/white"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:text="@string/hello_blank_fragment"/>
+      android:layout_height="wrap_content"/>
 
-</FrameLayout>
+  <com.github.jupittar.commlib.custom.SCViewPager
+      android:id="@+id/view_pager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"/>
+
+</LinearLayout>
