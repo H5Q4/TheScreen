@@ -1,16 +1,26 @@
 package com.github.jupittar.thescreen.ui.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.github.jupittar.thescreen.AppComponent;
+import com.github.jupittar.thescreen.TheScreenApp;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
   private Unbinder mUnbinder;
+
+  @Override
+  public void onAttach(Context context) {
+    super.onAttach(context);
+    injectDependencies(TheScreenApp.getAppComponent());
+  }
 
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -23,4 +33,6 @@ public class BaseFragment extends Fragment {
     mUnbinder.unbind();
     super.onDestroyView();
   }
+
+  protected abstract void injectDependencies(AppComponent appComponent);
 }

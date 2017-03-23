@@ -4,16 +4,20 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
+import com.github.jupittar.thescreen.AppComponent;
+import com.github.jupittar.thescreen.TheScreenApp;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
   private Unbinder mUnbinder;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    injectDependencies(TheScreenApp.getAppComponent());
   }
 
   @Override
@@ -27,4 +31,6 @@ public class BaseActivity extends AppCompatActivity {
     mUnbinder.unbind();
     super.onDestroy();
   }
+
+  protected abstract void injectDependencies(AppComponent appComponent);
 }

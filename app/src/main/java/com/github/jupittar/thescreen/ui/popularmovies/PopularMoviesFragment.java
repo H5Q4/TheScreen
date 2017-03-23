@@ -12,6 +12,7 @@ import com.github.jupittar.commlib.recyclerview.AutoFitRecyclerView;
 import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
 import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
 import com.github.jupittar.core.data.entity.Movie;
+import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.ui.base.LazyFragment;
 
@@ -36,7 +37,7 @@ public class PopularMoviesFragment extends LazyFragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_movie_by_tab_sub, container, false);
+    return inflater.inflate(R.layout.fragment_popular_movies, container, false);
   }
 
   @Override
@@ -48,6 +49,11 @@ public class PopularMoviesFragment extends LazyFragment {
     mRecyclerView.setHasFixedSize(true);
     MoviesAdapter adapter = new MoviesAdapter(getActivity(), R.layout.item_movie);
     mRecyclerView.setAdapter(adapter);
+  }
+
+  @Override
+  protected void injectDependencies(AppComponent appComponent) {
+    
   }
 
   private class MoviesAdapter extends CommonViewAdapter<Movie> {

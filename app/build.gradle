@@ -47,6 +47,7 @@ dependencies {
   compile rootProject.ext.libraries.appcompatV7
   compile rootProject.ext.libraries.design
   compile rootProject.ext.libraries.recyclerviewV7
+  compile rootProject.ext.libraries.cardviewV7
   // Rx
   compile rootProject.ext.libraries.rxjava2
   compile rootProject.ext.libraries.rxandroid2

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 
 import com.github.jupittar.commlib.custom.SCViewPager;
 import com.github.jupittar.commlib.util.ToastUtils;
+import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.ui.base.BaseActivity;
 import com.github.jupittar.thescreen.ui.movie.MoviesFragment;
@@ -48,6 +49,11 @@ public class MainActivity extends BaseActivity
     setUpToolbar();
     setUpDrawer();
     setUpViewPager();
+  }
+
+  @Override
+  protected void injectDependencies(AppComponent appComponent) {
+
   }
 
   private void setUpViewPager() {

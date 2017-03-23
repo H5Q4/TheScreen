@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.jupittar.commlib.custom.SCViewPager;
+import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.ui.base.LazyFragment;
 import com.github.jupittar.thescreen.ui.popularmovies.PopularMoviesFragment;
@@ -65,6 +66,11 @@ public class MoviesFragment extends LazyFragment {
     mViewPager.setAdapter(adapter);
     mViewPager.setScrollEnabled(true);
     mViewPager.setOffscreenPageLimit(adapter.getCount());
+  }
+
+  @Override
+  protected void injectDependencies(AppComponent appComponent) {
+
   }
 
   private class MovieTabPagerAdapter extends FragmentPagerAdapter {
