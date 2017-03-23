@@ -4,7 +4,7 @@
              android:layout_height="match_parent"
              tools:context="com.github.jupittar.thescreen.ui.movie.MovieByTabSubFragment">
 
-  <android.support.v7.widget.RecyclerView
+  <com.github.jupittar.commlib.recyclerview.AutoFitRecyclerView
       android:id="@+id/recycler_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"/>

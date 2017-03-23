@@ -1,10 +1,10 @@
 package com.github.jupittar.commlib.custom;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
-public class AspectRatioImageView extends ImageView {
+public class AspectRatioImageView extends AppCompatImageView {
 
   public static final double SQUARE = 1.0D;
   public static final double PHI = 2 / (Math.sqrt(5) + 1);
