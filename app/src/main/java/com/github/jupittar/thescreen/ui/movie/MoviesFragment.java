@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import com.github.jupittar.commlib.custom.SCViewPager;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.ui.base.LazyFragment;
+import com.github.jupittar.thescreen.ui.popularmovies.PopularMoviesFragment;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -58,10 +58,10 @@ public class MoviesFragment extends LazyFragment {
 
   private void setUpViewPager() {
     MovieTabPagerAdapter adapter = new MovieTabPagerAdapter(getChildFragmentManager());
-    adapter.addPager(MovieByTabSubFragment.newInstance(MovieTab.NOW_PLAYING), "NOW PLAYING");
-    adapter.addPager(MovieByTabSubFragment.newInstance(MovieTab.POPULAR), "POPULAR");
-    adapter.addPager(MovieByTabSubFragment.newInstance(MovieTab.TOP_RATED), "TOP RATED");
-    adapter.addPager(MovieByTabSubFragment.newInstance(MovieTab.UPCOMING), "UPCOMING");
+    adapter.addPager(PopularMoviesFragment.newInstance(), "NOW PLAYING");
+    adapter.addPager(PopularMoviesFragment.newInstance(), "POPULAR");
+    adapter.addPager(PopularMoviesFragment.newInstance(), "TOP RATED");
+    adapter.addPager(PopularMoviesFragment.newInstance(), "UPCOMING");
     mViewPager.setAdapter(adapter);
     mViewPager.setScrollEnabled(true);
     mViewPager.setOffscreenPageLimit(adapter.getCount());
@@ -97,13 +97,6 @@ public class MoviesFragment extends LazyFragment {
     public CharSequence getPageTitle(int position) {
       return mTitles.get(position);
     }
-  }
-
-  public enum MovieTab {
-    NOW_PLAYING,
-    POPULAR,
-    TOP_RATED,
-    UPCOMING
   }
 
 }

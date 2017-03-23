@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.github.jupittar.thescreen.ui.movie.MovieByTabSubFragment">
+             tools:context=".ui.popularmovies.PopularMoviesFragment">
 
   <com.github.jupittar.commlib.recyclerview.AutoFitRecyclerView
       android:id="@+id/recycler_view"

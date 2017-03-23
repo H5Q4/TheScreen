@@ -1,10 +1,9 @@
-package com.github.jupittar.thescreen.ui.movie;
+package com.github.jupittar.thescreen.ui.popularmovies;
 
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
-import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,34 +17,19 @@ import com.github.jupittar.thescreen.ui.base.LazyFragment;
 
 import butterknife.BindView;
 
-public class MovieByTabSubFragment extends LazyFragment {
-
-  private static final String ARG_PARAM_TAB = "movie_tab";
+public class PopularMoviesFragment extends LazyFragment {
 
   @BindView(R.id.recycler_view)
   AutoFitRecyclerView mRecyclerView;
 
-  private String mMovieTab;
 
-
-  public MovieByTabSubFragment() {
+  public PopularMoviesFragment() {
     // Required empty public constructor
   }
 
-  public static MovieByTabSubFragment newInstance(MoviesFragment.MovieTab tab) {
-    MovieByTabSubFragment fragment = new MovieByTabSubFragment();
-    Bundle args = new Bundle();
-    args.putString(ARG_PARAM_TAB, tab.name());
-    fragment.setArguments(args);
+  public static PopularMoviesFragment newInstance() {
+    PopularMoviesFragment fragment = new PopularMoviesFragment();
     return fragment;
-  }
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    if (getArguments() != null) {
-      mMovieTab = getArguments().getString(ARG_PARAM_TAB);
-    }
   }
 
   @Override
