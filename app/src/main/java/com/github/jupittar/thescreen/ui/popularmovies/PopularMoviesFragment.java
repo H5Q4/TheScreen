@@ -58,7 +58,7 @@ public class PopularMoviesFragment extends LazyFragment {
 
   private class MoviesAdapter extends CommonViewAdapter<Movie> {
 
-    public MoviesAdapter(Context context, @LayoutRes int layoutId) {
+    MoviesAdapter(Context context, @LayoutRes int layoutId) {
       super(context, layoutId);
     }
 
