@@ -1,4 +1,4 @@
-package com.github.jupittar.thescreen.ui.popularmovies;
+package com.github.jupittar.thescreen.ui.movies;
 
 
 import android.content.Context;
@@ -18,18 +18,18 @@ import com.github.jupittar.thescreen.ui.base.LazyFragment;
 
 import butterknife.BindView;
 
-public class PopularMoviesFragment extends LazyFragment {
+public class MoviesSubFragment extends LazyFragment {
 
   @BindView(R.id.recycler_view)
   AutoFitRecyclerView mRecyclerView;
 
 
-  public PopularMoviesFragment() {
+  public MoviesSubFragment() {
     // Required empty public constructor
   }
 
-  public static PopularMoviesFragment newInstance() {
-    PopularMoviesFragment fragment = new PopularMoviesFragment();
+  public static MoviesSubFragment newInstance() {
+    MoviesSubFragment fragment = new MoviesSubFragment();
     return fragment;
   }
 

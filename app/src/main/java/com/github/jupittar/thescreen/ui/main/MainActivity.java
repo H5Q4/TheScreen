@@ -19,7 +19,7 @@ import com.github.jupittar.commlib.util.ToastUtils;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.ui.base.BaseActivity;
-import com.github.jupittar.thescreen.ui.movie.MoviesFragment;
+import com.github.jupittar.thescreen.ui.movies.MoviesFragment;
 
 import java.util.ArrayList;
 import java.util.List;

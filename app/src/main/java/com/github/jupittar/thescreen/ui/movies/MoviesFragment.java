@@ -1,4 +1,4 @@
-package com.github.jupittar.thescreen.ui.movie;
+package com.github.jupittar.thescreen.ui.movies;
 
 
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import com.github.jupittar.commlib.custom.SCViewPager;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.ui.base.LazyFragment;
-import com.github.jupittar.thescreen.ui.popularmovies.PopularMoviesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,10 +58,10 @@ public class MoviesFragment extends LazyFragment {
 
   private void setUpViewPager() {
     MovieTabPagerAdapter adapter = new MovieTabPagerAdapter(getChildFragmentManager());
-    adapter.addPager(PopularMoviesFragment.newInstance(), "NOW PLAYING");
-    adapter.addPager(PopularMoviesFragment.newInstance(), "POPULAR");
-    adapter.addPager(PopularMoviesFragment.newInstance(), "TOP RATED");
-    adapter.addPager(PopularMoviesFragment.newInstance(), "UPCOMING");
+    adapter.addPager(MoviesSubFragment.newInstance(), "NOW PLAYING");
+    adapter.addPager(MoviesSubFragment.newInstance(), "POPULAR");
+    adapter.addPager(MoviesSubFragment.newInstance(), "TOP RATED");
+    adapter.addPager(MoviesSubFragment.newInstance(), "UPCOMING");
     mViewPager.setAdapter(adapter);
     mViewPager.setScrollEnabled(true);
     mViewPager.setOffscreenPageLimit(adapter.getCount());

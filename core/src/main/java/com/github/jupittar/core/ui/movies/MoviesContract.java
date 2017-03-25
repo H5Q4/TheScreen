@@ -1,9 +1,9 @@
-package com.github.jupittar.core.ui.popularmovies;
+package com.github.jupittar.core.ui.movies;
 
 import com.github.jupittar.core.ui.base.BasePresenter;
 import com.github.jupittar.core.ui.base.Contract;
 
-public interface PopularMoviesContract {
+public interface MoviesContract {
 
   interface View extends Contract.View {
 
