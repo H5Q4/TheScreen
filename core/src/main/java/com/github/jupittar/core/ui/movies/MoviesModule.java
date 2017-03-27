@@ -26,10 +26,4 @@ public class MoviesModule {
     return presenter;
   }
 
-  @Provides
-  @MoviesScope
-  public MoviesInteractor provideInteractor(MoviesInteractor interactor) {
-    return interactor;
-  }
-
 }

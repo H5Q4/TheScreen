@@ -19,7 +19,7 @@ public abstract class BaseFragment extends Fragment {
   @Override
   public void onAttach(Context context) {
     super.onAttach(context);
-    injectDependencies(TheScreenApp.getAppComponent());
+    injectDependencies(context, TheScreenApp.getAppComponent());
   }
 
   @Override
@@ -34,5 +34,5 @@ public abstract class BaseFragment extends Fragment {
     super.onDestroyView();
   }
 
-  protected abstract void injectDependencies(AppComponent appComponent);
+  protected abstract void injectDependencies(Context context, AppComponent appComponent);
 }

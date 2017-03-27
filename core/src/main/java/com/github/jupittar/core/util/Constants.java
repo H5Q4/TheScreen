@@ -3,7 +3,12 @@ package com.github.jupittar.core.util;
 public class Constants {
 
   public static final String BASE_URL = "https://api.themoviedb.org/3/";
+  public static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/";
   public static final String API_KEY = "fb1ca2b3ed6f907f369a6ab7d696cf44";
+
+  public static final String POSTER_SIZE = "w500";
+  public static final String BACKDROP_SIZE = "w780";
+  public static final String PROFILE_SIZE = "h632";
 
   public static final int NETWORK_CONNECTION_TIMEOUT = 30; // 30 sec
   public static final int NETWORK_READ_TIMEOUT = 10;  // 10 sec

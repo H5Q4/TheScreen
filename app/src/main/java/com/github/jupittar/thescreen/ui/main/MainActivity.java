@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity
 
   @Override
   protected void injectDependencies(AppComponent appComponent) {
-
+    appComponent.inject(this);
   }
 
   private void setUpViewPager() {

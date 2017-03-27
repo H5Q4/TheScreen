@@ -22,6 +22,7 @@ public class AppAndroidHelper implements AndroidHelper {
     SharedPreferencesManager.setConfiguration(mContext, configuration);
   }
 
+  @Override
   public boolean isApiConfigurationExisted() {
     Configuration configuration = SharedPreferencesManager.getConfiguration(mContext);
     return configuration != null;

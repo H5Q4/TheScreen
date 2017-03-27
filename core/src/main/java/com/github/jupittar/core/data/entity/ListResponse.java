@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class RawResponse<T> {
+public class ListResponse<T> {
 
     // region Fields
     @SerializedName("page")
