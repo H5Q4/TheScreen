@@ -1,9 +1,9 @@
-package com.github.jupittar.core.ui.base;
+package com.github.jupittar.core.base;
 
 
 import io.reactivex.disposables.Disposable;
 
-public interface Contract {
+public interface UiContract {
 
   interface View {
     void showLoading();

@@ -1,4 +1,4 @@
-package com.github.jupittar.core.ui.movies;
+package com.github.jupittar.core.movies;
 
 import com.github.jupittar.core.data.entity.ListResponse;
 import com.github.jupittar.core.data.entity.Movie;
@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Single;
 
-public class MoviesInteractor {
+class MoviesInteractor {
 
   private TMDbService mTMDbService;
 

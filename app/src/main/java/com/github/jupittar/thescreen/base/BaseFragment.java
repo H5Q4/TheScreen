@@ -1,4 +1,4 @@
-package com.github.jupittar.thescreen.ui.base;
+package com.github.jupittar.thescreen.base;
 
 import android.content.Context;
 import android.os.Bundle;

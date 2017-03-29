@@ -1,9 +1,9 @@
-package com.github.jupittar.core.ui.base;
+package com.github.jupittar.core.base;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public class BasePresenter<V extends Contract.View> implements Contract.Presenter<V> {
+public class BasePresenter<V extends UiContract.View> implements UiContract.Presenter<V> {
 
   private V mView;
   private CompositeDisposable mCompositeDisposable;

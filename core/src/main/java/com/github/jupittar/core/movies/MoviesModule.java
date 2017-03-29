@@ -1,4 +1,4 @@
-package com.github.jupittar.core.ui.movies;
+package com.github.jupittar.core.movies;
 
 import dagger.Module;
 import dagger.Provides;
@@ -6,20 +6,20 @@ import dagger.Provides;
 @Module
 public class MoviesModule {
 
-  private MoviesContract.View mView;
+  private MoviesUiContract.View mView;
 
-  public MoviesModule(MoviesContract.View view) {
+  public MoviesModule(MoviesUiContract.View view) {
     mView = view;
   }
 
   @Provides
-  public MoviesContract.View provideView() {
+  public MoviesUiContract.View provideView() {
     return mView;
   }
 
   @Provides
   @MoviesScope
-  public MoviesContract.Presenter<MoviesContract.View> providePresenter(
+  public MoviesUiContract.Presenter<MoviesUiContract.View> providePresenter(
       MoviesPresenter presenter
   ) {
     presenter.attach(mView);

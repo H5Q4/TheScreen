@@ -1,4 +1,4 @@
-package com.github.jupittar.core.ui.movies;
+package com.github.jupittar.core.movies;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

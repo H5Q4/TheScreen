@@ -1,4 +1,4 @@
-package com.github.jupittar.thescreen.ui.main;
+package com.github.jupittar.thescreen.main;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,8 +18,8 @@ import com.github.jupittar.commlib.custom.SCViewPager;
 import com.github.jupittar.commlib.util.ToastUtils;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
-import com.github.jupittar.thescreen.ui.base.BaseActivity;
-import com.github.jupittar.thescreen.ui.movies.MoviesFragment;
+import com.github.jupittar.thescreen.base.BaseActivity;
+import com.github.jupittar.thescreen.movies.MoviesFragment;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.github.jupittar.thescreen.ui.movies;
+package com.github.jupittar.thescreen.movies;
 
 
 import android.content.Context;
@@ -15,11 +15,11 @@ import com.github.jupittar.commlib.custom.AspectRatioImageView;
 import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
 import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
 import com.github.jupittar.core.data.entity.Movie;
-import com.github.jupittar.core.ui.movies.MoviesContract;
+import com.github.jupittar.core.movies.MoviesUiContract;
 import com.github.jupittar.core.util.Constants;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
-import com.github.jupittar.thescreen.ui.base.LazyFragment;
+import com.github.jupittar.thescreen.base.LazyFragment;
 
 import java.util.List;
 
@@ -27,13 +27,15 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class MoviesSubFragment extends LazyFragment implements MoviesContract.View {
+public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.View {
 
   @BindView(R.id.recycler_view)
   RecyclerView mRecyclerView;
 
   @Inject
-  MoviesContract.Presenter<MoviesContract.View> mPresenter;
+  MoviesUiContract.Presenter<MoviesUiContract.View> mPresenter;
+
+  private int mPage;
 
   @Override
   public void onDestroyView() {
@@ -62,8 +64,9 @@ public class MoviesSubFragment extends LazyFragment implements MoviesContract.Vi
 
   @Override
   public void onFirstAppear() {
+    mPage = 1;
     setUpRecyclerView();
-    mPresenter.showNowPlayingMovies(1);
+    mPresenter.showNowPlayingMovies(mPage);
   }
 
   private void setUpRecyclerView() {

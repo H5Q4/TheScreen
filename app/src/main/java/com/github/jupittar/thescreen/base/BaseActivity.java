@@ -1,4 +1,4 @@
-package com.github.jupittar.thescreen.ui.base;
+package com.github.jupittar.thescreen.base;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;

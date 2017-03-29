@@ -1,7 +1,7 @@
-package com.github.jupittar.thescreen.ui.movies;
+package com.github.jupittar.thescreen.movies;
 
 
-import com.github.jupittar.core.ui.movies.MoviesScope;
+import com.github.jupittar.core.movies.MoviesScope;
 
 import dagger.Subcomponent;
 

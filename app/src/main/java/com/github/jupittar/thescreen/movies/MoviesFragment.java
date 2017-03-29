@@ -1,4 +1,4 @@
-package com.github.jupittar.thescreen.ui.movies;
+package com.github.jupittar.thescreen.movies;
 
 
 import android.content.Context;
@@ -12,10 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.jupittar.commlib.custom.SCViewPager;
-import com.github.jupittar.core.ui.base.Contract;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
-import com.github.jupittar.thescreen.ui.base.LazyFragment;
+import com.github.jupittar.thescreen.base.LazyFragment;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -16,7 +16,7 @@
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
     <activity
-        android:name=".ui.main.MainActivity"
+        android:name=".main.MainActivity"
         android:screenOrientation="portrait"
         android:theme="@style/AppTheme.SplashTheme">
       <intent-filter>

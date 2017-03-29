@@ -1,13 +1,15 @@
-package com.github.jupittar.core.ui.movies;
+package com.github.jupittar.core.movies;
 
+import com.github.jupittar.core.base.BasePresenter;
 import com.github.jupittar.core.helper.SchedulerHelper;
 
 import javax.inject.Inject;
 
 import io.reactivex.disposables.Disposable;
 
-public class MoviesPresenter
-    extends MoviesContract.Presenter<MoviesContract.View> {
+class MoviesPresenter
+    extends BasePresenter<MoviesUiContract.View>
+    implements MoviesUiContract.Presenter<MoviesUiContract.View> {
 
   private MoviesInteractor mInteractor;
   private SchedulerHelper mSchedulerHelper;
