@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import io.reactivex.disposables.Disposable;
 
-class MoviesPresenter
+public class MoviesPresenter
     extends BasePresenter<MoviesUiContract.View>
     implements MoviesUiContract.Presenter<MoviesUiContract.View> {
 
@@ -21,16 +21,18 @@ class MoviesPresenter
   }
 
   @Override
-  public void showNowPlayingMovies(int page) {
+  public void listMovies(int page) {
+    getMvpView().showLoading();
     Disposable disposable = mInteractor
         .loadNowPlayingMovies(page)
         .subscribeOn(mSchedulerHelper.backgroundThread())
         .observeOn(mSchedulerHelper.mainThread())
         .subscribe(movies -> {
-          getMvpView().showNowPlayingMovies(movies);
+          getMvpView().showMovies(movies);
           getMvpView().hideLoading();
         }, throwable -> {
           getMvpView().hideLoading();
+          getMvpView().showErrorMessage();
         });
     addDisposable(disposable);
   }

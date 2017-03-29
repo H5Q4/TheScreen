@@ -9,11 +9,11 @@ import java.util.List;
 public interface MoviesUiContract {
 
   interface View extends UiContract.View {
-    void showNowPlayingMovies(List<Movie> movies);
+    void showMovies(List<Movie> movies);
   }
 
   interface Presenter<V extends View> extends UiContract.Presenter<V> {
-    void showNowPlayingMovies(int page);
+    void listMovies(int page);
   }
 
 }

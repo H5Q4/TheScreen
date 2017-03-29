@@ -4,15 +4,18 @@ package com.github.jupittar.thescreen.movies;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.github.jupittar.commlib.custom.AspectRatioImageView;
 import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
+import com.github.jupittar.commlib.recyclerview.EndlessScrollListener;
 import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
 import com.github.jupittar.core.data.entity.Movie;
 import com.github.jupittar.core.movies.MoviesUiContract;
@@ -31,6 +34,8 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
 
   @BindView(R.id.recycler_view)
   RecyclerView mRecyclerView;
+  @BindView(R.id.refresh_layout)
+  SwipeRefreshLayout mSwipeRefreshLayout;
 
   @Inject
   MoviesUiContract.Presenter<MoviesUiContract.View> mPresenter;
@@ -66,7 +71,7 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
   public void onFirstAppear() {
     mPage = 1;
     setUpRecyclerView();
-    mPresenter.showNowPlayingMovies(mPage);
+    mPresenter.listMovies(mPage);
   }
 
   private void setUpRecyclerView() {
@@ -75,6 +80,13 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
     mRecyclerView.setHasFixedSize(true);
     mMoviesAdapter = new MoviesAdapter(getActivity(), R.layout.item_movie);
     mRecyclerView.setAdapter(mMoviesAdapter);
+    mRecyclerView.addOnScrollListener(new EndlessScrollListener() {
+      @Override
+      public void onLoadMore() {
+        mPage++;
+        mPresenter.listMovies(mPage);
+      }
+    });
   }
 
   @Override
@@ -84,21 +96,21 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
 
   @Override
   public void showLoading() {
-
+    mSwipeRefreshLayout.setRefreshing(true);
   }
 
   @Override
   public void hideLoading() {
-
+    mSwipeRefreshLayout.setRefreshing(false);
   }
 
   @Override
   public void showErrorMessage() {
-
+    Toast.makeText(getActivity(), "Error Occurred", Toast.LENGTH_SHORT).show();
   }
 
   @Override
-  public void showNowPlayingMovies(List<Movie> movies) {
+  public void showMovies(List<Movie> movies) {
     mMoviesAdapter.addAll(movies);
   }
 
@@ -111,7 +123,7 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
     @Override
     public void convertView(CommonViewHolder holder, Movie item) {
       AspectRatioImageView posterIv = holder.getView(R.id.iv_movie_poster);
-      posterIv.setAspectRatio(1/AspectRatioImageView.PHI);
+      posterIv.setAspectRatio(1 / AspectRatioImageView.PHI);
       Glide.with(mContext)
           .load(String.format("%s%s%s",
               Constants.IMAGE_BASE_URL, Constants.POSTER_SIZE, item.getPosterPath()))

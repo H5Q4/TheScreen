@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Single;
 
-class MoviesInteractor {
+public class MoviesInteractor {
 
   private TMDbService mTMDbService;
 
