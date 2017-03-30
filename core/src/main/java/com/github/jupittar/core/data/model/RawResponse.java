@@ -1,17 +1,17 @@
-package com.github.jupittar.core.data.entity;
+package com.github.jupittar.core.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class ListResponse<T> {
+public class RawResponse<T> {
 
     // region Fields
     @SerializedName("page")
     private int page;
     @SerializedName("results")
-    private List<T> results = null;
+    private List<T> results;
     @SerializedName("total_results")
     private int totalResults;
     @SerializedName("total_pages")
@@ -24,32 +24,32 @@ public class ListResponse<T> {
       return page;
     }
 
+    public void setPage(int page) {
+        this.page = page;
+    }
+
     public List<T> getResults() {
       return results;
     }
 
-    public int getTotalResults() {
-      return totalResults;
-    }
-
-    public int getTotalPages() {
-      return totalPages;
+    public void setResults(List<T> results) {
+        this.results = results;
     }
 
     // endregion
 
     // region Setters
 
-    public void setPage(int page) {
-      this.page = page;
-    }
-
-    public void setResults(List<T> results) {
-      this.results = results;
+    public int getTotalResults() {
+        return totalResults;
     }
 
     public void setTotalResults(int totalResults) {
       this.totalResults = totalResults;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
     }
 
     public void setTotalPages(int totalPages) {

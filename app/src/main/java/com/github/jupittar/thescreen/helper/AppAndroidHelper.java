@@ -3,7 +3,7 @@ package com.github.jupittar.thescreen.helper;
 import android.content.Context;
 
 import com.github.jupittar.commlib.util.NetworkUtils;
-import com.github.jupittar.core.data.entity.Configuration;
+import com.github.jupittar.core.data.model.Configuration;
 import com.github.jupittar.core.helper.AndroidHelper;
 import com.github.jupittar.thescreen.util.SharedPreferencesManager;
 

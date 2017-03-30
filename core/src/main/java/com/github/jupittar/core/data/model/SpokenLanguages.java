@@ -1,20 +1,20 @@
-package com.github.jupittar.core.data.entity;
+package com.github.jupittar.core.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
-public class Genres {
-  @SerializedName("id")
-  private int id;
+public class SpokenLanguages {
+  @SerializedName("iso_639_1")
+  private String iso6391;
   @SerializedName("name")
   private String name;
 
-  public int getId() {
-    return id;
+  public String getIso6391() {
+    return iso6391;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public void setIso6391(String iso6391) {
+    this.iso6391 = iso6391;
   }
 
   public String getName() {

@@ -1,4 +1,4 @@
-package com.github.jupittar.core.data.entity;
+package com.github.jupittar.core.data.model;
 
 import com.google.gson.annotations.SerializedName;
 

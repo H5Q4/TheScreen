@@ -1,8 +1,8 @@
 package com.github.jupittar.core.data.remote;
 
-import com.github.jupittar.core.data.entity.Configuration;
-import com.github.jupittar.core.data.entity.Movie;
-import com.github.jupittar.core.data.entity.ListResponse;
+import com.github.jupittar.core.data.model.Configuration;
+import com.github.jupittar.core.data.model.Movie;
+import com.github.jupittar.core.data.model.RawResponse;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
@@ -15,16 +15,16 @@ public interface TMDbService {
   Single<Configuration> getApiConfiguration();
 
   @GET("movie/popular")
-  Single<ListResponse<Movie>> getPopularMovies(@Query("page") int page);
+  Single<RawResponse<Movie>> getPopularMovies(@Query("page") int page);
 
   @GET("movie/now_playing")
-  Single<ListResponse<Movie>> getNowPlayingMovies(@Query("page") int page);
+  Single<RawResponse<Movie>> getNowPlayingMovies(@Query("page") int page);
 
   @GET("movie/top_rated")
-  Single<ListResponse<Movie>> getTopRatedMovies(@Query("page") int page);
+  Single<RawResponse<Movie>> getTopRatedMovies(@Query("page") int page);
 
   @GET("movie/upcoming")
-  Single<ListResponse<Movie>> getUpcomingMovies(@Query("page") int page);
+  Single<RawResponse<Movie>> getUpcomingMovies(@Query("page") int page);
 
   @GET("movie/{movie_id}")
   Single<Movie> getMovieDetails(@Path("movie_id") long movieId);

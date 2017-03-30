@@ -3,7 +3,7 @@ package com.github.jupittar.thescreen.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.github.jupittar.core.data.entity.Configuration;
+import com.github.jupittar.core.data.model.Configuration;
 import com.google.gson.Gson;
 
 public class SharedPreferencesManager {
