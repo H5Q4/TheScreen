@@ -71,7 +71,15 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
   public void onFirstAppear() {
     mPage = 1;
     setUpRecyclerView();
+    setUpRefreshLayout();
     mPresenter.listMovies(mPage);
+  }
+
+  private void setUpRefreshLayout() {
+    mSwipeRefreshLayout.setOnRefreshListener(() -> {
+      mPage = 1;
+      mPresenter.listMovies(mPage);
+    });
   }
 
   private void setUpRecyclerView() {
@@ -96,12 +104,16 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
 
   @Override
   public void showLoading() {
-    mSwipeRefreshLayout.setRefreshing(true);
+    if (!mSwipeRefreshLayout.isRefreshing()) {
+      mSwipeRefreshLayout.setRefreshing(true);
+    }
   }
 
   @Override
   public void hideLoading() {
-    mSwipeRefreshLayout.setRefreshing(false);
+    if (mSwipeRefreshLayout.isRefreshing()) {
+      mSwipeRefreshLayout.setRefreshing(false);
+    }
   }
 
   @Override

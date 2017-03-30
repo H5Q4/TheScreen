@@ -7,12 +7,15 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.github.jupittar.commlib.custom.SCViewPager;
 import com.github.jupittar.commlib.util.ToastUtils;
@@ -26,9 +29,12 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static android.support.v4.widget.DrawerLayout.STATE_SETTLING;
+
 public class MainActivity extends BaseActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
+  private static final String TAG = MainActivity.class.getCanonicalName();
   @BindView(R.id.toolbar)
   Toolbar mToolbar;
   @BindView(R.id.drawer_layout)
@@ -43,7 +49,7 @@ public class MainActivity extends BaseActivity
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setTheme(R.style.AppTheme_MainTheme);
+    setTheme(R.style.AppTheme);
     setContentView(R.layout.activity_main);
 
     setUpToolbar();
@@ -74,8 +80,8 @@ public class MainActivity extends BaseActivity
     setSupportActionBar(mToolbar);
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) {
-      getSupportActionBar().setDisplayShowTitleEnabled(false);
-      getSupportActionBar().setLogo(R.drawable.logo);
+      actionBar.setDisplayShowTitleEnabled(false);
+      actionBar.setLogo(R.drawable.logo);
     }
   }
 
@@ -84,8 +90,22 @@ public class MainActivity extends BaseActivity
         this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open,
         R.string.navigation_drawer_close);
     mDrawerLayout.addDrawerListener(toggle);
+    mDrawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+      @Override
+      public void onDrawerStateChanged(int newState) {
+        super.onDrawerStateChanged(newState);
+        if (newState == STATE_SETTLING) {
+          if (!mDrawerLayout.isDrawerVisible(GravityCompat.START)) {
+            getWindow().setStatusBarColor(ContextCompat
+                .getColor(MainActivity.this, android.R.color.transparent));
+          } else {
+            getWindow().setStatusBarColor(ContextCompat
+                .getColor(MainActivity.this, R.color.colorPrimaryDark));
+          }
+        }
+      }
+    });
     toggle.syncState();
-
     mNavigationView.setNavigationItemSelectedListener(this);
   }
 

@@ -13,9 +13,9 @@
     <item name="android:windowBackground">@drawable/layer_list_splash_bg</item>
   </style>
 
-  <style name="AppTheme.MainTheme" parent="AppTheme">
-    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-    <item name="android:statusBarColor">#40000000</item>
-  </style>
+  <!--<style name="AppTheme.MainTheme" parent="AppTheme">-->
+    <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+    <!--<item name="android:statusBarColor">#40000000</item>-->
+  <!--</style>-->
 
 </resources>
