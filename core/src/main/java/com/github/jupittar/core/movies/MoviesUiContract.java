@@ -7,12 +7,12 @@ import java.util.List;
 
 public interface MoviesUiContract {
 
-  interface View extends UiContract.View {
-    void showMovies(List<Movie> movies);
-  }
+    interface View extends UiContract.View {
+        void showMovies(List<Movie> movies);
+    }
 
-  interface Presenter<V extends View> extends UiContract.Presenter<V> {
-    void showMovies(MovieTab tab, int page);
-  }
+    interface Presenter<V extends View> extends UiContract.Presenter<V> {
+        void showMovies(MovieTab tab, int page);
+    }
 
 }

@@ -21,7 +21,7 @@ public class RawResponse<T> {
     // region Getters
 
     public int getPage() {
-      return page;
+        return page;
     }
 
     public void setPage(int page) {
@@ -29,7 +29,7 @@ public class RawResponse<T> {
     }
 
     public List<T> getResults() {
-      return results;
+        return results;
     }
 
     public void setResults(List<T> results) {
@@ -45,7 +45,7 @@ public class RawResponse<T> {
     }
 
     public void setTotalResults(int totalResults) {
-      this.totalResults = totalResults;
+        this.totalResults = totalResults;
     }
 
     public int getTotalPages() {
@@ -53,7 +53,7 @@ public class RawResponse<T> {
     }
 
     public void setTotalPages(int totalPages) {
-      this.totalPages = totalPages;
+        this.totalPages = totalPages;
     }
 
     // endregion

@@ -14,25 +14,25 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment {
 
-  private Unbinder mUnbinder;
+    private Unbinder mUnbinder;
 
-  @Override
-  public void onAttach(Context context) {
-    super.onAttach(context);
-    injectDependencies(context, TheScreenApp.getAppComponent());
-  }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        injectDependencies(context, TheScreenApp.getAppComponent());
+    }
 
-  @Override
-  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    mUnbinder = ButterKnife.bind(this, view);
-  }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mUnbinder = ButterKnife.bind(this, view);
+    }
 
-  @Override
-  public void onDestroyView() {
-    mUnbinder.unbind();
-    super.onDestroyView();
-  }
+    @Override
+    public void onDestroyView() {
+        mUnbinder.unbind();
+        super.onDestroyView();
+    }
 
-  protected abstract void injectDependencies(Context context, AppComponent appComponent);
+    protected abstract void injectDependencies(Context context, AppComponent appComponent);
 }

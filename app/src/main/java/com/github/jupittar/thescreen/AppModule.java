@@ -16,36 +16,36 @@ import dagger.Provides;
 @Module
 public class AppModule {
 
-  private TheScreenApp mApp;
+    private TheScreenApp mApp;
 
-  AppModule(TheScreenApp app) {
-    this.mApp = app;
-  }
+    AppModule(TheScreenApp app) {
+        this.mApp = app;
+    }
 
-  @Provides
-  @Singleton
-  @Named("isDebug")
-  boolean isDebug() {
-    return AppUtils.isDebug();
-  }
+    @Provides
+    @Singleton
+    @Named("isDebug")
+    boolean isDebug() {
+        return AppUtils.isDebug();
+    }
 
-  @Provides
-  @Singleton
-  Context provideContext() {
-    return mApp.getApplicationContext();
-  }
+    @Provides
+    @Singleton
+    Context provideContext() {
+        return mApp.getApplicationContext();
+    }
 
-  @Provides
-  @Singleton
-  Resources provideResource() {
-    return mApp.getResources();
-  }
+    @Provides
+    @Singleton
+    Resources provideResource() {
+        return mApp.getResources();
+    }
 
-  @Provides
-  @Singleton
-  @Named("cacheDir")
-  File provideCacheDir(Context context) {
-    return context.getCacheDir();
-  }
+    @Provides
+    @Singleton
+    @Named("cacheDir")
+    File provideCacheDir(Context context) {
+        return context.getCacheDir();
+    }
 
 }

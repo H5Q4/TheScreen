@@ -7,8 +7,8 @@ import dagger.Subcomponent;
 
 @MoviesScope
 @Subcomponent(modules = {
-    AppMoviesModule.class
+        AppMoviesModule.class
 })
 public interface MoviesSubcomponent {
-  void inject(MoviesSubFragment fragment);
+    void inject(MoviesSubFragment fragment);
 }

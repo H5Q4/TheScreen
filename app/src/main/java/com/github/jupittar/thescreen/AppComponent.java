@@ -13,12 +13,12 @@ import dagger.Component;
 
 @Singleton
 @Component(modules = {
-    AppModule.class,
-    HelperModule.class,
-    NetworkModule.class
+        AppModule.class,
+        HelperModule.class,
+        NetworkModule.class
 })
 public interface AppComponent {
-  void inject(MainActivity activity);
+    void inject(MainActivity activity);
 
-  MoviesSubcomponent plus(AppMoviesModule module);
+    MoviesSubcomponent plus(AppMoviesModule module);
 }

@@ -28,120 +28,120 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @SuppressWarnings("unused")
 public class NetworkModule {
 
-  @Provides
-  @Singleton
-  public TMDbService provideTMDbService(Retrofit retrofit) {
-    return retrofit.create(TMDbService.class);
-  }
-
-  //region Retrofit
-  @Provides
-  @Singleton
-  public Retrofit provideRetrofit(
-      GsonConverterFactory converterFactory,
-      RxJava2CallAdapterFactory callAdapterFactory,
-      OkHttpClient okHttpClient
-  ) {
-    return new Retrofit
-        .Builder()
-        .baseUrl(Constants.BASE_URL)
-        .client(okHttpClient)
-        .addConverterFactory(converterFactory)
-        .addCallAdapterFactory(callAdapterFactory)
-        .build();
-  }
-
-  @Provides
-  @Singleton
-  public GsonConverterFactory provideGsonConverterFactory(Gson gson) {
-    return GsonConverterFactory.create(gson);
-  }
-
-  @Provides
-  @Singleton
-  public Gson provideGson() {
-    return new Gson();
-  }
-
-  @Provides
-  @Singleton
-  public RxJava2CallAdapterFactory provideRxjava2CallAdapterFactory() {
-    return RxJava2CallAdapterFactory.create();
-  }
-  //endregion
-
-  //region OkHttpClient
-  @Provides
-  @Singleton
-  public OkHttpClient provideOkHttpClient(
-      @Named("isDebug") boolean isDebug,
-      Cache cache,
-      HttpLoggingInterceptor loggingInterceptor,
-      AuthInterceptor authInterceptor,
-      HttpCacheInterceptor cacheInterceptor,
-      HttpOfflineCacheInterceptor offlineInterceptor
-  ) {
-    OkHttpClient.Builder builder = new OkHttpClient.Builder()
-        .connectTimeout(Constants.NETWORK_CONNECTION_TIMEOUT, TimeUnit.SECONDS)
-        .readTimeout(Constants.NETWORK_READ_TIMEOUT, TimeUnit.SECONDS)
-        .writeTimeout(Constants.NETWORK_WRITE_TIMEOUT, TimeUnit.SECONDS)
-        .addInterceptor(authInterceptor)
-        .addNetworkInterceptor(cacheInterceptor)
-        .addInterceptor(offlineInterceptor)
-        .cache(cache);
-
-    if (isDebug) {
-      builder.addInterceptor(loggingInterceptor);
+    @Provides
+    @Singleton
+    public TMDbService provideTMDbService(Retrofit retrofit) {
+        return retrofit.create(TMDbService.class);
     }
 
-    return builder.build();
-  }
-
-  @Provides
-  @Singleton
-  public Cache provideCache(
-      @Named("cacheDir") File cacheDir
-  ) {
-    Cache cache = null;
-    try {
-      cache = new Cache(new File(cacheDir.getPath(), "http"), Constants.CACHE_SIZE);
-    } catch (Exception e) {
-      e.printStackTrace();
+    //region Retrofit
+    @Provides
+    @Singleton
+    public Retrofit provideRetrofit(
+            GsonConverterFactory converterFactory,
+            RxJava2CallAdapterFactory callAdapterFactory,
+            OkHttpClient okHttpClient
+    ) {
+        return new Retrofit
+                .Builder()
+                .baseUrl(Constants.BASE_URL)
+                .client(okHttpClient)
+                .addConverterFactory(converterFactory)
+                .addCallAdapterFactory(callAdapterFactory)
+                .build();
     }
-    return cache;
-  }
 
-  @Provides
-  @Singleton
-  public HttpLoggingInterceptor provideHttpLoggingInterceptor(LoggerHelper loggerHelper) {
-    return new HttpLoggingInterceptor(loggerHelper);
-  }
+    @Provides
+    @Singleton
+    public GsonConverterFactory provideGsonConverterFactory(Gson gson) {
+        return GsonConverterFactory.create(gson);
+    }
 
-  @Provides
-  @Singleton
-  public AuthInterceptor provideAuthInterceptor() {
-    return new AuthInterceptor();
-  }
+    @Provides
+    @Singleton
+    public Gson provideGson() {
+        return new Gson();
+    }
 
-  @Provides
-  @Singleton
-  public HttpCacheInterceptor provideCacheInterceptor() {
-    return new HttpCacheInterceptor(Constants.CACHE_MAX_AGE_MINS);
-  }
+    @Provides
+    @Singleton
+    public RxJava2CallAdapterFactory provideRxjava2CallAdapterFactory() {
+        return RxJava2CallAdapterFactory.create();
+    }
+    //endregion
 
-  @Provides
-  @Singleton
-  public HttpOfflineCacheInterceptor provideOfflineCacheInterceptor(
-      AndroidHelper androidHelper
-  ) {
-    return new HttpOfflineCacheInterceptor(androidHelper, Constants.CACHE_MAX_STALE_DAYS);
-  }
+    //region OkHttpClient
+    @Provides
+    @Singleton
+    public OkHttpClient provideOkHttpClient(
+            @Named("isDebug") boolean isDebug,
+            Cache cache,
+            HttpLoggingInterceptor loggingInterceptor,
+            AuthInterceptor authInterceptor,
+            HttpCacheInterceptor cacheInterceptor,
+            HttpOfflineCacheInterceptor offlineInterceptor
+    ) {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .connectTimeout(Constants.NETWORK_CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(Constants.NETWORK_READ_TIMEOUT, TimeUnit.SECONDS)
+                .writeTimeout(Constants.NETWORK_WRITE_TIMEOUT, TimeUnit.SECONDS)
+                .addInterceptor(authInterceptor)
+                .addNetworkInterceptor(cacheInterceptor)
+                .addInterceptor(offlineInterceptor)
+                .cache(cache);
 
-  @Provides
-  @Singleton
-  public RetryInterceptor provideRetryInterceptor() {
-    return new RetryInterceptor(Constants.RETRY_COUNT);
-  }
-  //endregion
+        if (isDebug) {
+            builder.addInterceptor(loggingInterceptor);
+        }
+
+        return builder.build();
+    }
+
+    @Provides
+    @Singleton
+    public Cache provideCache(
+            @Named("cacheDir") File cacheDir
+    ) {
+        Cache cache = null;
+        try {
+            cache = new Cache(new File(cacheDir.getPath(), "http"), Constants.CACHE_SIZE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cache;
+    }
+
+    @Provides
+    @Singleton
+    public HttpLoggingInterceptor provideHttpLoggingInterceptor(LoggerHelper loggerHelper) {
+        return new HttpLoggingInterceptor(loggerHelper);
+    }
+
+    @Provides
+    @Singleton
+    public AuthInterceptor provideAuthInterceptor() {
+        return new AuthInterceptor();
+    }
+
+    @Provides
+    @Singleton
+    public HttpCacheInterceptor provideCacheInterceptor() {
+        return new HttpCacheInterceptor(Constants.CACHE_MAX_AGE_MINS);
+    }
+
+    @Provides
+    @Singleton
+    public HttpOfflineCacheInterceptor provideOfflineCacheInterceptor(
+            AndroidHelper androidHelper
+    ) {
+        return new HttpOfflineCacheInterceptor(androidHelper, Constants.CACHE_MAX_STALE_DAYS);
+    }
+
+    @Provides
+    @Singleton
+    public RetryInterceptor provideRetryInterceptor() {
+        return new RetryInterceptor(Constants.RETRY_COUNT);
+    }
+    //endregion
 
 }

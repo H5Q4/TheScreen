@@ -14,23 +14,23 @@ import dagger.Provides;
 @Module
 public class HelperModule {
 
-  @Provides
-  @Singleton
-  LoggerHelper provideLoggerHelper() {
-    return new AppLoggerHelper();
-  }
+    @Provides
+    @Singleton
+    LoggerHelper provideLoggerHelper() {
+        return new AppLoggerHelper();
+    }
 
-  @Provides
-  @Singleton
-  SchedulerHelper provideAppScheduler() {
-    return new AppSchedulerHelper();
-  }
+    @Provides
+    @Singleton
+    SchedulerHelper provideAppScheduler() {
+        return new AppSchedulerHelper();
+    }
 
-  @Provides
-  @Singleton
-  AndroidHelper provideAndroidHelper(Context context) {
-    return new AppAndroidHelper(context);
-  }
+    @Provides
+    @Singleton
+    AndroidHelper provideAndroidHelper(Context context) {
+        return new AppAndroidHelper(context);
+    }
 
 
 }

@@ -15,12 +15,11 @@ public class SharedPreferencesManager {
   }
 
   // region Getters
-  public static Configuration getConfiguration(Context context){
+  public static Configuration getConfiguration(Context context) {
     SharedPreferences preferences = getSharedPreferences(context);
     Gson gson = new Gson();
     String json = preferences.getString(KEY_TMDB_API_CONF, "");
-    Configuration configuration = gson.fromJson(json, Configuration.class);
-    return configuration;
+    return gson.fromJson(json, Configuration.class);
   }
   // endregion
 
@@ -30,7 +29,7 @@ public class SharedPreferencesManager {
     Gson gson = new Gson();
     String json = gson.toJson(configuration);
     editor.putString(KEY_TMDB_API_CONF, json)
-        .apply();
+            .apply();
   }
   // endregion
 

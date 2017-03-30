@@ -35,8 +35,7 @@ public class MoviesFragment extends LazyFragment {
   }
 
   public static MoviesFragment newInstance() {
-    MoviesFragment fragment = new MoviesFragment();
-    return fragment;
+    return new MoviesFragment();
   }
 
   @Override

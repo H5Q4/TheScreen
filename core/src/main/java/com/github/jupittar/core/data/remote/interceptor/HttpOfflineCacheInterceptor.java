@@ -13,32 +13,32 @@ import okhttp3.Response;
 @SuppressWarnings("unused")
 public class HttpOfflineCacheInterceptor implements Interceptor {
 
-  private AndroidHelper mAndroidHelper;
-  private int mCacheMaxStaleDays;
+    private AndroidHelper mAndroidHelper;
+    private int mCacheMaxStaleDays;
 
-  public HttpOfflineCacheInterceptor(AndroidHelper androidHelper, int cacheMaxStaleDays) {
-    mAndroidHelper = androidHelper;
-    mCacheMaxStaleDays = cacheMaxStaleDays;
-  }
-
-  @Override
-  public Response intercept(Chain chain) throws IOException {
-    Request request = chain.request();
-
-    if (!mAndroidHelper.isNetworkConnected()) {
-      CacheControl cacheControl = new CacheControl.Builder()
-          .maxStale(mCacheMaxStaleDays, TimeUnit.DAYS)
-          .build();
-      request = request.newBuilder()
-          .cacheControl(cacheControl)
-          // if your server doesn't support cache header, uncomment below to replace the upper line
-          // may work(not tested!)
-//          .header("Cache-Control", "public, only-if-cached, max-stale="
-//              + Constants.CACHE_MAX_STALE_DAYS * 24 * 60 * 60)
-          .build();
-      System.out.println("No Network, Read From Cache");
+    public HttpOfflineCacheInterceptor(AndroidHelper androidHelper, int cacheMaxStaleDays) {
+        mAndroidHelper = androidHelper;
+        mCacheMaxStaleDays = cacheMaxStaleDays;
     }
 
-    return chain.proceed(request);
-  }
+    @Override
+    public Response intercept(Chain chain) throws IOException {
+        Request request = chain.request();
+
+        if (!mAndroidHelper.isNetworkConnected()) {
+            CacheControl cacheControl = new CacheControl.Builder()
+                    .maxStale(mCacheMaxStaleDays, TimeUnit.DAYS)
+                    .build();
+            request = request.newBuilder()
+                    .cacheControl(cacheControl)
+                    // if your server doesn't support cache header, uncomment below to replace the upper line
+                    // may work(not tested!)
+//          .header("Cache-Control", "public, only-if-cached, max-stale="
+//              + Constants.CACHE_MAX_STALE_DAYS * 24 * 60 * 60)
+                    .build();
+            System.out.println("No Network, Read From Cache");
+        }
+
+        return chain.proceed(request);
+    }
 }

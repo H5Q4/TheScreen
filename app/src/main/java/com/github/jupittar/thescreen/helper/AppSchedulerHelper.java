@@ -9,14 +9,14 @@ import io.reactivex.schedulers.Schedulers;
 @SuppressWarnings("unused")
 public class AppSchedulerHelper implements SchedulerHelper {
 
-  @Override
-  public Scheduler mainThread() {
-    return AndroidSchedulers.mainThread();
-  }
+    @Override
+    public Scheduler mainThread() {
+        return AndroidSchedulers.mainThread();
+    }
 
-  @Override
-  public Scheduler backgroundThread() {
-    return Schedulers.io();
-  }
+    @Override
+    public Scheduler backgroundThread() {
+        return Schedulers.io();
+    }
 
 }

@@ -12,25 +12,25 @@ import butterknife.Unbinder;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-  private Unbinder mUnbinder;
+    private Unbinder mUnbinder;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    injectDependencies(TheScreenApp.getAppComponent());
-  }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        injectDependencies(TheScreenApp.getAppComponent());
+    }
 
-  @Override
-  public void setContentView(@LayoutRes int layoutResID) {
-    super.setContentView(layoutResID);
-    mUnbinder = ButterKnife.bind(this);
-  }
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+        super.setContentView(layoutResID);
+        mUnbinder = ButterKnife.bind(this);
+    }
 
-  @Override
-  protected void onDestroy() {
-    mUnbinder.unbind();
-    super.onDestroy();
-  }
+    @Override
+    protected void onDestroy() {
+        mUnbinder.unbind();
+        super.onDestroy();
+    }
 
-  protected abstract void injectDependencies(AppComponent appComponent);
+    protected abstract void injectDependencies(AppComponent appComponent);
 }

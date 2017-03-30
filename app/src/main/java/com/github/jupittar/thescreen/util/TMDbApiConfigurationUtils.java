@@ -10,11 +10,11 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class TMDbApiConfigurationUtils {
 
-  public static String getSecureBaseUrl(Context context){
+  public static String getSecureBaseUrl(Context context) {
     String secureBaseUrl = "";
 
     Configuration configuration = SharedPreferencesManager.getConfiguration(context);
-    if(configuration != null) {
+    if (configuration != null) {
       Images images = configuration.getImages();
       if (images != null) {
         secureBaseUrl = images.getSecureBaseUrl();
@@ -24,11 +24,11 @@ public class TMDbApiConfigurationUtils {
     return secureBaseUrl;
   }
 
-  public static String getProfileSize(Context context){
+  public static String getProfileSize(Context context) {
     String profileSize = "";
 
     Configuration configuration = SharedPreferencesManager.getConfiguration(context);
-    if(configuration != null) {
+    if (configuration != null) {
       Images images = configuration.getImages();
       if (images != null) {
 
@@ -46,11 +46,11 @@ public class TMDbApiConfigurationUtils {
     return profileSize;
   }
 
-  public static String getPosterSize(Context context){
+  public static String getPosterSize(Context context) {
     String posterSize = "";
 
     Configuration configuration = SharedPreferencesManager.getConfiguration(context);
-    if(configuration != null) {
+    if (configuration != null) {
       Images images = configuration.getImages();
       if (images != null) {
 

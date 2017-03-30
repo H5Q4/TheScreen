@@ -5,10 +5,10 @@ import com.github.jupittar.core.data.model.Configuration;
 
 public interface AndroidHelper {
 
-  void saveApiConfiguration(Configuration configuration);
+    void saveApiConfiguration(Configuration configuration);
 
-  boolean isApiConfigurationExisted();
+    boolean isApiConfigurationExisted();
 
-  boolean isNetworkConnected();
+    boolean isNetworkConnected();
 
 }
