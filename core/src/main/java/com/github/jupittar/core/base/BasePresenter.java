@@ -16,7 +16,7 @@ public class BasePresenter<V extends UiContract.View> implements UiContract.Pres
     @Override
     public void detach() {
         this.mView = null;
-        unSubscribeAll();
+        clear();
     }
 
     @Override
@@ -28,11 +28,11 @@ public class BasePresenter<V extends UiContract.View> implements UiContract.Pres
     }
 
     @Override
-    public void unSubscribeAll() {
+    public void clear() {
         if (mCompositeDisposable == null) {
             return;
         }
-        mCompositeDisposable.dispose();
+        mCompositeDisposable.clear();
     }
 
     public boolean isViewAttached() {

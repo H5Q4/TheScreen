@@ -20,7 +20,7 @@ public interface UiContract {
 
         void addDisposable(Disposable disposable);
 
-        void unSubscribeAll();
+        void clear();
     }
 
 }
