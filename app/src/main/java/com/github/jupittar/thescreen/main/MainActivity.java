@@ -14,7 +14,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.github.jupittar.commlib.custom.SCViewPager;
 import com.github.jupittar.thescreen.AppComponent;
@@ -26,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import es.dmoral.toasty.Toasty;
 
 import static android.support.v4.widget.DrawerLayout.STATE_SETTLING;
 
@@ -133,7 +133,7 @@ public class MainActivity extends BaseActivity
                 finish();
             } else {
                 mExit = true;
-                Toast.makeText(MainActivity.this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
+                Toasty.info(MainActivity.this, "再按一次退出应用").show();
                 new Handler().postDelayed(() -> mExit = false, 2000);
             }
 

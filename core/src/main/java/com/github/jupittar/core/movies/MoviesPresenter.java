@@ -1,8 +1,11 @@
 package com.github.jupittar.core.movies;
 
 import com.github.jupittar.core.base.BasePresenter;
-import com.github.jupittar.core.data.model.RawResponse;
+import com.github.jupittar.core.data.model.Movie;
+import com.github.jupittar.core.data.model.PagingInfo;
 import com.github.jupittar.core.helper.SchedulerHelper;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,18 +26,39 @@ public class MoviesPresenter
 
     @Override
     public void showMovies(MovieTab tab, int page) {
-        getMvpView().showLoading();
+        if (page == PagingInfo.NO_MORE_PAGES) return;
+
+        if (page == 1) {
+            getMvpView().showLoading();
+            getMvpView().clearMovies();
+        }
+
         Disposable disposable = mInteractor
                 .loadMovies(tab, page)
-                .map(RawResponse::getResults)
                 .subscribeOn(mSchedulerHelper.backgroundThread())
                 .observeOn(mSchedulerHelper.mainThread())
-                .subscribe(movies -> {
+                .subscribe(moviesWrapper -> {
+                    if (moviesWrapper == null) return;
+
+                    List<Movie> movies = moviesWrapper.getMovies();
+                    PagingInfo pagingInfo = moviesWrapper.getPagingInfo();
+                    getMvpView().updatePagingInfo(pagingInfo);
+
+                    if (pagingInfo.isLastPage()) getMvpView().addNoMoreMoviesFooter();
+
                     getMvpView().showMovies(movies);
                     getMvpView().hideLoading();
                 }, throwable -> {
+                    if (isNetworkException(throwable)) {
+                        if (getMvpView().isMoviesEmpty()) {
+                            getMvpView().showErrorLayout();
+                        } else if (page > 1) {
+                            getMvpView().showReloadSnackbar();
+                        }
+                    } else {
+                        getMvpView().showErrorMessage();
+                    }
                     getMvpView().hideLoading();
-                    getMvpView().showErrorMessage();
                 });
         addDisposable(disposable);
     }

@@ -32,6 +32,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import de.mateware.snacky.Snacky;
 
 public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.View {
 
@@ -45,7 +46,6 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
     @Inject
     MoviesUiContract.Presenter<MoviesUiContract.View> mPresenter;
     MoviesAdapter mMoviesAdapter;
-    private int mPage;
     private MovieTab mMovieTab;
     private PagingInfo mPagingInfo;
 
@@ -83,16 +83,14 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
 
     @Override
     public void onFirstAppear() {
-        mPage = 1;
         setUpRecyclerView();
         setUpRefreshLayout();
-        mPresenter.showMovies(mMovieTab, mPage);
+        mPresenter.showMovies(mMovieTab, 1);
     }
 
     private void setUpRefreshLayout() {
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            mPage = 1;
-            mPresenter.showMovies(mMovieTab, mPage);
+            mPresenter.showMovies(mMovieTab, 1);
         });
     }
 
@@ -105,8 +103,8 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
         mRecyclerView.addOnScrollListener(new EndlessScrollListener() {
             @Override
             public void onLoadMore() {
-                mPage++;
-                mPresenter.showMovies(mMovieTab, mPage);
+                mPagingInfo.nextPage();
+                mPresenter.showMovies(mMovieTab, mPagingInfo.getCurrentPage());
             }
         });
     }
@@ -140,6 +138,44 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
         mMoviesAdapter.addAll(movies);
     }
 
+    @Override
+    public void addNoMoreMoviesFooter() {
+
+    }
+
+    @Override
+    public boolean isMoviesEmpty() {
+        return mMoviesAdapter.isEmpty();
+    }
+
+    @Override
+    public void showErrorLayout() {
+
+    }
+
+    @Override
+    public void showReloadSnackbar() {
+        Snacky.builder()
+                .setActivty(getActivity())
+                .setText("Network Error")
+                .setActionText("Reload")
+                .setActionClickListener(
+                        v -> mPresenter.showMovies(mMovieTab, mPagingInfo.getCurrentPage()))
+                .setDuration(Snacky.LENGTH_INDEFINITE)
+                .error()
+                .show();
+    }
+
+    @Override
+    public void updatePagingInfo(PagingInfo pagingInfo) {
+        mPagingInfo = pagingInfo;
+    }
+
+    @Override
+    public void clearMovies() {
+        mMoviesAdapter.clear();
+    }
+
     private class MoviesAdapter extends CommonViewAdapter<Movie> {
 
         MoviesAdapter(Context context, @LayoutRes int layoutId) {
@@ -152,7 +188,9 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
             posterIv.setAspectRatio(1 / AspectRatioImageView.PHI);
             Glide.with(mContext)
                     .load(String.format("%s%s%s",
-                            Constants.IMAGE_BASE_URL, Constants.POSTER_SIZE, item.getPosterPath()))
+                            Constants.IMAGE_BASE_URL,
+                            Constants.POSTER_SIZE,
+                            item.getPosterPath()))
                     .centerCrop()
                     .into(posterIv);
         }

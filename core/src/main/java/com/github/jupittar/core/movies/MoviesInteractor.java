@@ -1,6 +1,8 @@
 package com.github.jupittar.core.movies;
 
 import com.github.jupittar.core.data.model.Movie;
+import com.github.jupittar.core.data.model.MoviesWrapper;
+import com.github.jupittar.core.data.model.PagingInfo;
 import com.github.jupittar.core.data.model.RawResponse;
 import com.github.jupittar.core.data.remote.TmdbService;
 
@@ -17,7 +19,7 @@ public class MoviesInteractor {
         mTmdbService = TmdbService;
     }
 
-    public Single<RawResponse<Movie>> loadMovies(MovieTab tab, int page) {
+    public Single<MoviesWrapper> loadMovies(MovieTab tab, int page) {
         Single<RawResponse<Movie>> movieSingle = null;
         switch (tab) {
             case NOW_PLAYING:
@@ -33,7 +35,8 @@ public class MoviesInteractor {
                 movieSingle = mTmdbService.getUpcomingMovies(page);
                 break;
         }
-        return movieSingle;
+        return movieSingle.map(movieRawResponse -> new MoviesWrapper(movieRawResponse.getResults(),
+                new PagingInfo(movieRawResponse.getPage(), movieRawResponse.getTotalPages())));
     }
 
 }

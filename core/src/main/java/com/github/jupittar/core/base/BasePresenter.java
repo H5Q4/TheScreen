@@ -1,5 +1,9 @@
 package com.github.jupittar.core.base;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -46,4 +50,12 @@ public class BasePresenter<V extends UiContract.View> implements UiContract.Pres
         }
         return mView;
     }
+
+    //region Helper Methods
+    public boolean isNetworkException(Throwable t) {
+        return (t instanceof ConnectException
+                || t instanceof UnknownHostException
+                || t instanceof SocketTimeoutException);
+    }
+    //endregion
 }

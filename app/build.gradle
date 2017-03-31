@@ -66,4 +66,6 @@ dependencies {
 
   compile rootProject.ext.libraries.glide
   compile rootProject.ext.libraries.logger
+    compile rootProject.ext.libraries.toasty
+    compile rootProject.ext.libraries.snacky
 }
