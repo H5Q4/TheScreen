@@ -4,24 +4,29 @@ import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
 public class Genres {
-  @SerializedName("id")
-  private int id;
-  @SerializedName("name")
-  private String name;
 
-  public int getId() {
-    return id;
-  }
+    //region Fields
+    @SerializedName("id")
+    private int id;
+    @SerializedName("name")
+    private String name;
+    //endregion
 
-  public void setId(int id) {
-    this.id = id;
-  }
+    //region Getters and Setters
+    public int getId() {
+        return id;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    //endregion
 }

@@ -7,6 +7,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class Movie {
 
+  //region Fields
   @SerializedName("adult")
   private boolean adult;
   @SerializedName("backdrop_path")
@@ -55,7 +56,9 @@ public class Movie {
   private List<ProductionCountries> productionCountries;
   @SerializedName("spoken_languages")
   private List<SpokenLanguages> spokenLanguages;
+  //endregion
 
+  //region Getters and Setters
   public boolean isAdult() {
     return adult;
   }
@@ -247,5 +250,6 @@ public class Movie {
   public void setSpokenLanguages(List<SpokenLanguages> spokenLanguages) {
     this.spokenLanguages = spokenLanguages;
   }
+  //endregion
 
 }

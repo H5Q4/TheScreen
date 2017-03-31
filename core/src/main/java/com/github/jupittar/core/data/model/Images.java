@@ -7,6 +7,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class Images {
 
+  //region Fields
   @SerializedName("base_url")
   private String baseUrl;
   @SerializedName("secure_base_url")
@@ -21,6 +22,7 @@ public class Images {
   private List<String> profileSizes;
   @SerializedName("still_sizes")
   private List<String> stillSizes;
+  //endregion
 
   //region Getters and Setters
   public String getBaseUrl() {

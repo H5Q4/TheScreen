@@ -7,10 +7,12 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class Configuration {
 
+  //region Fields
   @SerializedName("images")
   private Images images;
   @SerializedName("change_keys")
   private List<String> changeKeys;
+  //endregion
 
   //region Getters and Setters
   public Images getImages() {

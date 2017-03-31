@@ -27,6 +27,6 @@ public interface TmdbService {
     Single<RawResponse<Movie>> getUpcomingMovies(@Query("page") int page);
 
     @GET("movie/{movie_id}")
-    Single<Movie> getMovieDetail(@Path("movie_id") long movieId);
+    Single<Movie> getMovieDetails(@Path("movie_id") long movieId);
 
 }

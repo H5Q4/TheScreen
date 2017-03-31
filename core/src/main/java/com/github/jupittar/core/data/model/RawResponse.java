@@ -18,8 +18,7 @@ public class RawResponse<T> {
     private int totalPages;
     // endregion
 
-    // region Getters
-
+    // region Getters and Setters
     public int getPage() {
         return page;
     }
@@ -36,10 +35,6 @@ public class RawResponse<T> {
         this.results = results;
     }
 
-    // endregion
-
-    // region Setters
-
     public int getTotalResults() {
         return totalResults;
     }
@@ -55,6 +50,5 @@ public class RawResponse<T> {
     public void setTotalPages(int totalPages) {
         this.totalPages = totalPages;
     }
-
     // endregion
 }
