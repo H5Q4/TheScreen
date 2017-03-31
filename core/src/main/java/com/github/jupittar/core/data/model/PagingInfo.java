@@ -4,7 +4,7 @@ public class PagingInfo {
 
     //region Fields
     private int currentPage;
-    private boolean isLastPage;
+    private int totalPages;
     //endregion
 
     //region Getters and Setters
@@ -16,12 +16,20 @@ public class PagingInfo {
         this.currentPage = currentPage;
     }
 
-    public boolean isLastPage() {
-        return isLastPage;
+    public int getTotalPages() {
+        return totalPages;
     }
 
-    public void setLastPage(boolean lastPage) {
-        isLastPage = lastPage;
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
     }
     //endregion
+
+    public void nextPage() {
+        currentPage++;
+    }
+
+    public boolean isLastPage() {
+        return currentPage == totalPages;
+    }
 }

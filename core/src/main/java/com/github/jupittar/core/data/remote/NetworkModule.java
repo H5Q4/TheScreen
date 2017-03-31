@@ -30,8 +30,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public TMDbService provideTMDbService(Retrofit retrofit) {
-        return retrofit.create(TMDbService.class);
+    public TmdbService provideTMDbService(Retrofit retrofit) {
+        return retrofit.create(TmdbService.class);
     }
 
     //region Retrofit

@@ -2,7 +2,7 @@ package com.github.jupittar.core.movies;
 
 import com.github.jupittar.core.data.model.Movie;
 import com.github.jupittar.core.data.model.RawResponse;
-import com.github.jupittar.core.data.remote.TMDbService;
+import com.github.jupittar.core.data.remote.TmdbService;
 
 import javax.inject.Inject;
 
@@ -10,27 +10,27 @@ import io.reactivex.Single;
 
 public class MoviesInteractor {
 
-    private TMDbService mTMDbService;
+    private TmdbService mTmdbService;
 
     @Inject
-    public MoviesInteractor(TMDbService TMDbService) {
-        mTMDbService = TMDbService;
+    public MoviesInteractor(TmdbService TmdbService) {
+        mTmdbService = TmdbService;
     }
 
     public Single<RawResponse<Movie>> loadMovies(MovieTab tab, int page) {
         Single<RawResponse<Movie>> movieSingle = null;
         switch (tab) {
             case NOW_PLAYING:
-                movieSingle = mTMDbService.getNowPlayingMovies(page);
+                movieSingle = mTmdbService.getNowPlayingMovies(page);
                 break;
             case POPULAR:
-                movieSingle = mTMDbService.getPopularMovies(page);
+                movieSingle = mTmdbService.getPopularMovies(page);
                 break;
             case TOP_RATED:
-                movieSingle = mTMDbService.getTopRatedMovies(page);
+                movieSingle = mTmdbService.getTopRatedMovies(page);
                 break;
             case UPCOMING:
-                movieSingle = mTMDbService.getUpcomingMovies(page);
+                movieSingle = mTmdbService.getUpcomingMovies(page);
                 break;
         }
         return movieSingle;

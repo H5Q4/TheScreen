@@ -8,7 +8,7 @@ import com.github.jupittar.core.data.model.Images;
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class TMDbApiConfigurationUtils {
+public class TmdbApiConfigurationUtils {
 
   public static String getSecureBaseUrl(Context context) {
     String secureBaseUrl = "";

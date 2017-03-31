@@ -19,6 +19,7 @@ import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
 import com.github.jupittar.commlib.recyclerview.EndlessScrollListener;
 import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
 import com.github.jupittar.core.data.model.Movie;
+import com.github.jupittar.core.data.model.PagingInfo;
 import com.github.jupittar.core.movies.MovieTab;
 import com.github.jupittar.core.movies.MoviesUiContract;
 import com.github.jupittar.core.util.Constants;
@@ -34,7 +35,7 @@ import butterknife.BindView;
 
 public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.View {
 
-    public static final String ARG_PARA_MOVIE_TAB = "movie_tab";
+    public static final String ARG_PARAM_MOVIE_TAB = "movie_tab";
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -46,6 +47,7 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
     MoviesAdapter mMoviesAdapter;
     private int mPage;
     private MovieTab mMovieTab;
+    private PagingInfo mPagingInfo;
 
     public MoviesSubFragment() {
         // Required empty public constructor
@@ -54,7 +56,7 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
     public static MoviesSubFragment newInstance(MovieTab tab) {
         MoviesSubFragment fragment = new MoviesSubFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(ARG_PARA_MOVIE_TAB, tab.name());
+        bundle.putString(ARG_PARAM_MOVIE_TAB, tab.name());
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -69,7 +71,7 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMovieTab = MovieTab.valueOf(getArguments().getString(ARG_PARA_MOVIE_TAB));
+        mMovieTab = MovieTab.valueOf(getArguments().getString(ARG_PARAM_MOVIE_TAB));
     }
 
     @Override
