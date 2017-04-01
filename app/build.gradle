@@ -22,6 +22,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
     configurations.all {
         resolutionStrategy {
             force rootProject.ext.libraries.supportAnnotations
@@ -68,4 +72,5 @@ dependencies {
     compile rootProject.ext.libraries.logger
     compile rootProject.ext.libraries.toasty
     compile rootProject.ext.libraries.snacky
+    compile rootProject.ext.libraries.dualcache
 }

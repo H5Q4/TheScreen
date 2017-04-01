@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.github.jupittar.commlib.custom.AspectRatioImageView;
@@ -33,9 +32,11 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import de.mateware.snacky.Snacky;
+import es.dmoral.toasty.Toasty;
 
 public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.View {
 
+    //region Fields
     public static final String ARG_PARAM_MOVIE_TAB = "movie_tab";
 
     @BindView(R.id.recycler_view)
@@ -48,11 +49,15 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
     MoviesAdapter mMoviesAdapter;
     private MovieTab mMovieTab;
     private PagingInfo mPagingInfo;
+    //endregion
 
+    //region Constructors
     public MoviesSubFragment() {
         // Required empty public constructor
     }
+    //endregion
 
+    //region Factory Methods
     public static MoviesSubFragment newInstance(MovieTab tab) {
         MoviesSubFragment fragment = new MoviesSubFragment();
         Bundle bundle = new Bundle();
@@ -60,14 +65,9 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
         fragment.setArguments(bundle);
         return fragment;
     }
+    //endregion
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mPresenter.detach();
-        mPresenter = null;
-    }
-
+    //region Lifecycle Methods
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +88,15 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
         mPresenter.showMovies(mMovieTab, 1);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.detach();
+        mPresenter = null;
+    }
+    //endregion
+
+    //region SetUp Methods
     private void setUpRefreshLayout() {
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
             mPresenter.showMovies(mMovieTab, 1);
@@ -113,7 +122,9 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
     protected void injectDependencies(Context context, AppComponent appComponent) {
         appComponent.plus(new AppMoviesModule(this)).inject(this);
     }
+    //endregion
 
+    //region Implementation of MoviesUiContract.View
     @Override
     public void showLoading() {
         if (!mSwipeRefreshLayout.isRefreshing()) {
@@ -130,7 +141,7 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
 
     @Override
     public void showErrorMessage() {
-        Toast.makeText(getActivity(), "Error Occurred", Toast.LENGTH_SHORT).show();
+        Toasty.error(getActivity(), "Error Occurred").show();
     }
 
     @Override
@@ -175,7 +186,9 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
     public void clearMovies() {
         mMoviesAdapter.clear();
     }
+    //endregion
 
+    //region RecyclerView's Adapter
     private class MoviesAdapter extends CommonViewAdapter<Movie> {
 
         MoviesAdapter(Context context, @LayoutRes int layoutId) {
@@ -195,4 +208,5 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
                     .into(posterIv);
         }
     }
+    //endregion
 }
