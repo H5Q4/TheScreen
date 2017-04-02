@@ -17,6 +17,8 @@ public interface MoviesUiContract {
 
         void showErrorLayout();
 
+        void hideErrorLayout();
+
         void showReloadSnackbar();
 
         void updatePagingInfo(PagingInfo pagingInfo);

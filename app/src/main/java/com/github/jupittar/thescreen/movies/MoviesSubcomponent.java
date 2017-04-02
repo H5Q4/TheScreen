@@ -10,5 +10,5 @@ import dagger.Subcomponent;
         AppMoviesModule.class
 })
 public interface MoviesSubcomponent {
-    void inject(MoviesSubFragment fragment);
+    void inject(MoviesByTabFragment fragment);
 }

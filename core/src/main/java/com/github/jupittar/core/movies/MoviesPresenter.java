@@ -29,6 +29,7 @@ public class MoviesPresenter
         if (page == PagingInfo.NO_MORE_PAGES) return;
 
         if (page == 1) {
+            getMvpView().hideErrorLayout();
             getMvpView().showLoading();
             getMvpView().clearMovies();
         }

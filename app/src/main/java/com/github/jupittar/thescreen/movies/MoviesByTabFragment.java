@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.github.jupittar.commlib.custom.AspectRatioImageView;
@@ -34,13 +35,14 @@ import butterknife.BindView;
 import de.mateware.snacky.Snacky;
 import es.dmoral.toasty.Toasty;
 
-public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.View {
+public class MoviesByTabFragment extends LazyFragment implements MoviesUiContract.View {
 
     //region Fields
     public static final String ARG_PARAM_MOVIE_TAB = "movie_tab";
 
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
     @BindView(R.id.refresh_layout) SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.ll_error) LinearLayout mErrorLayout;
 
     @Inject
     MoviesUiContract.Presenter<MoviesUiContract.View> mPresenter;
@@ -50,14 +52,14 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
     //endregion
 
     //region Constructors
-    public MoviesSubFragment() {
+    public MoviesByTabFragment() {
         // Required empty public constructor
     }
     //endregion
 
     //region Factory Methods
-    public static MoviesSubFragment newInstance(MovieTab tab) {
-        MoviesSubFragment fragment = new MoviesSubFragment();
+    public static MoviesByTabFragment newInstance(MovieTab tab) {
+        MoviesByTabFragment fragment = new MoviesByTabFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ARG_PARAM_MOVIE_TAB, tab.name());
         fragment.setArguments(bundle);
@@ -76,7 +78,7 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sub_movies, container, false);
+        return inflater.inflate(R.layout.fragment_movies_by_tab, container, false);
     }
 
     @Override
@@ -159,7 +161,12 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
 
     @Override
     public void showErrorLayout() {
+        mErrorLayout.setVisibility(View.VISIBLE);
+    }
 
+    @Override
+    public void hideErrorLayout() {
+        mErrorLayout.setVisibility(View.GONE);
     }
 
     @Override
