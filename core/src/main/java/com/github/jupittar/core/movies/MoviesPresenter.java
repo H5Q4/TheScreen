@@ -38,8 +38,6 @@ public class MoviesPresenter
                 .subscribeOn(mSchedulerHelper.backgroundThread())
                 .observeOn(mSchedulerHelper.mainThread())
                 .subscribe(moviesWrapper -> {
-                    if (moviesWrapper == null) return;
-
                     List<Movie> movies = moviesWrapper.getMovies();
                     PagingInfo pagingInfo = moviesWrapper.getPagingInfo();
                     getMvpView().updatePagingInfo(pagingInfo);
@@ -58,6 +56,7 @@ public class MoviesPresenter
                     } else {
                         getMvpView().showErrorMessage();
                     }
+                    throwable.printStackTrace();
                     getMvpView().hideLoading();
                 });
         addDisposable(disposable);

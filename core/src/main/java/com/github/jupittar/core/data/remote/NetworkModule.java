@@ -78,8 +78,8 @@ public class NetworkModule {
             Cache cache,
             HttpLoggingInterceptor loggingInterceptor,
             AuthInterceptor authInterceptor,
-            HttpCacheInterceptor cacheInterceptor,
-            HttpOfflineCacheInterceptor offlineInterceptor
+            HttpCacheInterceptor cacheInterceptor
+//            ,HttpOfflineCacheInterceptor offlineInterceptor
     ) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .connectTimeout(Constants.NETWORK_CONNECTION_TIMEOUT, TimeUnit.SECONDS)
@@ -87,7 +87,7 @@ public class NetworkModule {
                 .writeTimeout(Constants.NETWORK_WRITE_TIMEOUT, TimeUnit.SECONDS)
                 .addInterceptor(authInterceptor)
                 .addNetworkInterceptor(cacheInterceptor)
-                .addInterceptor(offlineInterceptor)
+//                .addInterceptor(offlineInterceptor)
                 .cache(cache);
 
         if (isDebug) {

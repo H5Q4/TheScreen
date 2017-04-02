@@ -39,10 +39,8 @@ public class MoviesSubFragment extends LazyFragment implements MoviesUiContract.
     //region Fields
     public static final String ARG_PARAM_MOVIE_TAB = "movie_tab";
 
-    @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
+    @BindView(R.id.refresh_layout) SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Inject
     MoviesUiContract.Presenter<MoviesUiContract.View> mPresenter;
