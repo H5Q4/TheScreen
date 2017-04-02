@@ -8,6 +8,7 @@ import com.github.jupittar.core.data.model.RawResponse;
 import com.github.jupittar.core.data.remote.TmdbService;
 
 import java.util.Date;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -16,7 +17,7 @@ import io.reactivex.Observable;
 
 public class MoviesInteractor {
 
-    private static final String KEY_CACHE_MOVIES = "key_cache_movies";
+    private static final String CACHE_KEY_FORMAT = "movies_%s_%d";
 
     private TmdbService mTmdbService;
     private CacheManager<MoviesWrapper> mCacheManager;
@@ -30,16 +31,15 @@ public class MoviesInteractor {
     }
 
     Maybe<MoviesWrapper> loadMovies(MovieTab tab, int page) {
-        Observable<RawResponse<Movie>> responseObservable = getMoviesByTab(tab, page);
-        Observable<MoviesWrapper> cachedMoviesObservable = getCachedMovies();
-        Observable<MoviesWrapper> remoteMoviesObservable = getRemoteMovies(responseObservable);
+        String cacheKey = String.format(Locale.ENGLISH, CACHE_KEY_FORMAT, tab.name(), page);
         return Observable
-                .concat(cachedMoviesObservable, remoteMoviesObservable)
+                .concat(getLocalMovies(cacheKey), getRemoteMovies(tab, page))
                 .firstElement();
     }
 
-    private Observable<RawResponse<Movie>> getMoviesByTab(MovieTab tab, int page) {
-        Observable<RawResponse<Movie>> rawResponseObservable = null;
+    private Observable<MoviesWrapper> getRemoteMovies(MovieTab tab, int page) {
+        String cacheKey = String.format(Locale.ENGLISH, CACHE_KEY_FORMAT, tab.name(), page);
+        Observable<RawResponse<Movie>> rawResponseObservable;
         switch (tab) {
             case NOW_PLAYING:
                 rawResponseObservable = mTmdbService.getNowPlayingMovies(page);
@@ -53,12 +53,9 @@ public class MoviesInteractor {
             case UPCOMING:
                 rawResponseObservable = mTmdbService.getUpcomingMovies(page);
                 break;
+            default:
+                rawResponseObservable = Observable.empty();
         }
-        return rawResponseObservable;
-    }
-
-    private Observable<MoviesWrapper> getRemoteMovies(
-            Observable<RawResponse<Movie>> rawResponseObservable) {
         return rawResponseObservable
                 .timestamp()
                 .map(rawResponseTimed -> {
@@ -70,12 +67,12 @@ public class MoviesInteractor {
                 })
                 .filter(moviesWrapper -> moviesWrapper != null)
                 .doOnNext(moviesWrapper ->
-                        mCacheManager.put(KEY_CACHE_MOVIES, moviesWrapper));
+                        mCacheManager.put(cacheKey, moviesWrapper));
     }
 
-    private Observable<MoviesWrapper> getCachedMovies() {
+    private Observable<MoviesWrapper> getLocalMovies(String cacheKey) {
         return Observable
-                .fromCallable(() -> mCacheManager.get(KEY_CACHE_MOVIES))
+                .fromCallable(() -> mCacheManager.get(cacheKey))
                 .filter(moviesWrapper -> moviesWrapper != null && !isPastOneDay(moviesWrapper))
                 .onErrorResumeNext(Observable.empty());
     }
