@@ -13,54 +13,53 @@ import javax.inject.Inject;
 
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 
 public class MoviesInteractor {
 
-    public static final String KEY_CACHE_MOVIES = "key_cache_movies";
+    private static final String KEY_CACHE_MOVIES = "key_cache_movies";
 
     private TmdbService mTmdbService;
     private CacheManager<MoviesWrapper> mCacheManager;
 
     @Inject
-    public MoviesInteractor(TmdbService tmdbService,
-                            CacheManager<MoviesWrapper> cacheManager) {
+    public MoviesInteractor(
+            TmdbService tmdbService,
+            CacheManager<MoviesWrapper> cacheManager) {
         mTmdbService = tmdbService;
         mCacheManager = cacheManager;
     }
 
-    public Maybe<MoviesWrapper> loadMovies(MovieTab tab, int page) {
-        Single<RawResponse<Movie>> remoteMoviesSingle = getMoviesByTab(tab, page);
+    Maybe<MoviesWrapper> loadMovies(MovieTab tab, int page) {
+        Observable<RawResponse<Movie>> responseObservable = getMoviesByTab(tab, page);
         Observable<MoviesWrapper> cachedMoviesObservable = getCachedMovies();
-        Observable<MoviesWrapper> remoteMoviesObservable = getRemoteMovies(remoteMoviesSingle);
+        Observable<MoviesWrapper> remoteMoviesObservable = getRemoteMovies(responseObservable);
         return Observable
                 .concat(cachedMoviesObservable, remoteMoviesObservable)
                 .firstElement();
     }
 
-    private Single<RawResponse<Movie>> getMoviesByTab(MovieTab tab, int page) {
-        Single<RawResponse<Movie>> remoteMoviesSingle = null;
+    private Observable<RawResponse<Movie>> getMoviesByTab(MovieTab tab, int page) {
+        Observable<RawResponse<Movie>> rawResponseObservable = null;
         switch (tab) {
             case NOW_PLAYING:
-                remoteMoviesSingle = mTmdbService.getNowPlayingMovies(page);
+                rawResponseObservable = mTmdbService.getNowPlayingMovies(page);
                 break;
             case POPULAR:
-                remoteMoviesSingle = mTmdbService.getPopularMovies(page);
+                rawResponseObservable = mTmdbService.getPopularMovies(page);
                 break;
             case TOP_RATED:
-                remoteMoviesSingle = mTmdbService.getTopRatedMovies(page);
+                rawResponseObservable = mTmdbService.getTopRatedMovies(page);
                 break;
             case UPCOMING:
-                remoteMoviesSingle = mTmdbService.getUpcomingMovies(page);
+                rawResponseObservable = mTmdbService.getUpcomingMovies(page);
                 break;
         }
-        return remoteMoviesSingle;
+        return rawResponseObservable;
     }
 
     private Observable<MoviesWrapper> getRemoteMovies(
-            Single<RawResponse<Movie>> remoteMoviesSingle) {
-        return remoteMoviesSingle
-                .toObservable()
+            Observable<RawResponse<Movie>> rawResponseObservable) {
+        return rawResponseObservable
                 .timestamp()
                 .map(rawResponseTimed -> {
                     RawResponse<Movie> movieRawResponse = rawResponseTimed.value();
@@ -75,17 +74,14 @@ public class MoviesInteractor {
     }
 
     private Observable<MoviesWrapper> getCachedMovies() {
-        return Single
+        return Observable
                 .fromCallable(() -> mCacheManager.get(KEY_CACHE_MOVIES))
-                .toObservable()
                 .filter(moviesWrapper -> moviesWrapper != null && !isPastOneDay(moviesWrapper))
                 .onErrorResumeNext(Observable.empty());
     }
 
     private boolean isPastOneDay(MoviesWrapper moviesWrapper) {
         long currentTime = new Date().getTime();
-        System.out.println(currentTime);
-        System.out.println(moviesWrapper.getCreatedTime());
         return currentTime - moviesWrapper.getCreatedTime() > 24 * 60 * 60 * 1000;
     }
 
