@@ -17,7 +17,7 @@ public class AuthInterceptor implements Interceptor {
         HttpUrl url = request.url();
         HttpUrl newUrl = url.newBuilder()
                 .addQueryParameter("api_key", Constants.API_KEY)
-                .addQueryParameter("language", "zh")
+//                .addQueryParameter("language", "zh")
                 .build();
         Request newRequest = request.newBuilder()
                 .url(newUrl)

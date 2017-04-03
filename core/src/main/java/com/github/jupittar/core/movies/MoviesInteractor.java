@@ -7,7 +7,6 @@ import com.github.jupittar.core.data.model.PagingInfo;
 import com.github.jupittar.core.data.model.RawResponse;
 import com.github.jupittar.core.data.remote.TmdbService;
 
-import java.util.Date;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -15,7 +14,7 @@ import javax.inject.Inject;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 
-public class MoviesInteractor {
+public class MoviesInteractor implements MoviesContract.Interactor {
 
     private static final String CACHE_KEY_FORMAT = "movies_%s_%d";
 
@@ -30,15 +29,20 @@ public class MoviesInteractor {
         mCacheManager = cacheManager;
     }
 
-    Maybe<MoviesWrapper> loadMovies(MovieTab tab, int page) {
-        String cacheKey = String.format(Locale.ENGLISH, CACHE_KEY_FORMAT, tab.name(), page);
+    @Override
+    public Maybe<MoviesWrapper> getMovies(MovieTab tab, int page) {
+        String cacheKey = String
+                .format(Locale.ENGLISH, CACHE_KEY_FORMAT, tab.name(), page)
+                .toLowerCase();
         return Observable
                 .concat(getLocalMovies(cacheKey), getRemoteMovies(tab, page))
                 .firstElement();
     }
 
     private Observable<MoviesWrapper> getRemoteMovies(MovieTab tab, int page) {
-        String cacheKey = String.format(Locale.ENGLISH, CACHE_KEY_FORMAT, tab.name(), page);
+        String cacheKey = String
+                .format(Locale.ENGLISH, CACHE_KEY_FORMAT, tab.name(), page)
+                .toLowerCase();
         Observable<RawResponse<Movie>> rawResponseObservable;
         switch (tab) {
             case NOW_PLAYING:
@@ -78,8 +82,7 @@ public class MoviesInteractor {
     }
 
     private boolean isPastOneDay(MoviesWrapper moviesWrapper) {
-        long currentTime = new Date().getTime();
-        return currentTime - moviesWrapper.getCreatedTime() > 24 * 60 * 60 * 1000;
+        return System.currentTimeMillis() - moviesWrapper.getPersistedTime() > 24 * 60 * 60 * 1000;
     }
 
 }

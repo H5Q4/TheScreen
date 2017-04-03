@@ -21,7 +21,7 @@ import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
 import com.github.jupittar.core.data.model.Movie;
 import com.github.jupittar.core.data.model.PagingInfo;
 import com.github.jupittar.core.movies.MovieTab;
-import com.github.jupittar.core.movies.MoviesUiContract;
+import com.github.jupittar.core.movies.MoviesContract;
 import com.github.jupittar.core.util.Constants;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
@@ -35,7 +35,7 @@ import butterknife.BindView;
 import de.mateware.snacky.Snacky;
 import es.dmoral.toasty.Toasty;
 
-public class MoviesByTabFragment extends LazyFragment implements MoviesUiContract.View {
+public class MoviesByTabFragment extends LazyFragment implements MoviesContract.View {
 
     //region Fields
     public static final String ARG_PARAM_MOVIE_TAB = "movie_tab";
@@ -45,7 +45,7 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesUiContrac
     @BindView(R.id.ll_error) LinearLayout mErrorLayout;
 
     @Inject
-    MoviesUiContract.Presenter<MoviesUiContract.View> mPresenter;
+    MoviesContract.Presenter<MoviesContract.View> mPresenter;
     MoviesAdapter mMoviesAdapter;
     private MovieTab mMovieTab;
     private PagingInfo mPagingInfo;
@@ -98,9 +98,7 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesUiContrac
 
     //region SetUp Methods
     private void setUpRefreshLayout() {
-        mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            mPresenter.showMovies(mMovieTab, 1);
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.showMovies(mMovieTab, 1));
     }
 
     private void setUpRecyclerView() {
@@ -124,7 +122,7 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesUiContrac
     }
     //endregion
 
-    //region Implementation of MoviesUiContract.View
+    //region Implementation of MoviesContract.View
     @Override
     public void showLoading() {
         if (!mSwipeRefreshLayout.isRefreshing()) {
@@ -150,7 +148,7 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesUiContrac
     }
 
     @Override
-    public void addNoMoreMoviesFooter() {
+    public void showNoMoreMoviesFooter() {
 
     }
 

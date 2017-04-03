@@ -7,7 +7,7 @@ import java.net.UnknownHostException;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public class BasePresenter<V extends UiContract.View> implements UiContract.Presenter<V> {
+public class BasePresenter<V extends Contract.View> implements Contract.Presenter<V> {
 
     private V mView;
     private CompositeDisposable mCompositeDisposable;
@@ -39,11 +39,11 @@ public class BasePresenter<V extends UiContract.View> implements UiContract.Pres
         mCompositeDisposable.clear();
     }
 
-    public boolean isViewAttached() {
+    private boolean isViewAttached() {
         return mView != null;
     }
 
-    public V getMvpView() {
+    protected V getMvpView() {
         if (!isViewAttached()) {
             throw new RuntimeException("Please call Presenter.attach(MvpView) before requesting" +
                     " data to the Presenter");
@@ -52,7 +52,7 @@ public class BasePresenter<V extends UiContract.View> implements UiContract.Pres
     }
 
     //region Helper Methods
-    public boolean isNetworkException(Throwable t) {
+    protected boolean isNetworkException(Throwable t) {
         return (t instanceof ConnectException
                 || t instanceof UnknownHostException
                 || t instanceof SocketTimeoutException);

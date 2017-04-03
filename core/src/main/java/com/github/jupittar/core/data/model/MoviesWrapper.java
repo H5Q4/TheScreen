@@ -7,15 +7,15 @@ public class MoviesWrapper {
     // region Fields
     private List<Movie> movies;
     private PagingInfo pagingInfo;
-    private long createdTime;
+    private long persistedTime;
     // endregion
 
     // region Constructors
 
-    public MoviesWrapper(List<Movie> movies, PagingInfo pagingInfo, long createdTime) {
+    public MoviesWrapper(List<Movie> movies, PagingInfo pagingInfo, long persistedTime) {
         this.movies = movies;
         this.pagingInfo = pagingInfo;
-        this.createdTime = createdTime;
+        this.persistedTime = persistedTime;
     }
 
     // endregion
@@ -37,12 +37,12 @@ public class MoviesWrapper {
         this.pagingInfo = pagingInfo;
     }
 
-    public long getCreatedTime() {
-        return createdTime;
+    public long getPersistedTime() {
+        return persistedTime;
     }
 
-    public void setCreatedTime(long createdTime) {
-        this.createdTime = createdTime;
+    public void setPersistedTime(long persistedTime) {
+        this.persistedTime = persistedTime;
     }
     // endregion
 

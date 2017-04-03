@@ -12,14 +12,14 @@ import javax.inject.Inject;
 import io.reactivex.disposables.Disposable;
 
 public class MoviesPresenter
-        extends BasePresenter<MoviesUiContract.View>
-        implements MoviesUiContract.Presenter<MoviesUiContract.View> {
+        extends BasePresenter<MoviesContract.View>
+        implements MoviesContract.Presenter<MoviesContract.View> {
 
-    private MoviesInteractor mInteractor;
+    private MoviesContract.Interactor mInteractor;
     private SchedulerHelper mSchedulerHelper;
 
     @Inject
-    public MoviesPresenter(MoviesInteractor interactor, SchedulerHelper schedulerHelper) {
+    public MoviesPresenter(MoviesContract.Interactor interactor, SchedulerHelper schedulerHelper) {
         mInteractor = interactor;
         mSchedulerHelper = schedulerHelper;
     }
@@ -35,7 +35,7 @@ public class MoviesPresenter
         }
 
         Disposable disposable = mInteractor
-                .loadMovies(tab, page)
+                .getMovies(tab, page)
                 .subscribeOn(mSchedulerHelper.backgroundThread())
                 .observeOn(mSchedulerHelper.mainThread())
                 .subscribe(moviesWrapper -> {
@@ -43,7 +43,7 @@ public class MoviesPresenter
                     PagingInfo pagingInfo = moviesWrapper.getPagingInfo();
                     getMvpView().updatePagingInfo(pagingInfo);
 
-                    if (pagingInfo.isLastPage()) getMvpView().addNoMoreMoviesFooter();
+                    if (pagingInfo.isLastPage()) getMvpView().showNoMoreMoviesFooter();
 
                     getMvpView().showMovies(movies);
                     getMvpView().hideLoading();

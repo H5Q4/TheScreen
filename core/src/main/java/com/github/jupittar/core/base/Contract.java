@@ -3,7 +3,7 @@ package com.github.jupittar.core.base;
 
 import io.reactivex.disposables.Disposable;
 
-public interface UiContract {
+public interface Contract {
 
     interface View {
         void showLoading();

@@ -6,24 +6,30 @@ import dagger.Provides;
 @Module
 public class MoviesModule {
 
-    private MoviesUiContract.View mView;
+    private MoviesContract.View mView;
 
-    public MoviesModule(MoviesUiContract.View view) {
+    public MoviesModule(MoviesContract.View view) {
         mView = view;
     }
 
     @Provides
-    public MoviesUiContract.View provideView() {
+    public MoviesContract.View provideView() {
         return mView;
     }
 
     @Provides
     @MoviesScope
-    public MoviesUiContract.Presenter<MoviesUiContract.View> providePresenter(
-            MoviesPresenter presenter
-    ) {
+    public MoviesContract.Presenter<MoviesContract.View> providePresenter(
+            MoviesPresenter presenter) {
         presenter.attach(mView);
         return presenter;
+    }
+
+    @Provides
+    @MoviesScope
+    public MoviesContract.Interactor provideInteractor(
+            MoviesInteractor interactor) {
+        return interactor;
     }
 
 }
