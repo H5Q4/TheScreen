@@ -12,12 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.jupittar.commlib.custom.AspectRatioImageView;
 import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
 import com.github.jupittar.commlib.recyclerview.EndlessScrollListener;
-import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
+import com.github.jupittar.commlib.recyclerview.adapter.HFViewAdapter;
 import com.github.jupittar.core.data.model.Movie;
 import com.github.jupittar.core.data.model.PagingInfo;
 import com.github.jupittar.core.movies.MovieTab;
@@ -32,6 +34,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import de.mateware.snacky.Snacky;
 import es.dmoral.toasty.Toasty;
 
@@ -43,6 +46,9 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
     @BindView(R.id.refresh_layout) SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.ll_error) LinearLayout mErrorLayout;
+    View mFooterView;
+    ProgressBar mFooterLoadingPb;
+    TextView mFooterNoMoreItemsTv;
 
     @Inject
     MoviesContract.Presenter<MoviesContract.View> mPresenter;
@@ -77,6 +83,9 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mFooterView = inflater.inflate(R.layout.footer_loading_or_no_more_items, null);
+        mFooterLoadingPb = (ProgressBar) mFooterView.findViewById(R.id.pb_loading);
+        mFooterNoMoreItemsTv = (TextView) mFooterView.findViewById(R.id.tv_no_more_items);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_movies_by_tab, container, false);
     }
@@ -103,6 +112,12 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
 
     private void setUpRecyclerView() {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return position == mMoviesAdapter.getItemCount() - 1 ? 2 : 1;
+            }
+        });
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
         mMoviesAdapter = new MoviesAdapter(getActivity(), R.layout.item_movie);
@@ -114,6 +129,11 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
                 mPresenter.showMovies(mMovieTab, mPagingInfo.getCurrentPage());
             }
         });
+    }
+
+    @OnClick(R.id.btn_reload)
+    public void onReloadClick(View view) {
+        mPresenter.showMovies(mMovieTab, 1);
     }
 
     @Override
@@ -149,7 +169,8 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
 
     @Override
     public void showNoMoreMoviesFooter() {
-
+        mFooterLoadingPb.setVisibility(View.GONE);
+        mFooterNoMoreItemsTv.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -189,10 +210,17 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
     public void clearMovies() {
         mMoviesAdapter.clear();
     }
+
+    @Override
+    public void addLoadingFooter() {
+        mFooterLoadingPb.setVisibility(View.VISIBLE);
+        mFooterNoMoreItemsTv.setVisibility(View.GONE);
+        mMoviesAdapter.setFooterView(mFooterView);
+    }
     //endregion
 
     //region RecyclerView's Adapter
-    private class MoviesAdapter extends CommonViewAdapter<Movie> {
+    private class MoviesAdapter extends HFViewAdapter<Movie> {
 
         MoviesAdapter(Context context, @LayoutRes int layoutId) {
             super(context, layoutId);

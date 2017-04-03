@@ -43,6 +43,8 @@ public class MoviesPresenter
                     PagingInfo pagingInfo = moviesWrapper.getPagingInfo();
                     getMvpView().updatePagingInfo(pagingInfo);
 
+                    if (pagingInfo.getCurrentPage() == 1) getMvpView().addLoadingFooter();
+
                     if (pagingInfo.isLastPage()) getMvpView().showNoMoreMoviesFooter();
 
                     getMvpView().showMovies(movies);

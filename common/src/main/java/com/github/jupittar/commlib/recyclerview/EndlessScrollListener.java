@@ -4,6 +4,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
+import com.github.jupittar.commlib.recyclerview.adapter.HFViewAdapter;
+
 public abstract class EndlessScrollListener extends RecyclerView.OnScrollListener {
 
     private int mPreviousTotal = 0; // the total number of items in the dataset after the last loading.
@@ -17,6 +20,7 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
         int firstVisibleItem = 0;
         int visibleItemCount;
         int totalItemCount = 0;
+        RecyclerView.Adapter adapter = recyclerView.getAdapter();
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         visibleItemCount = layoutManager.getChildCount();
         if (layoutManager instanceof GridLayoutManager) {
@@ -29,7 +33,17 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
             totalItemCount = linearLayoutManager.getItemCount();
         }
 
+        if (adapter instanceof CommonViewAdapter && ((CommonViewAdapter) adapter).isEmpty()) {
+            onDataClear();
+        }
+
+        int headerAndFooterCount;
         if (mLoading) {
+            if (adapter instanceof HFViewAdapter) {
+                headerAndFooterCount = adapter.getItemCount() -
+                        ((HFViewAdapter) adapter).getItemCountIgnoreHF();
+                mPreviousTotal += headerAndFooterCount;
+            }
             if (totalItemCount > mPreviousTotal) {
                 mLoading = false;
                 mPreviousTotal = totalItemCount;

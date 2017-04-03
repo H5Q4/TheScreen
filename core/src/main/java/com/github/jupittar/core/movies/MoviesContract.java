@@ -27,6 +27,8 @@ public interface MoviesContract {
         void updatePagingInfo(PagingInfo pagingInfo);
 
         void clearMovies();
+
+        void addLoadingFooter();
     }
 
     interface Presenter<V extends View> extends Contract.Presenter<V> {

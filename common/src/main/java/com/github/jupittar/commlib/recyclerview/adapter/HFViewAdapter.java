@@ -20,12 +20,12 @@ public abstract class HFViewAdapter<T> extends CommonViewAdapter<T> {
         super(context, layoutId);
     }
 
-    public void addHeaderView(View view) {
+    public void setHeaderView(View view) {
         this.mHeaderView = view;
         notifyDataSetChanged();
     }
 
-    public void addFooterView(View view) {
+    public void setFooterView(View view) {
         this.mFooterView = view;
         notifyDataSetChanged();
     }
@@ -88,7 +88,9 @@ public abstract class HFViewAdapter<T> extends CommonViewAdapter<T> {
         return getItemCountWithHF();
     }
 
-    public abstract int appendViewType(int position);
+    public int appendViewType(int position) {
+        return -1;
+    }
 
     private void add(T item) {
         mItemList.add(item);
