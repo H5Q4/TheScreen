@@ -1,5 +1,6 @@
 package com.github.jupittar.thescreen.main;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -13,13 +14,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 
+import com.github.jupittar.commlib.custom.CustomTypefaceSpan;
 import com.github.jupittar.commlib.custom.SCViewPager;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.base.BaseActivity;
 import com.github.jupittar.thescreen.movies.MoviesFragment;
+import com.github.jupittar.thescreen.util.FontUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +59,7 @@ public class MainActivity extends BaseActivity
 
         setUpToolbar();
         setUpDrawer();
+        setUpNavigationView();
         setUpViewPager();
     }
 
@@ -104,7 +112,25 @@ public class MainActivity extends BaseActivity
             }
         });
         toggle.syncState();
+    }
+
+    private void setUpNavigationView() {
         mNavigationView.setNavigationItemSelectedListener(this);
+        Menu m = mNavigationView.getMenu();
+        for (int i = 0; i < m.size(); i++) {
+            MenuItem mi = m.getItem(i);
+
+            //for applying a font to subMenu ...
+            SubMenu subMenu = mi.getSubMenu();
+            if (subMenu != null && subMenu.size() > 0) {
+                for (int j = 0; j < subMenu.size(); j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+
+            applyFontToMenuItem(mi);
+        }
     }
 
     @Override
@@ -138,6 +164,14 @@ public class MainActivity extends BaseActivity
             }
 
         }
+    }
+
+    private void applyFontToMenuItem(MenuItem item) {
+        Typeface font = FontUtils.getTypeface(FontUtils.FONT_AVENIR_NEXT_LT_PRO_REGULAR, this);
+        SpannableString mNewTitle = new SpannableString(item.getTitle());
+        mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(),
+                Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        item.setTitle(mNewTitle);
     }
 
     private class ContentFragmentPageAdapter extends FragmentPagerAdapter {
