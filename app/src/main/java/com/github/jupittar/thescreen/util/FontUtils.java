@@ -9,7 +9,7 @@ import java.util.Map;
 public class FontUtils {
 
     public static final String FONT_AVENIR_NEXT_LT_PRO_REGULAR = "AvenirNextLTPro-Regular.otf";
-    public static final String FONT_AVENIR_NEXT_LT_PRO_LT = "AvenirNextLTPro-lt.otf";
+    public static final String FONT_AVENIR_NEXT_LT_PRO_LT = "AvenirNextLTPro-It.otf";
     public static final String FONT_AVENIR_NEXT_LT_PRO_BOLD = "AvenirNextLTPro-Bold.otf";
 
     private static Map<String, Typeface> sTypefaceMap = new ArrayMap<>();

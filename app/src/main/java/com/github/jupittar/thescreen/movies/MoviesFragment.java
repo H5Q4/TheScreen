@@ -80,10 +80,10 @@ public class MoviesFragment extends LazyFragment {
 
     private void setUpViewPager() {
         MovieTabPagerAdapter adapter = new MovieTabPagerAdapter(getChildFragmentManager());
-        adapter.addPager(MoviesByTabFragment.newInstance(MovieTab.NOW_PLAYING), "NOW PLAYING");
-        adapter.addPager(MoviesByTabFragment.newInstance(MovieTab.POPULAR), "POPULAR");
-        adapter.addPager(MoviesByTabFragment.newInstance(MovieTab.TOP_RATED), "TOP RATED");
-        adapter.addPager(MoviesByTabFragment.newInstance(MovieTab.UPCOMING), "UPCOMING");
+        adapter.addPager(MoviesByTabFragment.newInstance(MovieTab.NOW_PLAYING), "Now Playing");
+        adapter.addPager(MoviesByTabFragment.newInstance(MovieTab.POPULAR), "Popular");
+        adapter.addPager(MoviesByTabFragment.newInstance(MovieTab.TOP_RATED), "Top Rated");
+        adapter.addPager(MoviesByTabFragment.newInstance(MovieTab.UPCOMING), "Upcoming");
         mViewPager.setAdapter(adapter);
         mViewPager.setScrollEnabled(true);
         mViewPager.setOffscreenPageLimit(adapter.getCount());

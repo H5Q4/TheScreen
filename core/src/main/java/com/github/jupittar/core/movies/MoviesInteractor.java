@@ -39,6 +39,7 @@ public class MoviesInteractor implements MoviesContract.Interactor {
                 .firstElement();
     }
 
+    //region Private Helper Methods
     private Observable<MoviesWrapper> getRemoteMovies(MovieTab tab, int page) {
         String cacheKey = String
                 .format(Locale.ENGLISH, CACHE_KEY_FORMAT, tab.name(), page)
@@ -61,14 +62,10 @@ public class MoviesInteractor implements MoviesContract.Interactor {
                 rawResponseObservable = Observable.empty();
         }
         return rawResponseObservable
-                .timestamp()
-                .map(rawResponseTimed -> {
-                    RawResponse<Movie> movieRawResponse = rawResponseTimed.value();
-                    return new MoviesWrapper(movieRawResponse.getResults(),
-                            new PagingInfo(movieRawResponse.getPage(),
-                                    movieRawResponse.getTotalPages()),
-                            rawResponseTimed.time());
-                })
+                .map(movieRawResponse -> new MoviesWrapper(movieRawResponse.getResults(),
+                        new PagingInfo(movieRawResponse.getPage(),
+                                movieRawResponse.getTotalPages()),
+                        System.currentTimeMillis()))
                 .filter(moviesWrapper -> moviesWrapper != null)
                 .doOnNext(moviesWrapper ->
                         mCacheManager.put(cacheKey, moviesWrapper));
@@ -84,5 +81,6 @@ public class MoviesInteractor implements MoviesContract.Interactor {
     private boolean isPastOneDay(MoviesWrapper moviesWrapper) {
         return System.currentTimeMillis() - moviesWrapper.getPersistedTime() > 24 * 60 * 60 * 1000;
     }
+    //endregion
 
 }

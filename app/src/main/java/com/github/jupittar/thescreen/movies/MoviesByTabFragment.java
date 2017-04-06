@@ -50,8 +50,7 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
     ProgressBar mFooterLoadingPb;
     TextView mFooterNoMoreItemsTv;
 
-    @Inject
-    MoviesContract.Presenter<MoviesContract.View> mPresenter;
+    @Inject MoviesContract.Presenter<MoviesContract.View> mPresenter;
     MoviesAdapter mMoviesAdapter;
     private MovieTab mMovieTab;
     private PagingInfo mPagingInfo;
@@ -128,6 +127,9 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
                 mPagingInfo.nextPage();
                 mPresenter.showMovies(mMovieTab, mPagingInfo.getCurrentPage());
             }
+        });
+        mMoviesAdapter.setOnItemClickListener((view, position) -> {
+            
         });
     }
 
