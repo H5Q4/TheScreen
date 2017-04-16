@@ -45,7 +45,11 @@ public class AppModule {
     @Singleton
     @Named("cacheDir")
     File provideCacheDir(Context context) {
-        return context.getCacheDir();
+        File dir = context.getExternalCacheDir();
+        if (dir == null) {
+            dir = context.getCacheDir();
+        }
+        return dir;
     }
 
 }

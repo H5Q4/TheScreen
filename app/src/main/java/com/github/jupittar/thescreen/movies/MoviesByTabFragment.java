@@ -2,6 +2,7 @@ package com.github.jupittar.thescreen.movies;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.jupittar.commlib.custom.AspectRatioImageView;
 import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
 import com.github.jupittar.commlib.recyclerview.EndlessScrollListener;
@@ -28,6 +30,7 @@ import com.github.jupittar.core.util.Constants;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.base.LazyFragment;
+import com.github.jupittar.thescreen.moviedetails.MovieDetailsActivity;
 
 import java.util.List;
 
@@ -129,7 +132,7 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
             }
         });
         mMoviesAdapter.setOnItemClickListener((view, position) -> {
-            
+            startActivity(new Intent(getActivity(), MovieDetailsActivity.class));
         });
     }
 
@@ -237,6 +240,7 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
                             Constants.IMAGE_BASE_URL,
                             Constants.POSTER_SIZE,
                             item.getPosterPath()))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
                     .into(posterIv);
         }
