@@ -6,8 +6,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,11 +20,12 @@ import android.view.SubMenu;
 
 import com.github.jupittar.commlib.custom.CustomTypefaceSpan;
 import com.github.jupittar.commlib.custom.SCViewPager;
+import com.github.jupittar.commlib.util.CommonPagerAdapter;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.base.BaseActivity;
 import com.github.jupittar.thescreen.movies.MoviesFragment;
-import com.github.jupittar.thescreen.util.FontUtils;
+import com.github.jupittar.thescreen.util.TypefaceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,15 +38,12 @@ import static android.support.v4.widget.DrawerLayout.STATE_SETTLING;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG = MainActivity.class.getCanonicalName();
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
-    @BindView(R.id.nav_view)
-    NavigationView mNavigationView;
-    @BindView(R.id.view_pager)
-    SCViewPager mViewPager;
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    @BindView(R.id.toolbar) Toolbar mToolbar;
+    @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
+    @BindView(R.id.nav_view) NavigationView mNavigationView;
+    @BindView(R.id.view_pager) SCViewPager mViewPager;
 
     private boolean mExit;
 
@@ -72,7 +68,7 @@ public class MainActivity extends BaseActivity
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(0, MoviesFragment.newInstance());
         fragments.add(1, MoviesFragment.newInstance());
-        ContentFragmentPageAdapter adapter = new ContentFragmentPageAdapter(
+        CommonPagerAdapter adapter = new CommonPagerAdapter(
                 getSupportFragmentManager(),
                 fragments
         );
@@ -85,10 +81,10 @@ public class MainActivity extends BaseActivity
     private void setUpToolbar() {
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(false);
-            actionBar.setLogo(R.drawable.logo);
-        }
+        assert actionBar != null;
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setLogo(R.drawable.logo);
+
     }
 
     private void setUpDrawer() {
@@ -167,30 +163,11 @@ public class MainActivity extends BaseActivity
     }
 
     private void applyFontToMenuItem(MenuItem item) {
-        Typeface font = FontUtils.getTypeface(FontUtils.FONT_AVENIR_NEXT_LT_PRO_REGULAR, this);
+        Typeface font = TypefaceUtils.getTypeface(TypefaceUtils.FONT_AVENIR_NEXT_LT_PRO_REGULAR, this);
         SpannableString mNewTitle = new SpannableString(item.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(),
                 Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         item.setTitle(mNewTitle);
     }
 
-    private class ContentFragmentPageAdapter extends FragmentPagerAdapter {
-
-        private List<Fragment> mFragments;
-
-        ContentFragmentPageAdapter(FragmentManager fm, @NonNull List<Fragment> fragments) {
-            super(fm);
-            this.mFragments = fragments;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-    }
 }

@@ -6,7 +6,7 @@ import android.util.ArrayMap;
 
 import java.util.Map;
 
-public class FontUtils {
+public class TypefaceUtils {
 
     public static final String FONT_AVENIR_NEXT_LT_PRO_REGULAR = "AvenirNextLTPro-Regular.otf";
     public static final String FONT_AVENIR_NEXT_LT_PRO_LT = "AvenirNextLTPro-It.otf";
