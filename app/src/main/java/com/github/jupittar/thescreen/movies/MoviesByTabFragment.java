@@ -132,7 +132,9 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
             }
         });
         mMoviesAdapter.setOnItemClickListener((view, position) -> {
-            startActivity(new Intent(getActivity(), MovieDetailsActivity.class));
+            Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
+            intent.putExtra(MovieDetailsActivity.KEY_MOVIE, mMoviesAdapter.getDataItem(position));
+            startActivity(intent);
         });
     }
 
@@ -238,7 +240,7 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
             Glide.with(mContext)
                     .load(String.format("%s%s%s",
                             Constants.IMAGE_BASE_URL,
-                            Constants.POSTER_SIZE,
+                            Constants.IMAGE_SIZE_W500,
                             item.getPosterPath()))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()

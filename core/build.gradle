@@ -44,6 +44,8 @@ dependencies {
     compile rootProject.ext.libraries.gson
     compile rootProject.ext.libraries.dagger2
     annotationProcessor rootProject.ext.libraries.dagger2Compiler
+
+    compile rootProject.ext.libraries.lightWeightStreamApi
 }
 
 

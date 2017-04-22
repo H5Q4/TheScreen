@@ -1,17 +1,27 @@
 package com.github.jupittar.thescreen.moviedetails;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.github.jupittar.commlib.custom.SCViewPager;
 import com.github.jupittar.commlib.util.CommonPagerAdapter;
+import com.github.jupittar.core.data.model.Movie;
+import com.github.jupittar.core.util.Constants;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.base.BaseActivity;
@@ -22,6 +32,9 @@ import butterknife.BindView;
 
 public class MovieDetailsActivity extends BaseActivity {
 
+    public static final String KEY_MOVIE = "movie";
+
+    @BindView(R.id.section_parallax) View mParallaxSection;
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.appbar_layout) AppBarLayout mAppBarLayout;
     @BindView(R.id.collapsing_toolbar_layout) CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -29,14 +42,68 @@ public class MovieDetailsActivity extends BaseActivity {
     @BindView(R.id.vp_backdrop) ImageView mBackdropIv;
     @BindView(R.id.tab_layout) TabLayout mTabLayout;
     @BindView(R.id.view_pager) SCViewPager mViewPager;
+    @BindView(R.id.tv_title) TextView mTitleTv;
+    @BindView(R.id.tv_release_data) TextView mReleaseDateTv;
+
+    private Movie mMovie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
+        getWindow().setStatusBarColor(ContextCompat
+                .getColor(getApplicationContext(), android.R.color.transparent));
+        initMemberVariables();
         setUpToolbar();
         setUpViewPager();
         setUpTabLayout();
+    }
+
+    private void initMemberVariables() {
+        mTitleTv.setTypeface(TypefaceUtils.getTypeface(TypefaceUtils.FONT_AVENIR_NEXT_LT_PRO_REGULAR,
+                getApplicationContext()));
+        mReleaseDateTv.setTypeface(TypefaceUtils.getTypeface(TypefaceUtils.FONT_AVENIR_NEXT_LT_PRO_IT,
+                getApplicationContext()));
+        mReleaseDateTv.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray));
+        mMovie = (Movie) getIntent().getSerializableExtra(KEY_MOVIE);
+        if (mMovie != null) {
+            Glide.with(getApplicationContext())
+                    .load(String.format("%s%s%s",
+                            Constants.IMAGE_BASE_URL,
+                            Constants.IMAGE_SIZE_W500,
+                            mMovie.getPosterPath()))
+                    .asBitmap()
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(new BitmapImageViewTarget(mPosterIv) {
+                        @Override
+                        public void onResourceReady(Bitmap resource,
+                                                    GlideAnimation<? super Bitmap> glideAnimation) {
+                            super.onResourceReady(resource, glideAnimation);
+                            Palette.from(resource).generate(p -> {
+                                int darkMutedColor = p.getDarkMutedColor(
+                                        ContextCompat.getColor(getApplicationContext(),
+                                                R.color.colorPrimary));
+                                mParallaxSection.setBackgroundColor(darkMutedColor);
+                                int lightVibrantColor = p.getLightVibrantColor(
+                                        ContextCompat.getColor(getApplicationContext(),
+                                                android.R.color.white));
+                                mTitleTv.setTextColor(lightVibrantColor);
+                                mReleaseDateTv.setTextColor(lightVibrantColor);
+                            });
+                        }
+                    });
+            Glide.with(getApplicationContext())
+                    .load(String.format("%s%s%s",
+                            Constants.IMAGE_BASE_URL,
+                            Constants.IMAGE_SIZE_W780,
+                            mMovie.getBackdropPath()))
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(mBackdropIv);
+            mTitleTv.setText(mMovie.getOriginalTitle());
+            mReleaseDateTv.setText(mMovie.getReleaseDate());
+        }
     }
 
     private void setUpTabLayout() {
@@ -76,7 +143,7 @@ public class MovieDetailsActivity extends BaseActivity {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    mCollapsingToolbarLayout.setTitle("This is title");
+                    mCollapsingToolbarLayout.setTitle(mMovie.getOriginalTitle());
                     isShow = true;
                 } else if (isShow) {
                     mCollapsingToolbarLayout.setTitle(" ");

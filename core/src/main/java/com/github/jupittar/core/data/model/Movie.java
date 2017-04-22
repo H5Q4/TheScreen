@@ -2,10 +2,11 @@ package com.github.jupittar.core.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class Movie {
+public class Movie implements Serializable {
 
   //region Fields
   @SerializedName("adult")

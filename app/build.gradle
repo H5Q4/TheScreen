@@ -52,6 +52,7 @@ dependencies {
     compile rootProject.ext.libraries.design
     compile rootProject.ext.libraries.recyclerviewV7
     compile rootProject.ext.libraries.cardviewV7
+    compile rootProject.ext.libraries.paletteV7
     // Rx
     compile rootProject.ext.libraries.rxjava2
     compile rootProject.ext.libraries.rxandroid2
@@ -74,4 +75,6 @@ dependencies {
     compile rootProject.ext.libraries.snacky
     compile rootProject.ext.libraries.dualcache
     compile 'com.android.support:support-v4:25.3.1'
+
+    compile rootProject.ext.libraries.lightWeightStreamApi
 }

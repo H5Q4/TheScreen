@@ -3,22 +3,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp">
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline_h_60"
+        android:id="@+id/guideline_h_70"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6"/>
+        app:layout_constraintGuide_percent="0.7"/>
 
     <ImageView
         android:id="@+id/vp_backdrop"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:contentDescription="@null"
         android:background="@drawable/shape_bg_pic"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_h_60"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_h_70"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -42,16 +43,16 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:background="@drawable/shape_bg_pic"
         android:contentDescription="@null"
-        app:layout_constraintDimensionRatio="h,5:8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,2:3"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/guideline_v_40"
         app:layout_constraintTop_toTopOf="@+id/guideline_h_45"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintVertical_bias="0.0"/>
 
     <TextView
         android:id="@+id/tv_title"
@@ -61,16 +62,18 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:text="Movie Title"
         android:textAppearance="@android:style/TextAppearance.Material.Title"
+        app:layout_constraintBottom_toTopOf="@+id/tv_release_data"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_v_40"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline_h_60"
-        app:layout_constraintBottom_toTopOf="@+id/tv_genres"
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_70"
         app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView
-        android:id="@+id/tv_genres"
+        android:id="@+id/tv_release_data"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -78,8 +81,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Drama"
-        android:textAppearance="@android:style/TextAppearance.Material.Title"
+        android:text="2017"
+        android:textAppearance="@android:style/TextAppearance.Material.Body1"
         app:layout_constraintBottom_toBottomOf="@+id/iv_poster"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_v_40"
         app:layout_constraintRight_toRightOf="parent"

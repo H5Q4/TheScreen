@@ -29,7 +29,9 @@
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax">
 
-                <include layout="@layout/layout_movie_details_collapsing_part"/>
+                <include
+                    android:id="@+id/section_parallax"
+                    layout="@layout/layout_movie_details_collapsing_part"/>
 
             </FrameLayout>
 
