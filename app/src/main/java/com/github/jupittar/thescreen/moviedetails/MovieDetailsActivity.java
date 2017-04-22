@@ -1,6 +1,7 @@
 package com.github.jupittar.thescreen.moviedetails;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -53,6 +54,7 @@ public class MovieDetailsActivity extends BaseActivity {
         setContentView(R.layout.activity_movie_details);
         getWindow().setStatusBarColor(ContextCompat
                 .getColor(getApplicationContext(), android.R.color.transparent));
+        supportPostponeEnterTransition();
         initMemberVariables();
         setUpToolbar();
         setUpViewPager();
@@ -74,12 +76,14 @@ public class MovieDetailsActivity extends BaseActivity {
                             mMovie.getPosterPath()))
                     .asBitmap()
                     .centerCrop()
+                    .dontAnimate()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(new BitmapImageViewTarget(mPosterIv) {
                         @Override
                         public void onResourceReady(Bitmap resource,
                                                     GlideAnimation<? super Bitmap> glideAnimation) {
                             super.onResourceReady(resource, glideAnimation);
+                            supportStartPostponedEnterTransition();
                             Palette.from(resource).generate(p -> {
                                 int darkMutedColor = p.getDarkMutedColor(
                                         ContextCompat.getColor(getApplicationContext(),
@@ -91,6 +95,12 @@ public class MovieDetailsActivity extends BaseActivity {
                                 mTitleTv.setTextColor(lightVibrantColor);
                                 mReleaseDateTv.setTextColor(lightVibrantColor);
                             });
+                        }
+
+                        @Override
+                        public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                            super.onLoadFailed(e, errorDrawable);
+                            supportStartPostponedEnterTransition();
                         }
                     });
             Glide.with(getApplicationContext())
@@ -163,7 +173,7 @@ public class MovieDetailsActivity extends BaseActivity {
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
-            finish();
+            supportFinishAfterTransition();
             return true;
         }
 

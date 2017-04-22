@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -134,7 +136,11 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
         mMoviesAdapter.setOnItemClickListener((view, position) -> {
             Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
             intent.putExtra(MovieDetailsActivity.KEY_MOVIE, mMoviesAdapter.getDataItem(position));
-            startActivity(intent);
+            View posterIv = view.findViewById(R.id.iv_movie_poster);
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(getActivity(), posterIv,
+                            ViewCompat.getTransitionName(posterIv));
+            startActivity(intent, optionsCompat.toBundle());
         });
     }
 
