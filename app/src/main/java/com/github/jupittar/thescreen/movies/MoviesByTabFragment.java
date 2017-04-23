@@ -28,6 +28,7 @@ import com.github.jupittar.core.data.model.Movie;
 import com.github.jupittar.core.data.model.PagingInfo;
 import com.github.jupittar.core.movies.MovieTab;
 import com.github.jupittar.core.movies.MoviesContract;
+import com.github.jupittar.core.movies.MoviesModule;
 import com.github.jupittar.core.util.Constants;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
@@ -151,7 +152,7 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
 
     @Override
     protected void injectDependencies(Context context, AppComponent appComponent) {
-        appComponent.plus(new AppMoviesModule(this)).inject(this);
+        appComponent.plus(new MoviesModule(this)).inject(this);
     }
     //endregion
 
