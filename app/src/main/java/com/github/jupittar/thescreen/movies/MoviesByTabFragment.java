@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -141,7 +142,7 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                     .makeSceneTransitionAnimation(getActivity(), posterIv,
                             ViewCompat.getTransitionName(posterIv));
-            startActivity(intent, optionsCompat.toBundle());
+            ActivityCompat.startActivity(getActivity(), intent, optionsCompat.toBundle());
         });
     }
 
@@ -243,7 +244,7 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
         @Override
         public void convertView(CommonViewHolder holder, Movie item) {
             AspectRatioImageView posterIv = holder.getView(R.id.iv_movie_poster);
-            posterIv.setAspectRatio(1 / AspectRatioImageView.PHI);
+            posterIv.setAspectRatio(3.0D / 2.0D);
             Glide.with(mContext)
                     .load(String.format("%s%s%s",
                             Constants.IMAGE_BASE_URL,
