@@ -4,81 +4,177 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-@SuppressWarnings("unused")
 public class Images {
 
   //region Fields
-  @SerializedName("base_url")
-  private String baseUrl;
-  @SerializedName("secure_base_url")
-  private String secureBaseUrl;
-  @SerializedName("backdrop_sizes")
-  private List<String> backdropSizes;
-  @SerializedName("logo_sizes")
-  private List<String> logoSizes;
-  @SerializedName("poster_sizes")
-  private List<String> posterSizes;
-  @SerializedName("profile_sizes")
-  private List<String> profileSizes;
-  @SerializedName("still_sizes")
-  private List<String> stillSizes;
+  @SerializedName("id") private int id;
+    @SerializedName("backdrops") private List<BackdropsBean> backdrops;
+    @SerializedName("posters") private List<PostersBean> posters;
   //endregion
 
   //region Getters and Setters
-  public String getBaseUrl() {
-    return baseUrl;
+  public int getId() {
+      return id;
   }
 
-  public void setBaseUrl(String baseUrl) {
-    this.baseUrl = baseUrl;
+    public void setId(int id) {
+        this.id = id;
   }
 
-  public String getSecureBaseUrl() {
-    return secureBaseUrl;
+    public List<BackdropsBean> getBackdrops() {
+        return backdrops;
   }
 
-  public void setSecureBaseUrl(String secureBaseUrl) {
-    this.secureBaseUrl = secureBaseUrl;
+    public void setBackdrops(List<BackdropsBean> backdrops) {
+        this.backdrops = backdrops;
   }
 
-  public List<String> getBackdropSizes() {
-    return backdropSizes;
+    public List<PostersBean> getPosters() {
+        return posters;
   }
 
-  public void setBackdropSizes(List<String> backdropSizes) {
-    this.backdropSizes = backdropSizes;
+    public void setPosters(List<PostersBean> posters) {
+        this.posters = posters;
+  }
+    //endregion
+
+    public static class BackdropsBean {
+        //region Fields
+        @SerializedName("aspect_ratio") private double aspectRatio;
+        @SerializedName("file_path") private String filePath;
+        @SerializedName("height") private int height;
+        @SerializedName("iso_639_1") private Object iso6391;
+        @SerializedName("vote_average") private int voteAverage;
+        @SerializedName("vote_count") private int voteCount;
+        @SerializedName("width") private int width;
+        //endregion
+
+        //region Getters and Setters
+        public double getAspectRatio() {
+            return aspectRatio;
+        }
+
+        public void setAspectRatio(double aspectRatio) {
+            this.aspectRatio = aspectRatio;
+        }
+
+        public String getFilePath() {
+            return filePath;
+        }
+
+        public void setFilePath(String filePath) {
+            this.filePath = filePath;
+        }
+
+        public int getHeight() {
+            return height;
+        }
+
+        public void setHeight(int height) {
+            this.height = height;
+        }
+
+        public Object getIso6391() {
+            return iso6391;
+        }
+
+        public void setIso6391(Object iso6391) {
+            this.iso6391 = iso6391;
+        }
+
+        public int getVoteAverage() {
+            return voteAverage;
+        }
+
+        public void setVoteAverage(int voteAverage) {
+            this.voteAverage = voteAverage;
+        }
+
+        public int getVoteCount() {
+            return voteCount;
+        }
+
+        public void setVoteCount(int voteCount) {
+            this.voteCount = voteCount;
+        }
+
+        public int getWidth() {
+            return width;
+        }
+
+        public void setWidth(int width) {
+            this.width = width;
+        }
+        //endregion
   }
 
-  public List<String> getLogoSizes() {
-    return logoSizes;
-  }
+    public static class PostersBean {
+        //region Fields
+        @SerializedName("aspect_ratio") private double aspectRatio;
+        @SerializedName("file_path") private String filePath;
+        @SerializedName("height") private int height;
+        @SerializedName("iso_639_1") private String iso6391;
+        @SerializedName("vote_average") private int voteAverage;
+        @SerializedName("vote_count") private int voteCount;
+        @SerializedName("width") private int width;
+        //endregion
 
-  public void setLogoSizes(List<String> logoSizes) {
-    this.logoSizes = logoSizes;
-  }
+        //region Getters and Setters
+        public double getAspectRatio() {
+            return aspectRatio;
+        }
 
-  public List<String> getPosterSizes() {
-    return posterSizes;
-  }
+        public void setAspectRatio(double aspectRatio) {
+            this.aspectRatio = aspectRatio;
+        }
 
-  public void setPosterSizes(List<String> posterSizes) {
-    this.posterSizes = posterSizes;
-  }
+        public String getFilePath() {
+            return filePath;
+        }
 
-  public List<String> getProfileSizes() {
-    return profileSizes;
-  }
+        public void setFilePath(String filePath) {
+            this.filePath = filePath;
+        }
 
-  public void setProfileSizes(List<String> profileSizes) {
-    this.profileSizes = profileSizes;
-  }
+        public int getHeight() {
+            return height;
+        }
 
-  public List<String> getStillSizes() {
-    return stillSizes;
-  }
+        public void setHeight(int height) {
+            this.height = height;
+        }
 
-  public void setStillSizes(List<String> stillSizes) {
-    this.stillSizes = stillSizes;
+        public String getIso6391() {
+            return iso6391;
+        }
+
+        public void setIso6391(String iso6391) {
+            this.iso6391 = iso6391;
+        }
+
+        public int getVoteAverage() {
+            return voteAverage;
+        }
+
+        public void setVoteAverage(int voteAverage) {
+            this.voteAverage = voteAverage;
+        }
+
+        public int getVoteCount() {
+            return voteCount;
+        }
+
+        public void setVoteCount(int voteCount) {
+            this.voteCount = voteCount;
+        }
+
+        public int getWidth() {
+            return width;
+        }
+
+        public void setWidth(int width) {
+            this.width = width;
+        }
+        //endregion
   }
-  //endregion
 }

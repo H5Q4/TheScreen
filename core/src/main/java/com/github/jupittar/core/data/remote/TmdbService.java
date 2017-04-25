@@ -1,8 +1,10 @@
 package com.github.jupittar.core.data.remote;
 
-import com.github.jupittar.core.data.model.Configuration;
+import com.github.jupittar.core.data.model.Images;
 import com.github.jupittar.core.data.model.Movie;
 import com.github.jupittar.core.data.model.RawResponse;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -10,9 +12,6 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface TmdbService {
-
-    @GET("configuration")
-    Observable<Configuration> getApiConfiguration();
 
     @GET("movie/popular")
     Observable<RawResponse<Movie>> getPopularMovies(@Query("page") int page);
@@ -28,5 +27,8 @@ public interface TmdbService {
 
     @GET("movie/{movie_id}")
     Observable<Movie> getMovieDetails(@Path("movie_id") long movieId);
+
+    @GET("movie/{movie_id}/images")
+    Observable<List<Images>> getMovieImages(@Path("movie_id") long movieId);
 
 }

@@ -24,6 +24,21 @@ public class AppModule {
 
     @Provides
     @Singleton
+    @Named("ramCacheSize")
+    int provideRamCacheSize() {
+        int maxMemory = (int) Runtime.getRuntime().maxMemory();
+        return maxMemory / 8;
+    }
+
+    @Provides
+    @Singleton
+    @Named("diskCacheSize")
+    int provideDiskCacheSize() {
+        return 100 * 1024 * 1024;
+    }
+
+    @Provides
+    @Singleton
     @Named("isDebug")
     boolean isDebug() {
         return AppUtils.isDebug();

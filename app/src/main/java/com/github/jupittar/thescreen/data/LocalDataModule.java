@@ -3,7 +3,6 @@ package com.github.jupittar.thescreen.data;
 import com.github.jupittar.core.data.local.CacheManager;
 import com.github.jupittar.core.data.model.MoviesWrapper;
 import com.github.jupittar.thescreen.BuildConfig;
-import com.github.jupittar.thescreen.util.AppConstants;
 import com.vincentbrison.openlibraries.android.dualcache.Builder;
 import com.vincentbrison.openlibraries.android.dualcache.DualCache;
 
@@ -18,24 +17,27 @@ import dagger.Provides;
 @Module
 public class LocalDataModule {
 
-    @Provides
-    @Singleton
-    public DualCache<MoviesWrapper> provideMoviesCache(@Named("cacheDir") File cacheDir) {
-        int maxMemory = (int) Runtime.getRuntime().maxMemory();
-        int ramCacheSize = maxMemory / 8;
-        GsonCacheSerializer<MoviesWrapper> serializer = new GsonCacheSerializer<>(
-                MoviesWrapper.class);
-        return new Builder<MoviesWrapper>(AppConstants.CACHE_ID, BuildConfig.VERSION_CODE)
-                .useSerializerInRam(ramCacheSize, serializer)
-                .useSerializerInDisk(AppConstants.DISK_CACHE_SIZE, cacheDir, serializer)
-                .build();
-    }
+    private static final String CACHE_ID_MOVIES = "movies";
 
     @Provides
     @Singleton
     public CacheManager<MoviesWrapper> provideMoviesCacheManager(
             DualCache<MoviesWrapper> dualCache) {
         return new AppCacheManager<>(dualCache);
+    }
+
+    @Provides
+    @Singleton
+    public DualCache<MoviesWrapper> provideMoviesCache(
+            @Named("cacheDir") File cacheDir,
+            @Named("diskCacheSize") int diskCacheSize,
+            @Named("ramCacheSize") int ramCacheSize) {
+        GsonCacheSerializer<MoviesWrapper> serializer = new GsonCacheSerializer<>(
+                MoviesWrapper.class);
+        return new Builder<MoviesWrapper>(CACHE_ID_MOVIES, BuildConfig.VERSION_CODE)
+                .useSerializerInRam(ramCacheSize, serializer)
+                .useSerializerInDisk(diskCacheSize, cacheDir, serializer)
+                .build();
     }
 
 }

@@ -7,15 +7,12 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by huangqiao on 23/04/2017.
- */
 
 public class PileLayoutManager extends RecyclerView.LayoutManager {
 
     private static final String TAG = PileLayoutManager.class.getSimpleName();
 
-    public static final int MAX_SHOW_COUNT = 4;
+    public static final int MAX_SHOW_COUNT = 3;
     public static final float SCALE_GAP = 0.05f;
     public static int TRANS_X_GAP = 0;
 
@@ -36,9 +33,8 @@ public class PileLayoutManager extends RecyclerView.LayoutManager {
         if (itemCount < 1) {
             return;
         }
-        //top-3View的position
         int bottomPosition;
-        //边界处理
+
         if (itemCount < MAX_SHOW_COUNT) {
             bottomPosition = 0;
         } else {
@@ -60,11 +56,11 @@ public class PileLayoutManager extends RecyclerView.LayoutManager {
             if (level > 0) {
                 view.setScaleY(1 - SCALE_GAP * level);
                 if (level < MAX_SHOW_COUNT - 1) {
-                    view.setTranslationY(TRANS_X_GAP * level);
+                    view.setTranslationX(TRANS_X_GAP * level);
                     view.setScaleY(1 - SCALE_GAP * level);
                 } else {
-                    view.setTranslationY(TRANS_X_GAP * (level - 1));
-                    view.setScaleX(1 - SCALE_GAP * (level - 1));
+                    view.setTranslationX(TRANS_X_GAP * (level - 1));
+                    view.setScaleY(1 - SCALE_GAP * (level - 1));
                 }
             }
         }
