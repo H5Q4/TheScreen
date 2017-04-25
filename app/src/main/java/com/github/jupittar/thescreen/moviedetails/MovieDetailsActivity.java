@@ -22,6 +22,8 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.github.jupittar.commlib.custom.SCViewPager;
 import com.github.jupittar.commlib.util.CommonPagerAdapter;
 import com.github.jupittar.core.data.model.Movie;
+import com.github.jupittar.core.moviedetails.MovieDetailsContract;
+import com.github.jupittar.core.moviedetails.MovieDetailsModule;
 import com.github.jupittar.core.util.Constants;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
@@ -29,9 +31,13 @@ import com.github.jupittar.thescreen.base.BaseActivity;
 import com.github.jupittar.thescreen.moviedetails.info.MovieInfoFragment;
 import com.github.jupittar.thescreen.util.TypefaceUtils;
 
+import java.util.List;
+
 import butterknife.BindView;
 
-public class MovieDetailsActivity extends BaseActivity {
+public class MovieDetailsActivity
+        extends BaseActivity
+        implements MovieDetailsContract.View {
 
     public static final String KEY_MOVIE = "movie";
 
@@ -62,18 +68,21 @@ public class MovieDetailsActivity extends BaseActivity {
     }
 
     private void initMemberVariables() {
-        mTitleTv.setTypeface(TypefaceUtils.getTypeface(TypefaceUtils.FONT_AVENIR_NEXT_LT_PRO_REGULAR,
+        mTitleTv.setTypeface(TypefaceUtils.getTypeface(
+                TypefaceUtils.FONT_AVENIR_NEXT_LT_PRO_REGULAR,
                 getApplicationContext()));
-        mReleaseDateTv.setTypeface(TypefaceUtils.getTypeface(TypefaceUtils.FONT_AVENIR_NEXT_LT_PRO_IT,
+        mReleaseDateTv.setTypeface(TypefaceUtils.getTypeface(
+                TypefaceUtils.FONT_AVENIR_NEXT_LT_PRO_IT,
                 getApplicationContext()));
         mReleaseDateTv.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray));
         mMovie = (Movie) getIntent().getSerializableExtra(KEY_MOVIE);
         if (mMovie != null) {
+            String posterPath = String.format("%s%s%s",
+                    Constants.IMAGE_BASE_URL,
+                    Constants.IMAGE_SIZE_W500,
+                    mMovie.getPosterPath());
             Glide.with(getApplicationContext())
-                    .load(String.format("%s%s%s",
-                            Constants.IMAGE_BASE_URL,
-                            Constants.IMAGE_SIZE_W500,
-                            mMovie.getPosterPath()))
+                    .load(posterPath)
                     .asBitmap()
                     .centerCrop()
                     .dontAnimate()
@@ -103,11 +112,12 @@ public class MovieDetailsActivity extends BaseActivity {
                             supportStartPostponedEnterTransition();
                         }
                     });
+            String backdropPath = String.format("%s%s%s",
+                    Constants.IMAGE_BASE_URL,
+                    Constants.IMAGE_SIZE_W780,
+                    mMovie.getBackdropPath());
             Glide.with(getApplicationContext())
-                    .load(String.format("%s%s%s",
-                            Constants.IMAGE_BASE_URL,
-                            Constants.IMAGE_SIZE_W780,
-                            mMovie.getBackdropPath()))
+                    .load(backdropPath)
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(mBackdropIv);
@@ -165,7 +175,7 @@ public class MovieDetailsActivity extends BaseActivity {
 
     @Override
     protected void injectDependencies(AppComponent appComponent) {
-
+        appComponent.plus(new MovieDetailsModule(this)).inject(this);
     }
 
     @Override
@@ -179,4 +189,26 @@ public class MovieDetailsActivity extends BaseActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    //region Implementation of MovieDetailsContract.View
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showErrorMessage() {
+
+    }
+
+    @Override
+    public void showImages(List<String> urls) {
+
+    }
+    //endregion
 }

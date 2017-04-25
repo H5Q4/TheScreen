@@ -245,11 +245,12 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
         public void convertView(CommonViewHolder holder, Movie item) {
             AspectRatioImageView posterIv = holder.getView(R.id.iv_movie_poster);
             posterIv.setAspectRatio(3.0D / 2.0D);
+            String posterPath = String.format("%s%s%s",
+                    Constants.IMAGE_BASE_URL,
+                    Constants.IMAGE_SIZE_W500,
+                    item.getPosterPath());
             Glide.with(mContext)
-                    .load(String.format("%s%s%s",
-                            Constants.IMAGE_BASE_URL,
-                            Constants.IMAGE_SIZE_W500,
-                            item.getPosterPath()))
+                    .load(posterPath)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
                     .into(posterIv);

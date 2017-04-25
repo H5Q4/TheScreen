@@ -79,7 +79,8 @@ public class MoviesInteractor implements MoviesContract.Interactor {
     }
 
     private boolean isPastOneDay(MoviesWrapper moviesWrapper) {
-        return System.currentTimeMillis() - moviesWrapper.getPersistedTime() > 24 * 60 * 60 * 1000;
+        return System.currentTimeMillis() >
+                moviesWrapper.getPersistedTime() + 7 * 24 * 60 * 60 * 1000;
     }
     //endregion
 
