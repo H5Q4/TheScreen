@@ -46,7 +46,6 @@ public class PileLayoutManager extends RecyclerView.LayoutManager {
             addView(view);
             measureChildWithMargins(view, 0, 0);
             int widthSpace = getWidth() - getDecoratedMeasuredWidth(view);
-            int heightSpace = getHeight() - getDecoratedMeasuredHeight(view);
 
             layoutDecoratedWithMargins(view, widthSpace / 2, 0,
                     widthSpace / 2 + getDecoratedMeasuredWidth(view),

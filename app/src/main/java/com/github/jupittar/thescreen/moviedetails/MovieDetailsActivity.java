@@ -40,6 +40,7 @@ import com.github.jupittar.thescreen.base.BaseActivity;
 import com.github.jupittar.thescreen.moviedetails.info.MovieInfoFragment;
 import com.github.jupittar.thescreen.util.TypefaceUtils;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -239,6 +240,7 @@ public class MovieDetailsActivity
 
     @Override
     public void showImages(List<String> urls) {
+        Collections.reverse(urls);
         mBackdropViewAdapter.addAll(urls);
     }
 

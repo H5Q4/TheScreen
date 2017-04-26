@@ -38,6 +38,7 @@ public class MoviesPresenter
                 .getMovies(tab, page)
                 .subscribeOn(mSchedulerHelper.backgroundThread())
                 .observeOn(mSchedulerHelper.mainThread())
+                .doFinally(() -> getMvpView().hideLoading())
                 .subscribe(moviesWrapper -> {
                     List<Movie> movies = moviesWrapper.getMovies();
                     PagingInfo pagingInfo = moviesWrapper.getPagingInfo();
@@ -48,7 +49,6 @@ public class MoviesPresenter
                     if (pagingInfo.isLastPage()) getMvpView().showNoMoreMoviesFooter();
 
                     getMvpView().showMovies(movies);
-                    getMvpView().hideLoading();
                 }, throwable -> {
                     if (isNetworkException(throwable)) {
                         if (getMvpView().isMoviesEmpty()) {
@@ -60,7 +60,6 @@ public class MoviesPresenter
                         getMvpView().showErrorMessage();
                     }
                     throwable.printStackTrace();
-                    getMvpView().hideLoading();
                 });
         addDisposable(disposable);
     }
