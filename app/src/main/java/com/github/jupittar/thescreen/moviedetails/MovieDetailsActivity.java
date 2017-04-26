@@ -1,15 +1,19 @@
 package com.github.jupittar.thescreen.moviedetails;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +25,10 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.github.jupittar.commlib.custom.FontChangeableTabLayout;
 import com.github.jupittar.commlib.custom.SCViewPager;
+import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
+import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
+import com.github.jupittar.commlib.recyclerview.layoutmanager.PileLayoutManager;
+import com.github.jupittar.commlib.recyclerview.layoutmanager.PileSwipeCallback;
 import com.github.jupittar.commlib.util.CommonPagerAdapter;
 import com.github.jupittar.core.data.model.Movie;
 import com.github.jupittar.core.moviedetails.MovieDetailsContract;
@@ -33,6 +41,8 @@ import com.github.jupittar.thescreen.moviedetails.info.MovieInfoFragment;
 import com.github.jupittar.thescreen.util.TypefaceUtils;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -47,13 +57,16 @@ public class MovieDetailsActivity
     @BindView(R.id.appbar_layout) AppBarLayout mAppBarLayout;
     @BindView(R.id.collapsing_toolbar_layout) CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.iv_poster) ImageView mPosterIv;
-    @BindView(R.id.vp_backdrop) ImageView mBackdropIv;
+    @BindView(R.id.rv_backdrop) RecyclerView mBackdropRv;
     @BindView(R.id.tab_layout) FontChangeableTabLayout mTabLayout;
     @BindView(R.id.view_pager) SCViewPager mViewPager;
     @BindView(R.id.tv_title) TextView mTitleTv;
     @BindView(R.id.tv_release_data) TextView mReleaseDateTv;
 
+    @Inject MovieDetailsContract.Presenter<MovieDetailsContract.View> mPresenter;
+
     private Movie mMovie;
+    private BackdropViewAdapter mBackdropViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +77,25 @@ public class MovieDetailsActivity
         supportPostponeEnterTransition();
         initMemberVariables();
         setUpToolbar();
+        setUpBackdropRecyclerView();
         setUpViewPager();
         setUpTabLayout();
+    }
+
+    private void setUpBackdropRecyclerView() {
+        PileLayoutManager layoutManager = new PileLayoutManager(this);
+        mBackdropRv.setLayoutManager(layoutManager);
+        mBackdropViewAdapter = new BackdropViewAdapter(this, R.layout.item_movie_backdrop);
+        mBackdropRv.setHasFixedSize(true);
+        mBackdropRv.setAdapter(mBackdropViewAdapter);
+        PileSwipeCallback pileSwipeCallback = new PileSwipeCallback(mBackdropRv,
+                mBackdropViewAdapter.getItemList(),
+                mBackdropViewAdapter);
+        new ItemTouchHelper(pileSwipeCallback).attachToRecyclerView(mBackdropRv);
+
+        if (mMovie != null) {
+            mPresenter.showImages(mMovie.getId());
+        }
     }
 
     private void initMemberVariables() {
@@ -113,15 +143,7 @@ public class MovieDetailsActivity
                             supportStartPostponedEnterTransition();
                         }
                     });
-            String backdropPath = String.format("%s%s%s",
-                    Constants.IMAGE_BASE_URL,
-                    Constants.IMAGE_SIZE_W780,
-                    mMovie.getBackdropPath());
-            Glide.with(getApplicationContext())
-                    .load(backdropPath)
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(mBackdropIv);
+
             mTitleTv.setText(mMovie.getOriginalTitle());
             mReleaseDateTv.setText(mMovie.getReleaseDate());
         }
@@ -192,6 +214,13 @@ public class MovieDetailsActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.detach();
+        mPresenter = null;
+    }
+
     //region Implementation of MovieDetailsContract.View
     @Override
     public void showLoading() {
@@ -210,7 +239,28 @@ public class MovieDetailsActivity
 
     @Override
     public void showImages(List<String> urls) {
+        mBackdropViewAdapter.addAll(urls);
+    }
+
+    @Override
+    public void showErrorBackdrop() {
 
     }
     //endregion
+
+    private class BackdropViewAdapter extends CommonViewAdapter<String> {
+
+        public BackdropViewAdapter(Context context, @LayoutRes int layoutId) {
+            super(context, layoutId);
+        }
+
+        @Override
+        public void convertView(CommonViewHolder holder, String url) {
+            ImageView backdropIv = holder.getView(R.id.iv_movie_backdrop);
+            Glide.with(mContext)
+                    .load(url)
+                    .centerCrop()
+                    .into(backdropIv);
+        }
+    }
 }

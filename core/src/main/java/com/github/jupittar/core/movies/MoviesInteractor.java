@@ -11,7 +11,6 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import io.reactivex.Maybe;
 import io.reactivex.Observable;
 
 public class MoviesInteractor implements MoviesContract.Interactor {
@@ -30,13 +29,14 @@ public class MoviesInteractor implements MoviesContract.Interactor {
     }
 
     @Override
-    public Maybe<MoviesWrapper> getMovies(MovieTab tab, int page) {
+    public Observable<MoviesWrapper> getMovies(MovieTab tab, int page) {
         String cacheKey = String
                 .format(Locale.ENGLISH, CACHE_KEY_FORMAT, tab.name(), page)
                 .toLowerCase();
         return Observable
                 .concat(getLocalMovies(cacheKey), getRemoteMovies(tab, page))
-                .firstElement();
+                .firstElement()
+                .toObservable();
     }
 
     //region Private Helper Methods
@@ -74,13 +74,8 @@ public class MoviesInteractor implements MoviesContract.Interactor {
     private Observable<MoviesWrapper> getLocalMovies(String cacheKey) {
         return Observable
                 .fromCallable(() -> mCacheManager.get(cacheKey))
-                .filter(moviesWrapper -> moviesWrapper != null && !isPastOneDay(moviesWrapper))
+                .filter(moviesWrapper -> moviesWrapper != null && !moviesWrapper.isExpired())
                 .onErrorResumeNext(Observable.empty());
-    }
-
-    private boolean isPastOneDay(MoviesWrapper moviesWrapper) {
-        return System.currentTimeMillis() >
-                moviesWrapper.getPersistedTime() + 7 * 24 * 60 * 60 * 1000;
     }
     //endregion
 

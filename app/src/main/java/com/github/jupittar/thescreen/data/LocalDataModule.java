@@ -1,6 +1,7 @@
 package com.github.jupittar.thescreen.data;
 
 import com.github.jupittar.core.data.local.CacheManager;
+import com.github.jupittar.core.data.model.ImagesWrapper;
 import com.github.jupittar.core.data.model.MoviesWrapper;
 import com.github.jupittar.thescreen.BuildConfig;
 import com.vincentbrison.openlibraries.android.dualcache.Builder;
@@ -18,6 +19,28 @@ import dagger.Provides;
 public class LocalDataModule {
 
     private static final String CACHE_ID_MOVIES = "movies";
+    private static final String CACHE_ID_MOVIE_DETAILS = "movie_details";
+
+    @Provides
+    @Singleton
+    public CacheManager<ImagesWrapper> provideMovieDetailsCacheManager(
+            DualCache<ImagesWrapper> dualCache) {
+        return new AppCacheManager<>(dualCache);
+    }
+
+    @Provides
+    @Singleton
+    public DualCache<ImagesWrapper> provideMovieDetailsCache(
+            @Named("cacheDir") File cacheDir,
+            @Named("diskCacheSize") int diskCacheSize,
+            @Named("ramCacheSize") int ramCacheSize) {
+        GsonCacheSerializer<ImagesWrapper> serializer = new GsonCacheSerializer<>(
+                ImagesWrapper.class);
+        return new Builder<ImagesWrapper>(CACHE_ID_MOVIE_DETAILS, BuildConfig.VERSION_CODE)
+                .useSerializerInRam(ramCacheSize, serializer)
+                .useSerializerInDisk(diskCacheSize, cacheDir, serializer)
+                .build();
+    }
 
     @Provides
     @Singleton

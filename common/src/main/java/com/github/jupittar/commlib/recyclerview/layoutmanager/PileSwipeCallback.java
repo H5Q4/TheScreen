@@ -9,7 +9,7 @@ import java.util.List;
 
 import static com.github.jupittar.commlib.recyclerview.layoutmanager.PileLayoutManager.MAX_SHOW_COUNT;
 import static com.github.jupittar.commlib.recyclerview.layoutmanager.PileLayoutManager.SCALE_GAP;
-import static com.github.jupittar.commlib.recyclerview.layoutmanager.PileLayoutManager.TRANS_X_GAP;
+import static com.github.jupittar.commlib.recyclerview.layoutmanager.PileLayoutManager.TRANS_GAP;
 
 public class PileSwipeCallback extends ItemTouchHelper.SimpleCallback {
 
@@ -49,7 +49,7 @@ public class PileSwipeCallback extends ItemTouchHelper.SimpleCallback {
                             float dX, float dY, int actionState, boolean isCurrentlyActive) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         double swipedValue = Math.sqrt(dX * dX + dY * dY);
-        double fraction = swipedValue / getSwipeThreshold(viewHolder);
+        double fraction = swipedValue / getThreshold(viewHolder);
         if (fraction > 1) fraction = 1;
         int childCount = recyclerView.getChildCount();
         for (int i = 0; i < childCount; i++) {
@@ -57,12 +57,15 @@ public class PileSwipeCallback extends ItemTouchHelper.SimpleCallback {
             int childLevel = childCount - i - 1;
             if (childLevel > 0) {
                 child.setScaleX((float) (1 - SCALE_GAP * childLevel + fraction * SCALE_GAP));
-
                 if (childLevel < MAX_SHOW_COUNT - 1) {
                     child.setScaleY((float) (1 - SCALE_GAP * childLevel + fraction * SCALE_GAP));
-                    child.setTranslationX((float) (TRANS_X_GAP * childLevel - fraction * TRANS_X_GAP));
+                    child.setTranslationY((float) (TRANS_GAP * childLevel - fraction * TRANS_GAP));
                 }
             }
         }
+    }
+
+    private float getThreshold(RecyclerView.ViewHolder viewHolder) {
+        return mRecyclerView.getWidth() * getSwipeThreshold(viewHolder);
     }
 }

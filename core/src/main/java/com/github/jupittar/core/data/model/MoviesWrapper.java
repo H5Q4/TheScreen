@@ -50,5 +50,10 @@ public class MoviesWrapper {
     public boolean hasMovies() {
         return movies.size() > 0;
     }
+
+    public boolean isExpired() {
+        return System.currentTimeMillis() >
+                persistedTime + 24 * 60 * 60 * 1000;
+    }
     // endregion
 }

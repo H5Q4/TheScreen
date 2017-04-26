@@ -6,36 +6,36 @@ import java.util.List;
 
 public class Images {
 
-  //region Fields
-  @SerializedName("id") private int id;
+    //region Fields
+    @SerializedName("id") private int id;
     @SerializedName("backdrops") private List<BackdropsBean> backdrops;
     @SerializedName("posters") private List<PostersBean> posters;
-  //endregion
+    //endregion
 
-  //region Getters and Setters
-  public int getId() {
-      return id;
-  }
+    //region Getters and Setters
+    public int getId() {
+        return id;
+    }
 
     public void setId(int id) {
         this.id = id;
-  }
+    }
 
     public List<BackdropsBean> getBackdrops() {
         return backdrops;
-  }
+    }
 
     public void setBackdrops(List<BackdropsBean> backdrops) {
         this.backdrops = backdrops;
-  }
+    }
 
     public List<PostersBean> getPosters() {
         return posters;
-  }
+    }
 
     public void setPosters(List<PostersBean> posters) {
         this.posters = posters;
-  }
+    }
     //endregion
 
     public static class BackdropsBean {
@@ -44,7 +44,7 @@ public class Images {
         @SerializedName("file_path") private String filePath;
         @SerializedName("height") private int height;
         @SerializedName("iso_639_1") private Object iso6391;
-        @SerializedName("vote_average") private int voteAverage;
+        @SerializedName("vote_average") private float voteAverage;
         @SerializedName("vote_count") private int voteCount;
         @SerializedName("width") private int width;
         //endregion
@@ -82,11 +82,11 @@ public class Images {
             this.iso6391 = iso6391;
         }
 
-        public int getVoteAverage() {
+        public float getVoteAverage() {
             return voteAverage;
         }
 
-        public void setVoteAverage(int voteAverage) {
+        public void setVoteAverage(float voteAverage) {
             this.voteAverage = voteAverage;
         }
 
@@ -106,7 +106,7 @@ public class Images {
             this.width = width;
         }
         //endregion
-  }
+    }
 
     public static class PostersBean {
         //region Fields
@@ -114,7 +114,7 @@ public class Images {
         @SerializedName("file_path") private String filePath;
         @SerializedName("height") private int height;
         @SerializedName("iso_639_1") private String iso6391;
-        @SerializedName("vote_average") private int voteAverage;
+        @SerializedName("vote_average") private float voteAverage;
         @SerializedName("vote_count") private int voteCount;
         @SerializedName("width") private int width;
         //endregion
@@ -152,11 +152,11 @@ public class Images {
             this.iso6391 = iso6391;
         }
 
-        public int getVoteAverage() {
+        public float getVoteAverage() {
             return voteAverage;
         }
 
-        public void setVoteAverage(int voteAverage) {
+        public void setVoteAverage(float voteAverage) {
             this.voteAverage = voteAverage;
         }
 
@@ -176,5 +176,5 @@ public class Images {
             this.width = width;
         }
         //endregion
-  }
+    }
 }

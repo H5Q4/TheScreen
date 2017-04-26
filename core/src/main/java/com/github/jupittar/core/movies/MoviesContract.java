@@ -7,7 +7,7 @@ import com.github.jupittar.core.data.model.PagingInfo;
 
 import java.util.List;
 
-import io.reactivex.Maybe;
+import io.reactivex.Observable;
 
 public interface MoviesContract {
 
@@ -36,7 +36,7 @@ public interface MoviesContract {
     }
 
     interface Interactor {
-        Maybe<MoviesWrapper> getMovies(MovieTab tab, int page);
+        Observable<MoviesWrapper> getMovies(MovieTab tab, int page);
     }
 
 }

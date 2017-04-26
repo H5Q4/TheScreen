@@ -13,12 +13,10 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.7"/>
 
-    <ImageView
-        android:id="@+id/vp_backdrop"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_backdrop"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/shape_bg_pic"
-        android:contentDescription="@null"
         app:layout_constraintBottom_toTopOf="@+id/guideline_h_70"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -4,8 +4,6 @@ import com.github.jupittar.core.data.model.Images;
 import com.github.jupittar.core.data.model.Movie;
 import com.github.jupittar.core.data.model.RawResponse;
 
-import java.util.List;
-
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -29,6 +27,6 @@ public interface TmdbService {
     Observable<Movie> getMovieDetails(@Path("movie_id") long movieId);
 
     @GET("movie/{movie_id}/images")
-    Observable<List<Images>> getMovieImages(@Path("movie_id") long movieId);
+    Observable<Images> getMovieImages(@Path("movie_id") long movieId);
 
 }
