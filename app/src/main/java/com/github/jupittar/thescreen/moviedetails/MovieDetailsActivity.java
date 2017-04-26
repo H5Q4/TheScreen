@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.github.jupittar.commlib.custom.FontChangeableTabLayout;
 import com.github.jupittar.commlib.custom.SCViewPager;
 import com.github.jupittar.commlib.util.CommonPagerAdapter;
 import com.github.jupittar.core.data.model.Movie;
@@ -47,7 +48,7 @@ public class MovieDetailsActivity
     @BindView(R.id.collapsing_toolbar_layout) CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.iv_poster) ImageView mPosterIv;
     @BindView(R.id.vp_backdrop) ImageView mBackdropIv;
-    @BindView(R.id.tab_layout) TabLayout mTabLayout;
+    @BindView(R.id.tab_layout) FontChangeableTabLayout mTabLayout;
     @BindView(R.id.view_pager) SCViewPager mViewPager;
     @BindView(R.id.tv_title) TextView mTitleTv;
     @BindView(R.id.tv_release_data) TextView mReleaseDateTv;
@@ -129,6 +130,7 @@ public class MovieDetailsActivity
     private void setUpTabLayout() {
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        mTabLayout.setTypeface(TypefaceUtils.getTypeface(TypefaceUtils.FONT_LOBSTER_REGULAR, this));
         mTabLayout.setupWithViewPager(mViewPager);
     }
 

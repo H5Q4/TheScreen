@@ -28,4 +28,9 @@
     <!--<item name="android:statusBarColor">#40000000</item>-->
     <!--</style>-->
 
+    <style name="TabLayoutTextStyle" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

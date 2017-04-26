@@ -10,7 +10,7 @@ public class TypefaceUtils {
 
     public static final String FONT_AVENIR_NEXT_LT_PRO_REGULAR = "AvenirNextLTPro-Regular.otf";
     public static final String FONT_AVENIR_NEXT_LT_PRO_IT = "AvenirNextLTPro-It.otf";
-    public static final String FONT_AVENIR_NEXT_LT_PRO_BOLD = "AvenirNextLTPro-Bold.otf";
+    public static final String FONT_LOBSTER_REGULAR = "Lobster-Regular.ttf";
 
     private static Map<String, Typeface> sTypefaceMap = new ArrayMap<>();
 
