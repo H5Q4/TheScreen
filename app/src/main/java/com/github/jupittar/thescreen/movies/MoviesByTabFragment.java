@@ -45,11 +45,15 @@ import butterknife.OnClick;
 import de.mateware.snacky.Snacky;
 import es.dmoral.toasty.Toasty;
 
-public class MoviesByTabFragment extends LazyFragment implements MoviesContract.View {
+public class MoviesByTabFragment
+        extends LazyFragment
+        implements MoviesContract.View {
 
-    //region Fields
+    //region Constants
     public static final String ARG_PARAM_MOVIE_TAB = "movie_tab";
+    //endregion
 
+    //region Member Variables
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
     @BindView(R.id.refresh_layout) SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.ll_error) LinearLayout mErrorLayout;
@@ -111,7 +115,7 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
     }
     //endregion
 
-    //region SetUp Methods
+    //region Set Up Methods
     private void setUpRefreshLayout() {
         mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.showMovies(mMovieTab, 1));
     }
@@ -173,8 +177,8 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
     }
 
     @Override
-    public void showErrorMessage() {
-        Toasty.error(getActivity(), "Error Occurred").show();
+    public void showErrorMessage(Throwable throwable) {
+        Toasty.error(getActivity(), throwable.getMessage()).show();
     }
 
     @Override
@@ -234,7 +238,7 @@ public class MoviesByTabFragment extends LazyFragment implements MoviesContract.
     }
     //endregion
 
-    //region RecyclerView's Adapter
+    //region Adapters
     private class MoviesAdapter extends HFViewAdapter<Movie> {
 
         MoviesAdapter(Context context, @LayoutRes int layoutId) {

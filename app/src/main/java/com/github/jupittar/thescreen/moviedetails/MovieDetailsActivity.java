@@ -17,6 +17,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -40,19 +41,22 @@ import com.github.jupittar.thescreen.base.BaseActivity;
 import com.github.jupittar.thescreen.moviedetails.info.MovieInfoFragment;
 import com.github.jupittar.thescreen.util.TypefaceUtils;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import es.dmoral.toasty.Toasty;
 
 public class MovieDetailsActivity
         extends BaseActivity
         implements MovieDetailsContract.View {
 
+    //region Constants
     public static final String KEY_MOVIE = "movie";
+    //endregion
 
+    //region Member Variables
     @BindView(R.id.section_parallax) View mParallaxSection;
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.appbar_layout) AppBarLayout mAppBarLayout;
@@ -63,12 +67,15 @@ public class MovieDetailsActivity
     @BindView(R.id.view_pager) SCViewPager mViewPager;
     @BindView(R.id.tv_title) TextView mTitleTv;
     @BindView(R.id.tv_release_data) TextView mReleaseDateTv;
+    @BindView(R.id.pb_backdrop) ProgressBar mBackdropPb;
 
     @Inject MovieDetailsContract.Presenter<MovieDetailsContract.View> mPresenter;
 
     private Movie mMovie;
     private BackdropViewAdapter mBackdropViewAdapter;
+    //endregion
 
+    //region Lifecycle Methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +90,15 @@ public class MovieDetailsActivity
         setUpTabLayout();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.detach();
+        mPresenter = null;
+    }
+    //endregion
+
+    //region Set Up Methods
     private void setUpBackdropRecyclerView() {
         PileLayoutManager layoutManager = new PileLayoutManager(this);
         mBackdropRv.setLayoutManager(layoutManager);
@@ -197,6 +213,7 @@ public class MovieDetailsActivity
             }
         });
     }
+    //endregion
 
     @Override
     protected void injectDependencies(AppComponent appComponent) {
@@ -215,41 +232,29 @@ public class MovieDetailsActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.detach();
-        mPresenter = null;
-    }
-
     //region Implementation of MovieDetailsContract.View
     @Override
     public void showLoading() {
-
+        mBackdropPb.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-
+        mBackdropPb.setVisibility(View.GONE);
     }
 
     @Override
-    public void showErrorMessage() {
-
+    public void showErrorMessage(Throwable throwable) {
+        Toasty.error(this, throwable.getMessage()).show();
     }
 
     @Override
     public void showImages(List<String> urls) {
-        Collections.reverse(urls);
         mBackdropViewAdapter.addAll(urls);
-    }
-
-    @Override
-    public void showErrorBackdrop() {
-
     }
     //endregion
 
+    //region Adapters
     private class BackdropViewAdapter extends CommonViewAdapter<String> {
 
         public BackdropViewAdapter(Context context, @LayoutRes int layoutId) {
@@ -265,4 +270,5 @@ public class MovieDetailsActivity
                     .into(backdropIv);
         }
     }
+    //endregion
 }

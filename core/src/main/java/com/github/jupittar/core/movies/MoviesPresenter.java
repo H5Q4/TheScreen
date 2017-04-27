@@ -57,7 +57,7 @@ public class MoviesPresenter
                             getMvpView().showReloadSnackbar();
                         }
                     } else {
-                        getMvpView().showErrorMessage();
+                        getMvpView().showErrorMessage(throwable);
                     }
                     throwable.printStackTrace();
                 });

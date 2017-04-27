@@ -11,8 +11,6 @@ public interface MovieDetailsContract {
 
     interface View extends Contract.View {
         void showImages(List<String> urls);
-
-        void showErrorBackdrop();
     }
 
     interface Presenter<V extends View> extends Contract.Presenter<V> {

@@ -10,7 +10,7 @@ public interface Contract {
 
         void hideLoading();
 
-        void showErrorMessage();
+        void showErrorMessage(Throwable throwable);
     }
 
     interface Presenter<V extends View> {

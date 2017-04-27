@@ -1,12 +1,12 @@
 package com.github.jupittar.core.moviedetails;
 
-import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.github.jupittar.core.base.BasePresenter;
 import com.github.jupittar.core.data.model.Images;
 import com.github.jupittar.core.helper.SchedulerHelper;
 import com.github.jupittar.core.util.Constants;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -43,17 +43,21 @@ public class MovieDetailsPresenter
                                             Constants.IMAGE_BASE_URL,
                                             Constants.IMAGE_SIZE_W780,
                                             backdropsBean.getFilePath()))
-                                    .collect(Collectors.toList());
+                                    .collect(ArrayList<String>::new, (list, url) -> {
+                                        list.add(0, url);
+                                    });
                         }
                     }
                     return Collections.<String>emptyList();
                 })
                 .subscribeOn(mSchedulerHelper.backgroundThread())
                 .observeOn(mSchedulerHelper.mainThread())
+                .doOnSubscribe(d -> getMvpView().showLoading())
+                .doFinally(() -> getMvpView().hideLoading())
                 .subscribe(urls -> {
                     getMvpView().showImages(urls);
                 }, throwable -> {
-                    getMvpView().showErrorBackdrop();
+                    getMvpView().showErrorMessage(throwable);
                 });
         addDisposable(disposable);
     }
