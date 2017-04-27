@@ -175,9 +175,9 @@ public class MovieDetailsActivity
 
     private void setUpViewPager() {
         CommonPagerAdapter adapter = new CommonPagerAdapter(getSupportFragmentManager());
-        adapter.addPage(MovieInfoFragment.newInstance("", ""), "Info");
-        adapter.addPage(MovieInfoFragment.newInstance("", ""), "Cast");
-        adapter.addPage(MovieInfoFragment.newInstance("", ""), "Reviews");
+        adapter.addPage(MovieInfoFragment.newInstance(mMovie.getId()), "Info");
+        adapter.addPage(MovieInfoFragment.newInstance(mMovie.getId()), "Cast");
+        adapter.addPage(MovieInfoFragment.newInstance(mMovie.getId()), "Reviews");
         mViewPager.setAdapter(adapter);
         mViewPager.setScrollEnabled(true);
         mViewPager.setOffscreenPageLimit(adapter.getCount());
