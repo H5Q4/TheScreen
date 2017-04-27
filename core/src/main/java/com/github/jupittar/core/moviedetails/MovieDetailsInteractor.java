@@ -12,7 +12,7 @@ import io.reactivex.Observable;
 
 public class MovieDetailsInteractor implements MovieDetailsContract.Interactor {
 
-    public static final String CACHE_KEY_FORMAT = "movie_details_%d";
+    public static final String CACHE_KEY_FORMAT = "movie_images_%d";
 
     private TmdbService mTmdbService;
     private CacheManager<ImagesWrapper> mImagesWrapperCacheManager;
