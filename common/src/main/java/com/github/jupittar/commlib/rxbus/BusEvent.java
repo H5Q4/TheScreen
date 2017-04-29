@@ -3,12 +3,12 @@ package com.github.jupittar.commlib.rxbus;
 public class BusEvent {
 
     private String tag;
-    private Object object;
+    private Object data;
 
-    public BusEvent(String tag, Object object) {
+    public BusEvent(String tag, Object data) {
 
         this.tag = tag;
-        this.object = object;
+        this.data = data;
     }
 
     public String getTag() {
@@ -19,11 +19,11 @@ public class BusEvent {
         this.tag = tag;
     }
 
-    public Object getObject() {
-        return object;
+    public Object getData() {
+        return data;
     }
 
-    public void setObject(Object object) {
-        this.object = object;
+    public void setData(Object data) {
+        this.data = data;
     }
 }

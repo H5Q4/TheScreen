@@ -1,20 +1,22 @@
 package com.github.jupittar.commlib.rxbus;
 
-import io.reactivex.Observable;
+import java.util.HashMap;
+import java.util.Map;
+
+import io.reactivex.Scheduler;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
-import io.reactivex.subjects.Subject;
 
 /**
  * A simple event bus implemented by RxJava
- * <p>
- * Created by Jupittar on 2016/4/29.
  */
 public class RxBus {
 
-    private final Subject<Object> mBus = PublishSubject.create().toSerialized();
+    private Map<String, PublishSubject<BusEvent>> mSubjectMap = new HashMap<>();
+    private Map<Object, CompositeDisposable> mCompositeDisposableMap = new HashMap<>();
 
     private RxBus() {
 
@@ -24,31 +26,69 @@ public class RxBus {
         return SingletonHolder.INSTANCE;
     }
 
-    public void post(String tag, Object o) {
-        if (mBus.hasObservers()) {
-            mBus.onNext(new BusEvent(tag, o));
+    /**
+     * Publishes an object to the specified subject for all subscribers of that subject.
+     */
+    public void publish(@NonNull String tag, @NonNull Object message) {
+        getSubject(tag).onNext(new BusEvent(tag, message));
+    }
+
+    /**
+     * Subscribes to the specified subject and listen for updates on that subject.
+     * Pass in an object(often an Activity or Fragment) to associate
+     * your registration with, so that you can dispose later.
+     * <br/><br/>
+     * <b>Note:</b> Make sure to call {@link RxBus#unregister(Object)} to avoid memory leaks.
+     */
+    public void subscribe(String tag, @NonNull Object lifecycle,
+                          @NonNull Consumer<BusEvent> consumer,
+                          Scheduler scheduler) {
+        Disposable disposable = getSubject(tag)
+                .observeOn(scheduler)
+                .subscribe(consumer);
+        getCompositeDisposable(lifecycle).add(disposable);
+    }
+
+    /**
+     * Unregisters this object from the bus, removing all subscriptions.
+     * This should be called when the object is going to go out of memory.
+     */
+    public void unregister(@NonNull Object lifecycle) {
+        CompositeDisposable compositeDisposable = mCompositeDisposableMap.remove(lifecycle);
+        if (compositeDisposable != null) {
+            compositeDisposable.clear();
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public <T> Observable<T> toObservable(final String tag, final Class<T> tClass) {
-        return mBus.filter(new Predicate<Object>() {
-            @Override
-            public boolean test(@NonNull Object o) throws Exception {
-                if (!(o instanceof BusEvent)) {
-                    return false;
-                }
-                BusEvent busEvent = (BusEvent) o;
-                return tClass.isInstance(busEvent.getObject())
-                        && tag != null && tag.equals(busEvent.getTag());
-            }
-        }).map(new Function<Object, T>() {
-            @Override
-            public T apply(@NonNull Object o) throws Exception {
-                BusEvent busEvent = (BusEvent) o;
-                return (T) busEvent.getObject();
-            }
-        });
+    /**
+     * Gets the CompositeDisposable or create it if not existed.
+     *
+     * @param lifecycle the key associated with the CompositeDisposable, often is an Activity or Fragment
+     * @return the CompositeDisposable associated with the given key
+     */
+    private CompositeDisposable getCompositeDisposable(@NonNull Object lifecycle) {
+        CompositeDisposable compositeDisposable = mCompositeDisposableMap.get(lifecycle);
+        if (compositeDisposable == null) {
+            compositeDisposable = new CompositeDisposable();
+            mCompositeDisposableMap.put(lifecycle, compositeDisposable);
+        }
+        return compositeDisposable;
+    }
+
+    /**
+     * Gets the PublishSubject or create it if not existed.
+     *
+     * @param tag the key associated with the PublishSubject
+     * @return the PublishSubject with the given tag
+     */
+    @NonNull
+    private PublishSubject<BusEvent> getSubject(String tag) {
+        PublishSubject<BusEvent> subject = mSubjectMap.get(tag);
+        if (subject == null) {
+            subject = PublishSubject.create();
+            mSubjectMap.put(tag, subject);
+        }
+        return subject;
     }
 
     private static class SingletonHolder {
