@@ -12,6 +12,8 @@ import io.reactivex.subjects.PublishSubject;
 
 /**
  * A simple event bus implemented by RxJava
+ *
+ * thx => https://android.jlelse.eu/how-to-make-an-event-bus-with-rxjava-and-rxandroid-b7e3c0391978
  */
 public class RxBus {
 
