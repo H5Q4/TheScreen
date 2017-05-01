@@ -3,8 +3,8 @@ package com.github.jupittar.thescreen;
 import android.app.Application;
 
 import com.github.jupittar.commlib.util.AppUtils;
+import com.github.jupittar.thescreen.data.local.LocalDataModule;
 import com.github.jupittar.thescreen.data.remote.NetworkModule;
-import com.github.jupittar.thescreen.helper.HelperModule;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 
@@ -40,7 +40,7 @@ public class TheScreenApp extends Application {
         return DaggerAppComponent
                 .builder()
                 .appModule(new AppModule(this))
-                .helperModule(new HelperModule())
+                .localDataModule(new LocalDataModule())
                 .networkModule(new NetworkModule())
                 .build();
     }

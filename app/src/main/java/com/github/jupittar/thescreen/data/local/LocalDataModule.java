@@ -1,7 +1,6 @@
-package com.github.jupittar.thescreen.data;
+package com.github.jupittar.thescreen.data.local;
 
 import com.github.jupittar.thescreen.BuildConfig;
-import com.github.jupittar.thescreen.data.local.CacheManager;
 import com.github.jupittar.thescreen.data.model.ImagesWrapper;
 import com.github.jupittar.thescreen.data.model.MoviesWrapper;
 import com.vincentbrison.openlibraries.android.dualcache.Builder;
@@ -25,7 +24,7 @@ public class LocalDataModule {
     @Singleton
     public CacheManager<ImagesWrapper> provideMovieDetailsCacheManager(
             DualCache<ImagesWrapper> dualCache) {
-        return new AppCacheManager<>(dualCache);
+        return new CacheManager<>(dualCache);
     }
 
     @Provides
@@ -46,7 +45,7 @@ public class LocalDataModule {
     @Singleton
     public CacheManager<MoviesWrapper> provideMoviesCacheManager(
             DualCache<MoviesWrapper> dualCache) {
-        return new AppCacheManager<>(dualCache);
+        return new CacheManager<>(dualCache);
     }
 
     @Provides

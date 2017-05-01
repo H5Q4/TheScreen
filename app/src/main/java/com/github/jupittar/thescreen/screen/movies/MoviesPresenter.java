@@ -2,26 +2,25 @@ package com.github.jupittar.thescreen.screen.movies;
 
 import com.github.jupittar.thescreen.data.model.Movie;
 import com.github.jupittar.thescreen.data.model.PagingInfo;
-import com.github.jupittar.thescreen.helper.SchedulerHelper;
 import com.github.jupittar.thescreen.screen.base.BasePresenter;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MoviesPresenter
         extends BasePresenter<MoviesContract.View>
         implements MoviesContract.Presenter<MoviesContract.View> {
 
     private MoviesContract.Interactor mInteractor;
-    private SchedulerHelper mSchedulerHelper;
 
     @Inject
-    public MoviesPresenter(MoviesContract.Interactor interactor, SchedulerHelper schedulerHelper) {
+    public MoviesPresenter(MoviesContract.Interactor interactor) {
         mInteractor = interactor;
-        mSchedulerHelper = schedulerHelper;
     }
 
     @Override
@@ -36,8 +35,8 @@ public class MoviesPresenter
 
         Disposable disposable = mInteractor
                 .getMovies(tab, page)
-                .subscribeOn(mSchedulerHelper.backgroundThread())
-                .observeOn(mSchedulerHelper.mainThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> getMvpView().hideLoading())
                 .subscribe(moviesWrapper -> {
                     List<Movie> movies = moviesWrapper.getMovies();

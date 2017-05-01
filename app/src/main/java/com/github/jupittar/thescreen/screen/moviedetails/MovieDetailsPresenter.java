@@ -2,7 +2,6 @@ package com.github.jupittar.thescreen.screen.moviedetails;
 
 import com.annimon.stream.Stream;
 import com.github.jupittar.thescreen.data.model.Images;
-import com.github.jupittar.thescreen.helper.SchedulerHelper;
 import com.github.jupittar.thescreen.screen.base.BasePresenter;
 import com.github.jupittar.thescreen.util.Constants;
 
@@ -12,20 +11,19 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MovieDetailsPresenter
         extends BasePresenter<MovieDetailsContract.View>
         implements MovieDetailsContract.Presenter<MovieDetailsContract.View> {
 
     private MovieDetailsContract.Interactor mInteractor;
-    private SchedulerHelper mSchedulerHelper;
 
     @Inject
-    public MovieDetailsPresenter(MovieDetailsContract.Interactor interactor,
-                                 SchedulerHelper schedulerHelper) {
+    public MovieDetailsPresenter(MovieDetailsContract.Interactor interactor) {
         mInteractor = interactor;
-        mSchedulerHelper = schedulerHelper;
     }
 
     @Override
@@ -50,8 +48,8 @@ public class MovieDetailsPresenter
                     }
                     return Collections.<String>emptyList();
                 })
-                .subscribeOn(mSchedulerHelper.backgroundThread())
-                .observeOn(mSchedulerHelper.mainThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(d -> getMvpView().showLoading())
                 .doFinally(() -> getMvpView().hideLoading())
                 .subscribe(urls -> {

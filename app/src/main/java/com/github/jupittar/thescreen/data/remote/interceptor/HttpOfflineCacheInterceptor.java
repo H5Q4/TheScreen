@@ -1,6 +1,8 @@
 package com.github.jupittar.thescreen.data.remote.interceptor;
 
-import com.github.jupittar.thescreen.helper.AndroidHelper;
+import android.content.Context;
+
+import com.github.jupittar.commlib.util.NetworkUtils;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -13,11 +15,11 @@ import okhttp3.Response;
 @SuppressWarnings("unused")
 public class HttpOfflineCacheInterceptor implements Interceptor {
 
-    private AndroidHelper mAndroidHelper;
+    private Context mContext;
     private int mCacheMaxStaleDays;
 
-    public HttpOfflineCacheInterceptor(AndroidHelper androidHelper, int cacheMaxStaleDays) {
-        mAndroidHelper = androidHelper;
+    public HttpOfflineCacheInterceptor(Context context, int cacheMaxStaleDays) {
+        mContext = context;
         mCacheMaxStaleDays = cacheMaxStaleDays;
     }
 
@@ -25,7 +27,7 @@ public class HttpOfflineCacheInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
 
-        if (!mAndroidHelper.isNetworkConnected()) {
+        if (!NetworkUtils.isNetworkConnected(mContext)) {
             CacheControl cacheControl = new CacheControl.Builder()
                     .maxStale(mCacheMaxStaleDays, TimeUnit.DAYS)
                     .build();

@@ -1,12 +1,12 @@
 package com.github.jupittar.thescreen.data.remote;
 
+import android.content.Context;
+
 import com.github.jupittar.thescreen.data.remote.interceptor.AuthInterceptor;
 import com.github.jupittar.thescreen.data.remote.interceptor.HttpCacheInterceptor;
 import com.github.jupittar.thescreen.data.remote.interceptor.HttpLoggingInterceptor;
 import com.github.jupittar.thescreen.data.remote.interceptor.HttpOfflineCacheInterceptor;
 import com.github.jupittar.thescreen.data.remote.interceptor.RetryInterceptor;
-import com.github.jupittar.thescreen.helper.AndroidHelper;
-import com.github.jupittar.thescreen.helper.LoggerHelper;
 import com.github.jupittar.thescreen.util.Constants;
 import com.google.gson.Gson;
 
@@ -113,8 +113,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public HttpLoggingInterceptor provideHttpLoggingInterceptor(LoggerHelper loggerHelper) {
-        return new HttpLoggingInterceptor(loggerHelper);
+    public HttpLoggingInterceptor provideHttpLoggingInterceptor() {
+        return new HttpLoggingInterceptor();
     }
 
     @Provides
@@ -131,10 +131,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public HttpOfflineCacheInterceptor provideOfflineCacheInterceptor(
-            AndroidHelper androidHelper
-    ) {
-        return new HttpOfflineCacheInterceptor(androidHelper, Constants.CACHE_MAX_STALE_DAYS);
+    public HttpOfflineCacheInterceptor provideOfflineCacheInterceptor(Context context) {
+        return new HttpOfflineCacheInterceptor(context, Constants.CACHE_MAX_STALE_DAYS);
     }
 
     @Provides

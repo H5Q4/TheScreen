@@ -1,4 +1,4 @@
-package com.github.jupittar.thescreen.data;
+package com.github.jupittar.thescreen.data.local;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;

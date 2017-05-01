@@ -1,6 +1,6 @@
 package com.github.jupittar.thescreen.data.remote.interceptor;
 
-import com.github.jupittar.thescreen.helper.LoggerHelper;
+import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -14,13 +14,7 @@ import okio.Buffer;
 @SuppressWarnings("unused")
 public class HttpLoggingInterceptor implements Interceptor {
 
-    private LoggerHelper mLoggerHelper;
-
-    public HttpLoggingInterceptor(LoggerHelper loggerHelper) {
-        mLoggerHelper = loggerHelper;
-    }
-
-    private static String stringifyRequestBody(Request request) {
+    private String stringifyRequestBody(Request request) {
         try {
             final Request copy = request.newBuilder().build();
             final Buffer buffer = new Buffer();
@@ -41,11 +35,11 @@ public class HttpLoggingInterceptor implements Interceptor {
         long t1 = System.nanoTime();
 
         if (request.method().equals("GET")) {
-            mLoggerHelper.i(String.format("%s: %s%n%s%n",
+            Logger.i(String.format("%s: %s%n%s%n",
                     request.method(),
                     request.url(), request.headers()));
         } else {
-            mLoggerHelper.i(String.format("%s: %s%n%s%nBODY: %s",
+            Logger.i(String.format("%s: %s%n%s%nBODY: %s",
                     request.method(),
                     request.url(), request.headers(),
                     stringifyRequestBody(request)
@@ -55,12 +49,12 @@ public class HttpLoggingInterceptor implements Interceptor {
         Response response = chain.proceed(request);
 
         long t2 = System.nanoTime();
-        mLoggerHelper.i(String.format(Locale.CHINA, "Received response from %s in %.1fms%n%s",
+        Logger.i(String.format(Locale.CHINA, "Received response from %s in %.1fms%n%s",
                 response.request().url(), (t2 - t1) / 1e6d, response.headers()));
 
         ResponseBody responseBody = response.body();
         String responseBodyString = response.body().string();
-        mLoggerHelper.json(responseBodyString);
+        Logger.json(responseBodyString);
 
         return response.newBuilder()
                 .body(ResponseBody.create(responseBody.contentType(), responseBodyString.getBytes()))
