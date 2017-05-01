@@ -39,42 +39,40 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':app-common')
-    compile project(':app-core')
+    compile project(':common')
     // Test
-    testCompile rootProject.ext.testLibraries.junit
-    androidTestCompile rootProject.ext.testLibraries.espresso
+    testCompile "junit:junit:${libsVersion.junit}"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:${libsVersion.espresso}"
     // Support
-    compile rootProject.ext.libraries.constraintLayout
-    compile rootProject.ext.libraries.supportAnnotations
-    compile rootProject.ext.libraries.supportV4
-    compile rootProject.ext.libraries.appcompatV7
-    compile rootProject.ext.libraries.design
-    compile rootProject.ext.libraries.recyclerviewV7
-    compile rootProject.ext.libraries.cardviewV7
-    compile rootProject.ext.libraries.paletteV7
+    compile "com.android.support.constraint:constraint-layout:${libsVersion.constraintLayout}"
+    compile "com.android.support:support-annotations:${libsVersion.androidSupport}"
+    compile "com.android.support:support-v4:${libsVersion.androidSupport}"
+    compile "com.android.support:appcompat-v7:${libsVersion.androidSupport}"
+    compile "com.android.support:design:${libsVersion.androidSupport}"
+    compile "com.android.support:recyclerview-v7:${libsVersion.androidSupport}"
+    compile "com.android.support:cardview-v7:${libsVersion.androidSupport}"
+    compile "com.android.support:palette-v7:${libsVersion.androidSupport}"
     // Rx
-    compile rootProject.ext.libraries.rxjava2
-    compile rootProject.ext.libraries.rxandroid2
+    compile "io.reactivex.rxjava2:rxjava:${libsVersion.rxjava2}"
+    compile "io.reactivex.rxjava2:rxandroid:${libsVersion.rxandroid2}"
     // Retrofit2
-    compile rootProject.ext.libraries.okhttp3
-    compile rootProject.ext.libraries.retrofit2
-    compile rootProject.ext.libraries.rxjava2Adapter4Retrofit2
-    compile rootProject.ext.libraries.gson
-    compile rootProject.ext.libraries.gsonConverter4Retrofit2
+    compile "com.squareup.okhttp3:okhttp:${libsVersion.okhttp3}"
+    compile "com.squareup.retrofit2:retrofit:${libsVersion.retrofit2}"
+    compile "com.squareup.retrofit2:adapter-rxjava2:${libsVersion.retrofit2}"
+    compile "com.google.code.gson:gson:${libsVersion.gson}"
+    compile "com.squareup.retrofit2:converter-gson:${libsVersion.retrofit2}"
     // Dagger2
-    compile rootProject.ext.libraries.dagger2
-    annotationProcessor rootProject.ext.libraries.dagger2Compiler
+    compile "com.google.dagger:dagger:${libsVersion.dagger2}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${libsVersion.dagger2}"
     // Butterknife
-    compile rootProject.ext.libraries.butterknife
-    annotationProcessor rootProject.ext.libraries.butterknifeCompiler
+    compile "com.jakewharton:butterknife:${libsVersion.butterknife}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${libsVersion.butterknife}"
 
-    compile rootProject.ext.libraries.glide
-    compile rootProject.ext.libraries.logger
-    compile rootProject.ext.libraries.toasty
-    compile rootProject.ext.libraries.snacky
-    compile rootProject.ext.libraries.dualcache
-    compile 'com.android.support:support-v4:25.3.1'
+    compile "com.github.bumptech.glide:glide:${libsVersion.glide}"
+    compile "com.orhanobut:logger:${libsVersion.logger}"
+    compile "com.github.GrenderG:Toasty:${libsVersion.toasty}"
+    compile "com.github.matecode:Snacky:${libsVersion.snacky}"
+    compile "com.vincentbrison.openlibraries.android:dualcache:${libsVersion.dualcache}"
 
-    compile rootProject.ext.libraries.lightWeightStreamApi
+    compile "com.annimon:stream:${libsVersion.lightWeightStreamApi}"
 }

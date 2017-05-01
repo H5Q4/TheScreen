@@ -1,6 +1,5 @@
 package com.github.jupittar.thescreen.helper;
 
-import com.github.jupittar.core.helper.LoggerHelper;
 import com.orhanobut.logger.Logger;
 
 @SuppressWarnings("unused")

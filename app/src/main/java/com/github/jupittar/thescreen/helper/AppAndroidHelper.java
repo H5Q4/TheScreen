@@ -3,7 +3,6 @@ package com.github.jupittar.thescreen.helper;
 import android.content.Context;
 
 import com.github.jupittar.commlib.util.NetworkUtils;
-import com.github.jupittar.core.helper.AndroidHelper;
 
 
 public class AppAndroidHelper implements AndroidHelper {

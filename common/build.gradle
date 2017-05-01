@@ -20,11 +20,11 @@ android {
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
-  testCompile rootProject.ext.testLibraries.junit
+  testCompile "junit:junit:${libsVersion.junit}"
 
-  compile rootProject.ext.libraries.appcompatV7
-  compile rootProject.ext.libraries.recyclerviewV7
-  compile rootProject.ext.libraries.design
-  compile rootProject.ext.libraries.gson
-  compile rootProject.ext.libraries.rxjava2
+  compile "com.android.support:appcompat-v7:${libsVersion.androidSupport}"
+  compile "com.android.support:design:${libsVersion.androidSupport}"
+  compile "com.android.support:recyclerview-v7:${libsVersion.androidSupport}"
+  compile "com.google.code.gson:gson:${libsVersion.gson}"
+  compile "io.reactivex.rxjava2:rxjava:${libsVersion.rxjava2}"
 }

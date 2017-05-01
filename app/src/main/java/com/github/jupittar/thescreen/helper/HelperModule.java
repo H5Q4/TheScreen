@@ -2,10 +2,6 @@ package com.github.jupittar.thescreen.helper;
 
 import android.content.Context;
 
-import com.github.jupittar.core.helper.AndroidHelper;
-import com.github.jupittar.core.helper.LoggerHelper;
-import com.github.jupittar.core.helper.SchedulerHelper;
-
 import javax.inject.Singleton;
 
 import dagger.Module;

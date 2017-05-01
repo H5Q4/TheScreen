@@ -6,7 +6,7 @@ ext {
 
     //libraries versions
     libsVersion = [
-            androidSupport               : '25.3.0',
+            androidSupport               : '25.3.1',
             baseRecyclerViewAdapterHelper: '2.8.0',
             butterknife                  : '8.4.0',
             constraintLayout             : '1.0.2',
@@ -51,19 +51,19 @@ ext {
             //android support
             constraintLayout             : "com.android.support.constraint:constraint-layout:${libsVersion.constraintLayout}",
             supportV4                    : "com.android.support:support-v4:${libsVersion.androidSupport}",
-            appcompatV7         : "com.android.support:appcompat-v7:${libsVersion.androidSupport}",
-            supportAnnotations  : "com.android.support:support-annotations:${libsVersion.androidSupport}",
-            cardviewV7          : "com.android.support:cardview-v7:${libsVersion.androidSupport}",
-            design              : "com.android.support:design:${libsVersion.androidSupport}",
-            gridlayoutV7        : "com.android.support:gridlayout-v7:${libsVersion.androidSupport}",
-            paletteV7           : "com.android.support:palette-v7:${libsVersion.androidSupport}",
-            recyclerviewV7      : "com.android.support:recyclerview-v7:${libsVersion.androidSupport}",
+            appcompatV7                  : "com.android.support:appcompat-v7:${libsVersion.androidSupport}",
+            supportAnnotations           : "com.android.support:support-annotations:${libsVersion.androidSupport}",
+            cardviewV7                   : "com.android.support:cardview-v7:${libsVersion.androidSupport}",
+            design                       : "com.android.support:design:${libsVersion.androidSupport}",
+            gridlayoutV7                 : "com.android.support:gridlayout-v7:${libsVersion.androidSupport}",
+            paletteV7                    : "com.android.support:palette-v7:${libsVersion.androidSupport}",
+            recyclerviewV7               : "com.android.support:recyclerview-v7:${libsVersion.androidSupport}",
 
-            gson                : "com.google.code.gson:gson:${libsVersion.gson}",
-            dagger2             : "com.google.dagger:dagger:${libsVersion.dagger2}",
-            dagger2Compiler     : "com.google.dagger:dagger-compiler:${libsVersion.dagger2}",
+            gson                         : "com.google.code.gson:gson:${libsVersion.gson}",
+            dagger2                      : "com.google.dagger:dagger:${libsVersion.dagger2}",
+            dagger2Compiler              : "com.google.dagger:dagger-compiler:${libsVersion.dagger2}",
 
-            butterknife         : "com.jakewharton:butterknife:${libsVersion.butterknife}",
+            butterknife                  : "com.jakewharton:butterknife:${libsVersion.butterknife}",
             butterknifeCompiler          : "com.jakewharton:butterknife-compiler:${libsVersion.butterknife}",
 
             logger                       : "com.orhanobut:logger:${libsVersion.logger}",
@@ -79,16 +79,16 @@ ext {
             rxjava2Adapter4Retrofit2     : "com.squareup.retrofit2:adapter-rxjava2:${libsVersion.retrofit2}",
 
             leakcanary                   : "com.squareup.leakcanary:leakcanary-android:${libsVersion.leakcanary}",
-            leakcanaryNoOp      : "com.squareup.leakcanary:leakcanary-android-no-op:${libsVersion.leakcanary}",
+            leakcanaryNoOp               : "com.squareup.leakcanary:leakcanary-android-no-op:${libsVersion.leakcanary}",
 
-            rxpermissions       : "com.tbruyelle.rxpermissions:rxpermissions:${libsVersion.rxpermissions}",
+            rxpermissions                : "com.tbruyelle.rxpermissions:rxpermissions:${libsVersion.rxpermissions}",
 
-            snacky              : "com.github.matecode:Snacky:${libsVersion.snacky}",
+            snacky                       : "com.github.matecode:Snacky:${libsVersion.snacky}",
 
-            toasty              : "com.github.GrenderG:Toasty:${libsVersion.toasty}",
+            toasty                       : "com.github.GrenderG:Toasty:${libsVersion.toasty}",
 
-            dualcache           : "com.vincentbrison.openlibraries.android:dualcache:${libsVersion.dualcache}",
+            dualcache                    : "com.vincentbrison.openlibraries.android:dualcache:${libsVersion.dualcache}",
 
-            lightWeightStreamApi: "com.annimon:stream:${libsVersion.lightWeightStreamApi}",
+            lightWeightStreamApi         : "com.annimon:stream:${libsVersion.lightWeightStreamApi}",
     ]
 }

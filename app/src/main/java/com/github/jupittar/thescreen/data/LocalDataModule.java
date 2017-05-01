@@ -1,9 +1,9 @@
 package com.github.jupittar.thescreen.data;
 
-import com.github.jupittar.core.data.local.CacheManager;
-import com.github.jupittar.core.data.model.ImagesWrapper;
-import com.github.jupittar.core.data.model.MoviesWrapper;
 import com.github.jupittar.thescreen.BuildConfig;
+import com.github.jupittar.thescreen.data.local.CacheManager;
+import com.github.jupittar.thescreen.data.model.ImagesWrapper;
+import com.github.jupittar.thescreen.data.model.MoviesWrapper;
 import com.vincentbrison.openlibraries.android.dualcache.Builder;
 import com.vincentbrison.openlibraries.android.dualcache.DualCache;
 

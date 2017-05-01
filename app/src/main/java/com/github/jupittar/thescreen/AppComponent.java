@@ -1,16 +1,16 @@
 package com.github.jupittar.thescreen;
 
 
-import com.github.jupittar.core.data.remote.NetworkModule;
-import com.github.jupittar.core.moviedetails.MovieDetailsModule;
-import com.github.jupittar.core.moviedetails.info.MovieInfoModule;
-import com.github.jupittar.core.movies.MoviesModule;
 import com.github.jupittar.thescreen.data.LocalDataModule;
+import com.github.jupittar.thescreen.data.remote.NetworkModule;
 import com.github.jupittar.thescreen.helper.HelperModule;
-import com.github.jupittar.thescreen.main.MainActivity;
-import com.github.jupittar.thescreen.moviedetails.MovieDetailsSubcomponent;
-import com.github.jupittar.thescreen.moviedetails.info.MovieInfoSubcomponent;
-import com.github.jupittar.thescreen.movies.MoviesSubcomponent;
+import com.github.jupittar.thescreen.screen.main.MainActivity;
+import com.github.jupittar.thescreen.screen.moviedetails.MovieDetailsModule;
+import com.github.jupittar.thescreen.screen.moviedetails.MovieDetailsSubcomponent;
+import com.github.jupittar.thescreen.screen.moviedetails.info.MovieInfoModule;
+import com.github.jupittar.thescreen.screen.moviedetails.info.MovieInfoSubcomponent;
+import com.github.jupittar.thescreen.screen.movies.MoviesModule;
+import com.github.jupittar.thescreen.screen.movies.MoviesSubcomponent;
 
 import javax.inject.Singleton;
 

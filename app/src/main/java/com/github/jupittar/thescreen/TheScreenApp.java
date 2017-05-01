@@ -3,7 +3,7 @@ package com.github.jupittar.thescreen;
 import android.app.Application;
 
 import com.github.jupittar.commlib.util.AppUtils;
-import com.github.jupittar.core.data.remote.NetworkModule;
+import com.github.jupittar.thescreen.data.remote.NetworkModule;
 import com.github.jupittar.thescreen.helper.HelperModule;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;

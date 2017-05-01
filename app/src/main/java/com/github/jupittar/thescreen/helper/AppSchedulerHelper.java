@@ -1,7 +1,5 @@
 package com.github.jupittar.thescreen.helper;
 
-import com.github.jupittar.core.helper.SchedulerHelper;
-
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;

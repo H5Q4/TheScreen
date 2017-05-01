@@ -1,4 +1,1 @@
-include ':app-mobile', ':app-core', ':app-common'
-project(':app-mobile').projectDir = new File('app')
-project(':app-core').projectDir = new File('core')
-project(':app-common').projectDir = new File('common')
+include ':app', ':common'
