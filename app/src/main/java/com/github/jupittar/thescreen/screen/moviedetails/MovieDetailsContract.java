@@ -1,6 +1,6 @@
 package com.github.jupittar.thescreen.screen.moviedetails;
 
-import com.github.jupittar.thescreen.data.model.ImagesWrapper;
+import com.github.jupittar.thescreen.data.entity.ImagesWrapper;
 import com.github.jupittar.thescreen.screen.base.Contract;
 
 import java.util.List;

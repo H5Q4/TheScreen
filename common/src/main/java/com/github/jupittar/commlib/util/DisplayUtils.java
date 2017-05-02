@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 
-public class WindowUtils {
+public class DisplayUtils {
 
     /**
      * Returns the screen height pixels

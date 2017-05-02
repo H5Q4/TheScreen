@@ -28,11 +28,12 @@ android {
     }
     configurations.all {
         resolutionStrategy {
-            force rootProject.ext.libraries.supportAnnotations
-            force rootProject.ext.libraries.supportV4
-            force rootProject.ext.libraries.appcompatV7
-            force rootProject.ext.libraries.design
-            force rootProject.ext.libraries.recyclerviewV7
+            force "com.android.support:support-annotations:${libsVersion.androidSupport}"
+            force "com.android.support:support-v4:${libsVersion.androidSupport}"
+            force "com.android.support:appcompat-v7:${libsVersion.androidSupport}"
+            force "com.android.support:design:${libsVersion.androidSupport}"
+            force "com.android.support:recyclerview-v7:${libsVersion.androidSupport}"
+            force "com.android.support:cardview-v7:${libsVersion.androidSupport}"
         }
     }
 }

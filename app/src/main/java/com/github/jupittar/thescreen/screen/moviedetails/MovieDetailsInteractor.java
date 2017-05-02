@@ -1,7 +1,7 @@
 package com.github.jupittar.thescreen.screen.moviedetails;
 
+import com.github.jupittar.thescreen.data.entity.ImagesWrapper;
 import com.github.jupittar.thescreen.data.local.CacheManager;
-import com.github.jupittar.thescreen.data.model.ImagesWrapper;
 import com.github.jupittar.thescreen.data.remote.TmdbService;
 
 import java.util.Locale;

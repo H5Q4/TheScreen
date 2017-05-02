@@ -1,8 +1,8 @@
 package com.github.jupittar.thescreen.data.remote;
 
-import com.github.jupittar.thescreen.data.model.Images;
-import com.github.jupittar.thescreen.data.model.Movie;
-import com.github.jupittar.thescreen.data.model.RawResponse;
+import com.github.jupittar.thescreen.data.entity.RawResponse;
+import com.github.jupittar.thescreen.data.remote.response.Images;
+import com.github.jupittar.thescreen.data.remote.response.Movie;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

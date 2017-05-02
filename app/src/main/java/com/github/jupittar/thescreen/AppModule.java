@@ -3,6 +3,7 @@ package com.github.jupittar.thescreen;
 import android.content.Context;
 import android.content.res.Resources;
 
+import com.github.jupittar.commlib.util.AndroidUtils;
 import com.github.jupittar.commlib.util.AppUtils;
 
 import java.io.File;
@@ -60,11 +61,7 @@ public class AppModule {
     @Singleton
     @Named("cacheDir")
     File provideCacheDir(Context context) {
-        File dir = context.getExternalCacheDir();
-        if (dir == null) {
-            dir = context.getCacheDir();
-        }
-        return dir;
+        return AndroidUtils.getCacheDirectory(context);
     }
 
 }

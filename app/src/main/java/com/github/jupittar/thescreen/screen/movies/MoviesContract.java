@@ -1,8 +1,8 @@
 package com.github.jupittar.thescreen.screen.movies;
 
-import com.github.jupittar.thescreen.data.model.Movie;
-import com.github.jupittar.thescreen.data.model.MoviesWrapper;
-import com.github.jupittar.thescreen.data.model.PagingInfo;
+import com.github.jupittar.thescreen.data.entity.MoviesWrapper;
+import com.github.jupittar.thescreen.data.entity.PagingInfo;
+import com.github.jupittar.thescreen.data.remote.response.Movie;
 import com.github.jupittar.thescreen.screen.base.Contract;
 
 import java.util.List;

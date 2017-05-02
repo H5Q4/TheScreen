@@ -1,4 +1,4 @@
-package com.github.jupittar.thescreen.data.model;
+package com.github.jupittar.thescreen.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 

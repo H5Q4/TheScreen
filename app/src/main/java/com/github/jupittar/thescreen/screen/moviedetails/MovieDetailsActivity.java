@@ -33,7 +33,7 @@ import com.github.jupittar.commlib.recyclerview.layoutmanager.PileSwipeCallback;
 import com.github.jupittar.commlib.util.CommonPagerAdapter;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
-import com.github.jupittar.thescreen.data.model.Movie;
+import com.github.jupittar.thescreen.data.remote.response.Movie;
 import com.github.jupittar.thescreen.screen.base.BaseActivity;
 import com.github.jupittar.thescreen.screen.moviedetails.info.MovieInfoFragment;
 import com.github.jupittar.thescreen.util.Constants;

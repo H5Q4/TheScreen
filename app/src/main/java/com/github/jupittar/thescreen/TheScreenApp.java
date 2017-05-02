@@ -5,12 +5,13 @@ import android.app.Application;
 import com.github.jupittar.commlib.util.AppUtils;
 import com.github.jupittar.thescreen.data.local.LocalDataModule;
 import com.github.jupittar.thescreen.data.remote.NetworkModule;
+import com.github.jupittar.thescreen.helper.HelperModule;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 
 public class TheScreenApp extends Application {
 
-    private static final String LOGGER_TAG = "TheScreenApp_Log";
+    private static final String LOGGER_TAG = "TheScreen_Log";
 
     private static TheScreenApp sInstance;
     private static AppComponent sAppComponent;
@@ -40,6 +41,7 @@ public class TheScreenApp extends Application {
         return DaggerAppComponent
                 .builder()
                 .appModule(new AppModule(this))
+                .helperModule(new HelperModule())
                 .localDataModule(new LocalDataModule())
                 .networkModule(new NetworkModule())
                 .build();

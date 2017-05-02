@@ -1,24 +1,24 @@
-package com.github.jupittar.thescreen.data.model;
+package com.github.jupittar.thescreen.data.remote.response;
 
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
-public class SpokenLanguages {
+public class ProductionCountries {
 
     //region Fields
-    @SerializedName("iso_639_1")
-    private String iso6391;
+    @SerializedName("iso_3166_1")
+    private String iso31661;
     @SerializedName("name")
     private String name;
     //endregion
 
     //region Getters and Setters
-    public String getIso6391() {
-        return iso6391;
+    public String getIso31661() {
+        return iso31661;
     }
 
-    public void setIso6391(String iso6391) {
-        this.iso6391 = iso6391;
+    public void setIso31661(String iso31661) {
+        this.iso31661 = iso31661;
     }
 
     public String getName() {

@@ -1,5 +1,7 @@
-package com.github.jupittar.thescreen.data.model;
+package com.github.jupittar.thescreen.data.entity;
 
+
+import com.github.jupittar.thescreen.data.remote.response.Images;
 
 public class ImagesWrapper {
 

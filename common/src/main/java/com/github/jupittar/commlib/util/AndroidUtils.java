@@ -12,7 +12,11 @@ import java.lang.reflect.Field;
 public class AndroidUtils {
 
     public static File getCacheDirectory(Context context) {
-        return context.getCacheDir();
+        File cacheDir = context.getExternalCacheDir();
+        if (cacheDir == null) {
+            cacheDir = context.getCacheDir();
+        }
+        return cacheDir;
     }
 
     /**
@@ -46,6 +50,18 @@ public class AndroidUtils {
         if (view != null) {
             ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).
                     hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    /**
+     * Shows keyboard
+     */
+    public static void showKeyboard(Context context, View view) {
+        if (view.requestFocus()) {
+            InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null) {
+                inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+            }
         }
     }
 }

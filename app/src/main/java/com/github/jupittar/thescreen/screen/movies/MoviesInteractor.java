@@ -1,11 +1,11 @@
 package com.github.jupittar.thescreen.screen.movies;
 
+import com.github.jupittar.thescreen.data.entity.MoviesWrapper;
+import com.github.jupittar.thescreen.data.entity.PagingInfo;
+import com.github.jupittar.thescreen.data.entity.RawResponse;
 import com.github.jupittar.thescreen.data.local.CacheManager;
-import com.github.jupittar.thescreen.data.model.Movie;
-import com.github.jupittar.thescreen.data.model.MoviesWrapper;
-import com.github.jupittar.thescreen.data.model.PagingInfo;
-import com.github.jupittar.thescreen.data.model.RawResponse;
 import com.github.jupittar.thescreen.data.remote.TmdbService;
+import com.github.jupittar.thescreen.data.remote.response.Movie;
 
 import java.util.Locale;
 
