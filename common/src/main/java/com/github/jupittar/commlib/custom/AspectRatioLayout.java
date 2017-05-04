@@ -9,7 +9,7 @@ public class AspectRatioLayout extends RelativeLayout {
     public static final double SQUARE = 1.0D;
     public static final double PHI = 2 / (Math.sqrt(5) + 1);
 
-    private double mAspectRatio;
+    private double mAspectRatio = PHI;
 
     public AspectRatioLayout(Context context) {
         super(context);

@@ -172,13 +172,30 @@ public class MovieDetailsActivity
     }
 
     private void setUpViewPager() {
-        CommonPagerAdapter adapter = new CommonPagerAdapter(getSupportFragmentManager());
+        CommonPagerAdapter adapter = new CommonPagerAdapter(getSupportFragmentManager()) {
+
+//            private int mCurrentPosition = -1;
+//
+//            @Override
+//            public void setPrimaryItem(ViewGroup container, int position, Object object) {
+//                super.setPrimaryItem(container, position, object);
+//                if (position != mCurrentPosition) {
+//                    Fragment fragment = (Fragment) object;
+//                    SCViewPager pager = (SCViewPager) container;
+//                    if (fragment != null && fragment.getView() != null) {
+//                        mCurrentPosition = position;
+//                        pager.measureCurrentView(fragment.getView());
+//                    }
+//                }
+//            }
+        };
         adapter.addPage(MovieInfoFragment.newInstance(mMovie.getId()), "Info");
         adapter.addPage(MovieInfoFragment.newInstance(mMovie.getId()), "Cast");
         adapter.addPage(MovieInfoFragment.newInstance(mMovie.getId()), "Reviews");
         mViewPager.setAdapter(adapter);
         mViewPager.setScrollEnabled(true);
         mViewPager.setOffscreenPageLimit(adapter.getCount());
+//        mViewPager.setWrapContent(true);
     }
 
     private void setUpToolbar() {

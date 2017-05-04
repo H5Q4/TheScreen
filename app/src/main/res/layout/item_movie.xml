@@ -8,6 +8,7 @@
     android:clickable="true"
     android:elevation="@dimen/cardview_default_elevation"
     android:foreground="?android:attr/selectableItemBackground"
+    android:stateListAnimator="@animator/selector_press"
     app:cardCornerRadius="2dp">
 
     <com.github.jupittar.commlib.custom.AspectRatioImageView

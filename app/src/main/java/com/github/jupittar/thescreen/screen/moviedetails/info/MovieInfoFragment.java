@@ -2,10 +2,15 @@ package com.github.jupittar.thescreen.screen.moviedetails.info;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v7.graphics.Palette;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -14,10 +19,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.github.jupittar.commlib.custom.AspectRatioImageView;
+import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
+import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.data.remote.response.Movie;
 import com.github.jupittar.thescreen.screen.base.LazyFragment;
+import com.github.jupittar.thescreen.util.Constants;
 import com.github.jupittar.thescreen.util.TypefaceUtils;
 
 import java.util.List;
@@ -49,6 +62,8 @@ public class MovieInfoFragment
     @BindView(R.id.tv_budget) TextView mBudgetTv;
     @BindView(R.id.tv_revenue) TextView mRevenueTv;
     @BindView(R.id.pb_loading) ContentLoadingProgressBar mProgressBar;
+    @BindView(R.id.rv_similar_movies) RecyclerView mSimilarMoviesRv;
+    @BindView(R.id.tv_header_similar_movies) TextView mSimilarMoviesHeaderTv;
 
     private long mMovieId;
     @Inject MovieInfoContract.Presenter<MovieInfoContract.View> mPresenter;
@@ -113,6 +128,7 @@ public class MovieInfoFragment
         mLanguageTv.setTypeface(exo2RegularFont);
         mBudgetTv.setTypeface(exo2RegularFont);
         mRevenueTv.setTypeface(exo2RegularFont);
+        mSimilarMoviesHeaderTv.setTypeface(exo2RegularFont);
     }
 
     private CharSequence setInfoWithSpannableString(CharSequence source, int start, int end) {
@@ -178,7 +194,14 @@ public class MovieInfoFragment
 
     @Override
     public void showSimilarMovies(List<Movie> similarMovies) {
-
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false);
+        mSimilarMoviesRv.setLayoutManager(layoutManager);
+        mSimilarMoviesRv.setHasFixedSize(true);
+        SimilarMoviesAdapter adapter = new SimilarMoviesAdapter(getContext(),
+                R.layout.item_similar_movie);
+        adapter.addAll(similarMovies);
+        mSimilarMoviesRv.setAdapter(adapter);
     }
 
     @Override
@@ -228,6 +251,50 @@ public class MovieInfoFragment
     @Override
     public void showErrorMessage(Throwable throwable) {
         Toasty.error(getActivity(), throwable.getMessage()).show();
+    }
+    //endregion
+
+    //region Adapters
+    private class SimilarMoviesAdapter extends CommonViewAdapter<Movie> {
+
+        public SimilarMoviesAdapter(Context context, @LayoutRes int layoutId) {
+            super(context, layoutId);
+        }
+
+        @Override
+        public void convertView(CommonViewHolder holder, Movie item) {
+            AspectRatioImageView posterIv = holder.getView(R.id.iv_movie_poster);
+            posterIv.setAspectRatio(4.0D / 3.0D);
+            TextView releaseYearTv = holder.getView(R.id.tv_release_year);
+            releaseYearTv.setTypeface(TypefaceUtils.getTypeface(TypefaceUtils.FONT_EXO2_REGULAR, mContext));
+            releaseYearTv.setText(item.getReleaseDate().substring(0, 4));
+            String posterPath = String.format("%s%s%s",
+                    Constants.IMAGE_BASE_URL,
+                    Constants.IMAGE_SIZE_W500,
+                    item.getPosterPath());
+            Glide.with(mContext)
+                    .load(posterPath)
+                    .asBitmap()
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(new BitmapImageViewTarget(posterIv) {
+                        @Override
+                        public void onResourceReady(Bitmap resource,
+                                                    GlideAnimation<? super Bitmap> glideAnimation) {
+                            super.onResourceReady(resource, glideAnimation);
+                            Palette.from(resource).generate(p -> {
+                                int darkMutedColor = p.getDarkMutedColor(
+                                        ContextCompat.getColor(mContext,
+                                                R.color.colorPrimary));
+                                releaseYearTv.setBackgroundColor(darkMutedColor);
+                                int lightVibrantColor = p.getLightVibrantColor(
+                                        ContextCompat.getColor(mContext,
+                                                android.R.color.white));
+                                releaseYearTv.setTextColor(lightVibrantColor);
+                            });
+                        }
+                    });
+        }
     }
     //endregion
 }
