@@ -163,7 +163,7 @@ public class MainActivity extends BaseActivity
     }
 
     private void applyFontToMenuItem(MenuItem item) {
-        Typeface font = TypefaceUtils.getTypeface(TypefaceUtils.FONT_AVENIR_NEXT_LT_PRO_REGULAR, this);
+        Typeface font = TypefaceUtils.getTypeface(TypefaceUtils.FONT_EXO2_REGULAR, this);
         SpannableString mNewTitle = new SpannableString(item.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(),
                 Spannable.SPAN_INCLUSIVE_INCLUSIVE);

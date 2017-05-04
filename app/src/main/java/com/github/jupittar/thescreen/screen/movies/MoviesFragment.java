@@ -50,7 +50,7 @@ public class MoviesFragment extends LazyFragment {
     private void setUpTabLayout() {
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        mTabLayout.setTypeface(TypefaceUtils.getTypeface(TypefaceUtils.FONT_LOBSTER_REGULAR,
+        mTabLayout.setTypeface(TypefaceUtils.getTypeface(TypefaceUtils.FONT_EXO2_REGULAR,
                 getActivity()));
         mTabLayout.setupWithViewPager(mViewPager);
 

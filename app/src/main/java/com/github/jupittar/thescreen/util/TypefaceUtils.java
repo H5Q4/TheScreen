@@ -8,9 +8,7 @@ import java.util.Map;
 
 public class TypefaceUtils {
 
-    public static final String FONT_AVENIR_NEXT_LT_PRO_REGULAR = "AvenirNextLTPro-Regular.otf";
-    public static final String FONT_AVENIR_NEXT_LT_PRO_IT = "AvenirNextLTPro-It.otf";
-    public static final String FONT_LOBSTER_REGULAR = "Lobster-Regular.ttf";
+    public static final String FONT_EXO2_REGULAR = "Exo2-Regular.otf";
 
     private static Map<String, Typeface> sTypefaceMap = new ArrayMap<>();
 

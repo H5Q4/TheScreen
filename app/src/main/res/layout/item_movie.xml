@@ -13,7 +13,7 @@
     <com.github.jupittar.commlib.custom.AspectRatioImageView
         android:id="@+id/iv_movie_poster"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:background="@drawable/shape_bg_pic"
         android:transitionName="@string/transition_name_poster"/>
 

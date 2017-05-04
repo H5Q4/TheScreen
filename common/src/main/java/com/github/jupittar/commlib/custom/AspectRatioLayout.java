@@ -34,7 +34,12 @@ public class AspectRatioLayout extends RelativeLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (mAspectRatio > 0.0D) {
             int width = MeasureSpec.getSize(widthMeasureSpec);
-            int height = (int) (width * mAspectRatio);
+            int height = MeasureSpec.getSize(heightMeasureSpec);
+            if (width != 0 && height == 0) {
+                height = (int) (width * mAspectRatio);
+            } else if (width == 0 && height != 0) {
+                width = (int) (height / mAspectRatio);
+            }
             super.onMeasure(
                     MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
                     MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)

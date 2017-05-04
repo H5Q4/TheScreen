@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.github.jupittar.commlib.custom.CustomTypefaceSpan;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.data.remote.response.Movie;
@@ -103,27 +102,21 @@ public class MovieInfoFragment
 
     //region Set Up Methods
     private void initMemberVariables() {
-        Typeface avenirNextRegularFont = TypefaceUtils
-                .getTypeface(TypefaceUtils.FONT_AVENIR_NEXT_LT_PRO_REGULAR, getActivity());
-        Typeface avenirNextItFont = TypefaceUtils
-                .getTypeface(TypefaceUtils.FONT_AVENIR_NEXT_LT_PRO_IT, getActivity());
-        mRatingTv.setTypeface(avenirNextRegularFont);
-        mRuntimeTv.setTypeface(avenirNextItFont);
-        mGenresTv.setTypeface(avenirNextItFont);
-        mOverviewTv.setTypeface(avenirNextRegularFont);
-        mDirectorTv.setTypeface(avenirNextRegularFont);
-        mCompanyTv.setTypeface(avenirNextRegularFont);
-        mLanguageTv.setTypeface(avenirNextRegularFont);
-        mBudgetTv.setTypeface(avenirNextRegularFont);
-        mRevenueTv.setTypeface(avenirNextRegularFont);
+        Typeface exo2RegularFont = TypefaceUtils
+                .getTypeface(TypefaceUtils.FONT_EXO2_REGULAR, getActivity());
+        mRatingTv.setTypeface(exo2RegularFont);
+        mRuntimeTv.setTypeface(exo2RegularFont);
+        mGenresTv.setTypeface(exo2RegularFont);
+        mOverviewTv.setTypeface(exo2RegularFont);
+        mDirectorTv.setTypeface(exo2RegularFont);
+        mCompanyTv.setTypeface(exo2RegularFont);
+        mLanguageTv.setTypeface(exo2RegularFont);
+        mBudgetTv.setTypeface(exo2RegularFont);
+        mRevenueTv.setTypeface(exo2RegularFont);
     }
 
     private CharSequence setInfoWithSpannableString(CharSequence source, int start, int end) {
         SpannableString ss = new SpannableString(source);
-        Typeface avenirNextItFont = TypefaceUtils
-                .getTypeface(TypefaceUtils.FONT_AVENIR_NEXT_LT_PRO_IT, getActivity());
-        ss.setSpan(new CustomTypefaceSpan("", avenirNextItFont), start, end,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.grey_500)),
                 start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return ss;

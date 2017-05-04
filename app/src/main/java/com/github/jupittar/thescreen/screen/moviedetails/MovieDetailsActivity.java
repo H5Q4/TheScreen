@@ -115,10 +115,10 @@ public class MovieDetailsActivity
 
     private void initMemberVariables() {
         mTitleTv.setTypeface(TypefaceUtils.getTypeface(
-                TypefaceUtils.FONT_AVENIR_NEXT_LT_PRO_REGULAR,
+                TypefaceUtils.FONT_EXO2_REGULAR,
                 getApplicationContext()));
         mReleaseDateTv.setTypeface(TypefaceUtils.getTypeface(
-                TypefaceUtils.FONT_AVENIR_NEXT_LT_PRO_IT,
+                TypefaceUtils.FONT_EXO2_REGULAR,
                 getApplicationContext()));
         mReleaseDateTv.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray));
         mMovie = (Movie) getIntent().getSerializableExtra(KEY_MOVIE);
@@ -167,7 +167,7 @@ public class MovieDetailsActivity
     private void setUpTabLayout() {
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        mTabLayout.setTypeface(TypefaceUtils.getTypeface(TypefaceUtils.FONT_LOBSTER_REGULAR, this));
+        mTabLayout.setTypeface(TypefaceUtils.getTypeface(TypefaceUtils.FONT_EXO2_REGULAR, this));
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -188,7 +188,7 @@ public class MovieDetailsActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         mCollapsingToolbarLayout.setCollapsedTitleTypeface(
-                TypefaceUtils.getTypeface(TypefaceUtils.FONT_AVENIR_NEXT_LT_PRO_REGULAR,
+                TypefaceUtils.getTypeface(TypefaceUtils.FONT_EXO2_REGULAR,
                         getApplicationContext()));
         mCollapsingToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(this,
                 android.R.color.transparent));
