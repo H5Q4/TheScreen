@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -38,6 +39,7 @@ public class MovieInfoFragment
     //endregion
 
     //region Member Variables
+    @BindView(R.id.content_movie_info) View mContentView;
     @BindView(R.id.tv_rating) TextView mRatingTv;
     @BindView(R.id.tv_overview) TextView mOverviewTv;
     @BindView(R.id.tv_runtime) TextView mRuntimeTv;
@@ -47,6 +49,7 @@ public class MovieInfoFragment
     @BindView(R.id.tv_language) TextView mLanguageTv;
     @BindView(R.id.tv_budget) TextView mBudgetTv;
     @BindView(R.id.tv_revenue) TextView mRevenueTv;
+    @BindView(R.id.pb_loading) ContentLoadingProgressBar mProgressBar;
 
     private long mMovieId;
     @Inject MovieInfoContract.Presenter<MovieInfoContract.View> mPresenter;
@@ -215,13 +218,18 @@ public class MovieInfoFragment
     }
 
     @Override
-    public void showLoading() {
+    public void showContentView() {
+        mContentView.setVisibility(View.VISIBLE);
+    }
 
+    @Override
+    public void showLoading() {
+        mProgressBar.show();
     }
 
     @Override
     public void hideLoading() {
-
+        mProgressBar.hide();
     }
 
     @Override

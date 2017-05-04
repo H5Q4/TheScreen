@@ -30,6 +30,8 @@ public interface MovieInfoContract {
         void showDuration(int runtime);
 
         void showGenreText(String s);
+
+        void showContentView();
     }
 
     interface Presenter<V extends View> extends Contract.Presenter<V> {

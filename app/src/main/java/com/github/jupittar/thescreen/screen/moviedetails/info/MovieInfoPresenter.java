@@ -39,7 +39,10 @@ public class MovieInfoPresenter
                 .subscribeOn(mSchedulerProvider.io())
                 .observeOn(mSchedulerProvider.ui())
                 .doOnSubscribe(d -> getMvpView().showLoading())
-                .doOnTerminate(() -> getMvpView().hideLoading())
+                .doOnTerminate(() -> {
+                    getMvpView().hideLoading();
+                    getMvpView().showContentView();
+                })
                 .subscribe(movieDetailsWrapper -> {
                     if (movieDetailsWrapper != null) {
                         Movie movie = movieDetailsWrapper.getMovie();
