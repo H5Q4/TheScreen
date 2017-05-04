@@ -52,7 +52,7 @@ public class Movie implements Serializable {
   @SerializedName("genres")
   private List<Genres> genres;
   @SerializedName("production_companies")
-  private List<Genres> productionCompanies;
+  private List<Company> productionCompanies;
   @SerializedName("production_countries")
   private List<ProductionCountries> productionCountries;
   @SerializedName("spoken_languages")
@@ -228,11 +228,11 @@ public class Movie implements Serializable {
     this.genres = genres;
   }
 
-  public List<Genres> getProductionCompanies() {
+    public List<Company> getProductionCompanies() {
     return productionCompanies;
   }
 
-  public void setProductionCompanies(List<Genres> productionCompanies) {
+    public void setProductionCompanies(List<Company> productionCompanies) {
     this.productionCompanies = productionCompanies;
   }
 
