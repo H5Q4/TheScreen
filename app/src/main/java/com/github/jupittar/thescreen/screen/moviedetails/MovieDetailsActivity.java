@@ -14,6 +14,7 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.transition.Transition;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
 import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
 import com.github.jupittar.commlib.recyclerview.layoutmanager.PileLayoutManager;
 import com.github.jupittar.commlib.recyclerview.layoutmanager.PileSwipeCallback;
+import com.github.jupittar.commlib.util.AnimationMaker;
 import com.github.jupittar.commlib.util.CommonPagerAdapter;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
@@ -38,6 +40,7 @@ import com.github.jupittar.thescreen.screen.base.BaseActivity;
 import com.github.jupittar.thescreen.screen.moviedetails.info.MovieInfoFragment;
 import com.github.jupittar.thescreen.util.Constants;
 import com.github.jupittar.thescreen.util.TypefaceUtils;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -71,6 +74,7 @@ public class MovieDetailsActivity
 
     private Movie mMovie;
     private BackdropViewAdapter mBackdropViewAdapter;
+    private Transition.TransitionListener mSharedELementEnterTransitionListener;
     //endregion
 
     //region Lifecycle Methods
@@ -84,15 +88,13 @@ public class MovieDetailsActivity
         initMemberVariables();
         setUpToolbar();
         setUpBackdropRecyclerView();
-        setUpViewPager();
-        setUpTabLayout();
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mPresenter.detach();
         mPresenter = null;
+        super.onDestroy();
     }
     //endregion
 
@@ -162,6 +164,39 @@ public class MovieDetailsActivity
             mTitleTv.setText(mMovie.getOriginalTitle());
             mReleaseDateTv.setText(mMovie.getReleaseDate());
         }
+        mSharedELementEnterTransitionListener = new Transition.TransitionListener() {
+            @Override
+            public void onTransitionStart(Transition transition) {
+                AnimationMaker.makeReveal(mBackdropRv, AnimationMaker.REVEAL_FROM_BOTTOM);
+            }
+
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                Logger.i("Enter Transition End!");
+                setUpViewPager();
+                setUpTabLayout();
+                getWindow().getSharedElementEnterTransition()
+                        .removeListener(this);
+            }
+
+            @Override
+            public void onTransitionCancel(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionPause(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionResume(Transition transition) {
+
+            }
+        };
+        getWindow()
+                .getSharedElementEnterTransition()
+                .addListener(mSharedELementEnterTransitionListener);
     }
 
     private void setUpTabLayout() {
@@ -193,7 +228,7 @@ public class MovieDetailsActivity
         adapter.addPage(MovieInfoFragment.newInstance(mMovie.getId()), "Cast");
         adapter.addPage(MovieInfoFragment.newInstance(mMovie.getId()), "Reviews");
         mViewPager.setAdapter(adapter);
-        mViewPager.setScrollEnabled(true);
+        mViewPager.setScrollEnabled(false);
         mViewPager.setOffscreenPageLimit(adapter.getCount());
 //        mViewPager.setWrapContent(true);
     }

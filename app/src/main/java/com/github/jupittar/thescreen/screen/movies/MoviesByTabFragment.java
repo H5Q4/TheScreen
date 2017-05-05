@@ -8,7 +8,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.ViewCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -140,9 +140,10 @@ public class MoviesByTabFragment
             Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
             intent.putExtra(MovieDetailsActivity.KEY_MOVIE, mMoviesAdapter.getDataItem(position));
             View posterIv = view.findViewById(R.id.iv_movie_poster);
+            Pair<View, String> pair = Pair.create(posterIv, getString(R.string.transition_name_poster));
+            @SuppressWarnings("unchecked")
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation(getActivity(), posterIv,
-                            ViewCompat.getTransitionName(posterIv));
+                    .makeSceneTransitionAnimation(getActivity(), pair);
             ActivityCompat.startActivity(getActivity(), intent, optionsCompat.toBundle());
         });
     }
