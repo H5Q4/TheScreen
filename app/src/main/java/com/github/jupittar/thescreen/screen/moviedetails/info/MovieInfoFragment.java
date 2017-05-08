@@ -2,11 +2,15 @@ package com.github.jupittar.thescreen.screen.moviedetails.info;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,10 +30,12 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.github.jupittar.commlib.custom.AspectRatioImageView;
 import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
 import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
+import com.github.jupittar.commlib.util.ColorUtils;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.data.remote.response.Movie;
 import com.github.jupittar.thescreen.screen.base.LazyFragment;
+import com.github.jupittar.thescreen.screen.moviedetails.MovieDetailsActivity;
 import com.github.jupittar.thescreen.util.Constants;
 import com.github.jupittar.thescreen.util.TypefaceUtils;
 
@@ -201,6 +207,17 @@ public class MovieInfoFragment
         SimilarMoviesAdapter adapter = new SimilarMoviesAdapter(getContext(),
                 R.layout.item_similar_movie);
         adapter.addAll(similarMovies);
+        adapter.setOnItemClickListener(((view, position) -> {
+            Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
+            intent.putExtra(MovieDetailsActivity.KEY_MOVIE, adapter.getDataItem(position));
+            View posterIv = view.findViewById(R.id.iv_movie_poster);
+            Pair<View, String> pair = Pair.create(posterIv, getString(R.string.transition_name_poster));
+            @SuppressWarnings("unchecked")
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(getActivity(), pair);
+            ActivityCompat.startActivity(getActivity(), intent, optionsCompat.toBundle());
+
+        }));
         mSimilarMoviesRv.setAdapter(adapter);
     }
 
@@ -264,7 +281,7 @@ public class MovieInfoFragment
         @Override
         public void convertView(CommonViewHolder holder, Movie item) {
             AspectRatioImageView posterIv = holder.getView(R.id.iv_movie_poster);
-            posterIv.setAspectRatio(4.0D / 3.0D);
+            posterIv.setAspectRatio(3.0D / 2.0D);
             TextView releaseYearTv = holder.getView(R.id.tv_release_year);
             releaseYearTv.setTypeface(TypefaceUtils.getTypeface(TypefaceUtils.FONT_EXO2_REGULAR, mContext));
             releaseYearTv.setText(item.getReleaseDate().substring(0, 4));
@@ -286,7 +303,7 @@ public class MovieInfoFragment
                                 int darkMutedColor = p.getDarkMutedColor(
                                         ContextCompat.getColor(mContext,
                                                 R.color.colorPrimary));
-                                releaseYearTv.setBackgroundColor(darkMutedColor);
+                                releaseYearTv.setBackgroundColor(ColorUtils.modifyAlpha(darkMutedColor, 0.6F));
                                 int lightVibrantColor = p.getLightVibrantColor(
                                         ContextCompat.getColor(mContext,
                                                 android.R.color.white));
