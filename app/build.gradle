@@ -74,6 +74,6 @@ dependencies {
     compile "com.github.GrenderG:Toasty:${libsVersion.toasty}"
     compile "com.github.matecode:Snacky:${libsVersion.snacky}"
     compile "com.vincentbrison.openlibraries.android:dualcache:${libsVersion.dualcache}"
-
     compile "com.annimon:stream:${libsVersion.lightWeightStreamApi}"
+    compile "de.hdodenhof:circleimageview:${libsVersion.circleImageView}"
 }

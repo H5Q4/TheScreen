@@ -7,6 +7,8 @@ import com.github.jupittar.thescreen.helper.HelperModule;
 import com.github.jupittar.thescreen.screen.main.MainActivity;
 import com.github.jupittar.thescreen.screen.moviedetails.MovieDetailsModule;
 import com.github.jupittar.thescreen.screen.moviedetails.MovieDetailsSubcomponent;
+import com.github.jupittar.thescreen.screen.moviedetails.cast.MovieCastModule;
+import com.github.jupittar.thescreen.screen.moviedetails.cast.MovieCastSubcomponent;
 import com.github.jupittar.thescreen.screen.moviedetails.info.MovieInfoModule;
 import com.github.jupittar.thescreen.screen.moviedetails.info.MovieInfoSubcomponent;
 import com.github.jupittar.thescreen.screen.movies.MoviesModule;
@@ -31,4 +33,6 @@ public interface AppComponent {
     MovieDetailsSubcomponent plus(MovieDetailsModule module);
 
     MovieInfoSubcomponent plus(MovieInfoModule module);
+
+    MovieCastSubcomponent plus(MovieCastModule module);
 }

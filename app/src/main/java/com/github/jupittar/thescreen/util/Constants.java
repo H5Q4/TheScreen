@@ -18,4 +18,7 @@ public class Constants {
     public static final int CACHE_MAX_STALE_DAYS = 7; // 7 day
     public static final int RETRY_COUNT = 3;  // 3 times
 
+    // Event tag
+    public static final String EVENT_TAG_CAST_LOADED = "event_cast_loaded";
+
 }

@@ -37,6 +37,7 @@ import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.data.remote.response.Movie;
 import com.github.jupittar.thescreen.screen.base.BaseActivity;
+import com.github.jupittar.thescreen.screen.moviedetails.cast.MovieCastFragment;
 import com.github.jupittar.thescreen.screen.moviedetails.info.MovieInfoFragment;
 import com.github.jupittar.thescreen.util.Constants;
 import com.github.jupittar.thescreen.util.TypefaceUtils;
@@ -225,7 +226,7 @@ public class MovieDetailsActivity
 //            }
         };
         adapter.addPage(MovieInfoFragment.newInstance(mMovie.getId()), "Info");
-        adapter.addPage(MovieInfoFragment.newInstance(mMovie.getId()), "Cast");
+        adapter.addPage(new MovieCastFragment(), "Cast");
         adapter.addPage(MovieInfoFragment.newInstance(mMovie.getId()), "Reviews");
         mViewPager.setAdapter(adapter);
         mViewPager.setScrollEnabled(false);

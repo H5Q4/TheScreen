@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.github.jupittar.commlib.rxbus.RxBus;
 import com.github.jupittar.thescreen.data.remote.response.Company;
 import com.github.jupittar.thescreen.data.remote.response.CrewBean;
 import com.github.jupittar.thescreen.data.remote.response.Genres;
@@ -11,6 +12,7 @@ import com.github.jupittar.thescreen.data.remote.response.Movie;
 import com.github.jupittar.thescreen.data.remote.response.SpokenLanguages;
 import com.github.jupittar.thescreen.helper.SchedulerProvider;
 import com.github.jupittar.thescreen.screen.base.BasePresenter;
+import com.github.jupittar.thescreen.util.Constants;
 
 import java.util.List;
 
@@ -70,6 +72,8 @@ public class MovieInfoPresenter
                                 .collect(Collectors.toList());
                         getMvpView().showDirectorText(TextUtils.join(", ", directors));
                         getMvpView().showSimilarMovies(movieDetailsWrapper.getSimilarMovies());
+                        RxBus.getDefault().publishSticky(Constants.EVENT_TAG_CAST_LOADED,
+                                movieDetailsWrapper.getCredits().getCast());
                     }
                 }, throwable -> getMvpView().showErrorMessage(throwable));
         addDisposable(disposable);
