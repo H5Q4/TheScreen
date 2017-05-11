@@ -78,18 +78,18 @@ public class RxBus {
     public void subscribeSticky(String tag, @NonNull Object lifecycle,
                                 @NonNull Consumer<BusEvent> consumer,
                                 Scheduler scheduler) {
-        Disposable disposable = getSubject(tag, false)
+        Disposable disposable = getSubject(tag, true)
                 .observeOn(scheduler)
                 .subscribe(consumer);
         getCompositeDisposable(lifecycle).add(disposable);
     }
 
     /**
-     * Sticky version of {@link RxBus#subscribe(String, Object, Consumer, Scheduler)}.
+     * Sticky version of {@link RxBus#subscribe(String, Object, Consumer)}.
      */
     public void subscribeSticky(String tag, @NonNull Object lifecycle,
                                 @NonNull Consumer<BusEvent> consumer) {
-        Disposable disposable = getSubject(tag, false)
+        Disposable disposable = getSubject(tag, true)
                 .subscribe(consumer);
         getCompositeDisposable(lifecycle).add(disposable);
     }

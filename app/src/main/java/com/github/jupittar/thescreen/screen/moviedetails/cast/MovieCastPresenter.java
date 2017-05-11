@@ -22,8 +22,10 @@ public class MovieCastPresenter
     @SuppressWarnings("unchecked")
     @Override
     public void showCast() {
+        getMvpView().showLoading();
         RxBus.getDefault().subscribeSticky(EVENT_TAG_CAST_LOADED, getMvpView(), busEvent -> {
             getMvpView().showCast((List<CastBean>) busEvent.getData());
+            getMvpView().hideLoading();
         });
     }
 
