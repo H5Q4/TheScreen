@@ -1,20 +1,25 @@
 package com.github.jupittar.thescreen.screen.moviedetails.cast;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
 import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
 import com.github.jupittar.thescreen.AppComponent;
@@ -30,7 +35,6 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
 
 
@@ -58,7 +62,6 @@ public class MovieCastFragment
 
     @Override
     public void onFirstAppear() {
-        setUpCastRv();
         mPresenter.showCast();
     }
 
@@ -95,6 +98,7 @@ public class MovieCastFragment
 
     @Override
     public void showCast(List<CastBean> cast) {
+        setUpCastRv();
         mCastAdapter.addAll(cast);
     }
     //endregion
@@ -108,7 +112,7 @@ public class MovieCastFragment
 
         @Override
         public void convertView(CommonViewHolder holder, CastBean item) {
-            CircleImageView castIv = holder.getView(R.id.iv_cast);
+            ImageView castIv = holder.getView(R.id.iv_cast);
             TextView castNameTv = holder.getView(R.id.tv_cast_name);
             TextView roleNameTv = holder.getView(R.id.tv_role_name);
             Typeface typeface = TypefaceUtils.getTypeface(TypefaceUtils.FONT_EXO2_REGULAR, mContext);
@@ -118,9 +122,19 @@ public class MovieCastFragment
                     Constants.IMAGE_BASE_URL, Constants.IMAGE_SIZE_H632, item.getProfilePath());
             Glide.with(mContext)
                     .load(profileUrl)
+                    .asBitmap()
+                    .placeholder(R.drawable.ic_circled_user)
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(castIv);
+                    .into(new BitmapImageViewTarget(castIv) {
+                        @Override
+                        protected void setResource(Bitmap resource) {
+                            RoundedBitmapDrawable circularBitmapDrawable =
+                                    RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                            circularBitmapDrawable.setCircular(true);
+                            castIv.setImageDrawable(circularBitmapDrawable);
+                        }
+                    });
             castNameTv.setText(item.getName());
             roleNameTv.setText(String.format(Locale.ENGLISH, "as  %s", item.getCharacter()));
         }
