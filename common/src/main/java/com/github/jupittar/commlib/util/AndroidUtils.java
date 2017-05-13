@@ -8,8 +8,20 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.Locale;
 
 public class AndroidUtils {
+
+
+    public static Locale getLocale(Context context) {
+        Locale locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            locale = context.getResources().getConfiguration().getLocales().get(0);
+        } else {
+            locale = context.getResources().getConfiguration().locale;
+        }
+        return locale;
+    }
 
     public static File getCacheDirectory(Context context) {
         File cacheDir = context.getExternalCacheDir();

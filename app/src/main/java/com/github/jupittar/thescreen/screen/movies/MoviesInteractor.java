@@ -15,7 +15,7 @@ import io.reactivex.Observable;
 
 public class MoviesInteractor implements MoviesContract.Interactor {
 
-    private static final String CACHE_KEY_FORMAT = "movies_%s_%d";
+    private static final String CACHE_KEY_FORMAT = "movies_%s_%d"; // TODO: 13/05/2017 Add region to cache key
 
     private TmdbService mTmdbService;
     private CacheManager<MoviesWrapper> mCacheManager;

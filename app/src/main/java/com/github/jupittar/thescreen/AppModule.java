@@ -64,4 +64,12 @@ public class AppModule {
         return AndroidUtils.getCacheDirectory(context);
     }
 
+
+    @Provides
+    @Singleton
+    @Named("region")
+    String provideRegion(Context context) {
+        return AndroidUtils.getLocale(context).getCountry();
+    }
+
 }

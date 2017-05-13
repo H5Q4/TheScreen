@@ -119,8 +119,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public AuthInterceptor provideAuthInterceptor() {
-        return new AuthInterceptor();
+    public AuthInterceptor provideAuthInterceptor(Context context) {
+        return new AuthInterceptor(context, Constants.API_KEY);
     }
 
     @Provides
