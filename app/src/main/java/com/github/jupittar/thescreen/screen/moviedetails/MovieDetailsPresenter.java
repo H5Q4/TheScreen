@@ -29,7 +29,7 @@ public class MovieDetailsPresenter
     }
 
     @Override
-    public void showImages(long movieId) {
+    public void showImages(long movieId, String defaultUrl) {
         Disposable disposable = mInteractor
                 .getImages(movieId)
                 .filter(imagesWrapper -> imagesWrapper != null)
@@ -37,18 +37,16 @@ public class MovieDetailsPresenter
                     Images images = imagesWrapper.getImages();
                     if (images != null) {
                         List<Images.BackdropsBean> backdrops = images.getBackdrops();
-                        if (backdrops != null) {
+                        if (backdrops != null && backdrops.size() != 0) {
                             return Stream.of(backdrops)
-                                    .map(backdropsBean -> String.format("%s%s%s",
-                                            Constants.IMAGE_BASE_URL,
-                                            Constants.IMAGE_SIZE_W780,
-                                            backdropsBean.getFilePath()))
+                                    .map(backdropsBean -> concatPosterUrl(backdropsBean.getFilePath()))
                                     .collect(ArrayList<String>::new, (list, url) -> {
                                         list.add(0, url);
                                     });
                         }
+                        return Collections.singletonList(concatPosterUrl(defaultUrl));
                     }
-                    return Collections.<String>emptyList();
+                    return Collections.singletonList(concatPosterUrl(defaultUrl));
                 })
                 .subscribeOn(mSchedulerProvider.io())
                 .observeOn(mSchedulerProvider.ui())
@@ -60,5 +58,12 @@ public class MovieDetailsPresenter
                     getMvpView().showErrorMessage(throwable);
                 });
         addDisposable(disposable);
+    }
+
+    private String concatPosterUrl(String url) {
+        return String.format("%s%s%s",
+                Constants.IMAGE_BASE_URL,
+                Constants.IMAGE_SIZE_W780,
+                url);
     }
 }

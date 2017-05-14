@@ -14,7 +14,7 @@ public interface MovieDetailsContract {
     }
 
     interface Presenter<V extends View> extends Contract.Presenter<V> {
-        void showImages(long movieId);
+        void showImages(long movieId, String defaultUrl);
     }
 
     interface Interactor {

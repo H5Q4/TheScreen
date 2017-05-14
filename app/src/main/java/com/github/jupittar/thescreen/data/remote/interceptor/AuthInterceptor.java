@@ -28,6 +28,7 @@ public class AuthInterceptor implements Interceptor {
         HttpUrl url = request.url();
         HttpUrl newUrl = url.newBuilder()
                 .addQueryParameter("api_key", mApiKey)
+                .addQueryParameter("language", "en")
                 .addQueryParameter("region", AndroidUtils.getLocale(mContext).getCountry())
                 .build();
         Request newRequest = request.newBuilder()

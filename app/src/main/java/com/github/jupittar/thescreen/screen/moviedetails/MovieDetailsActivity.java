@@ -75,7 +75,6 @@ public class MovieDetailsActivity
 
     private Movie mMovie;
     private BackdropViewAdapter mBackdropViewAdapter;
-    private Transition.TransitionListener mSharedELementEnterTransitionListener;
     //endregion
 
     //region Lifecycle Methods
@@ -112,7 +111,7 @@ public class MovieDetailsActivity
         new ItemTouchHelper(pileSwipeCallback).attachToRecyclerView(mBackdropRv);
 
         if (mMovie != null) {
-            mPresenter.showImages(mMovie.getId());
+            mPresenter.showImages(mMovie.getId(), mMovie.getPosterPath());
         }
     }
 
@@ -165,7 +164,7 @@ public class MovieDetailsActivity
             mTitleTv.setText(mMovie.getOriginalTitle());
             mReleaseDateTv.setText(mMovie.getReleaseDate());
         }
-        mSharedELementEnterTransitionListener = new Transition.TransitionListener() {
+        Transition.TransitionListener sharedElementEnterTransitionListener = new Transition.TransitionListener() {
             @Override
             public void onTransitionStart(Transition transition) {
                 AnimationMaker.makeReveal(mBackdropRv, AnimationMaker.REVEAL_FROM_BOTTOM);
@@ -197,7 +196,7 @@ public class MovieDetailsActivity
         };
         getWindow()
                 .getSharedElementEnterTransition()
-                .addListener(mSharedELementEnterTransitionListener);
+                .addListener(sharedElementEnterTransitionListener);
     }
 
     private void setUpTabLayout() {

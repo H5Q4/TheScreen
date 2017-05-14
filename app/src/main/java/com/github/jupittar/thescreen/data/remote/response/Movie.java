@@ -32,7 +32,7 @@ public class Movie implements Serializable {
   @SerializedName("popularity")
   private double popularity;
   @SerializedName("poster_path")
-  private Object posterPath;
+  private String posterPath;
   @SerializedName("release_date")
   private String releaseDate;
   @SerializedName("revenue")
@@ -148,11 +148,11 @@ public class Movie implements Serializable {
     this.popularity = popularity;
   }
 
-  public Object getPosterPath() {
+  public String getPosterPath() {
     return posterPath;
   }
 
-  public void setPosterPath(Object posterPath) {
+  public void setPosterPath(String posterPath) {
     this.posterPath = posterPath;
   }
 

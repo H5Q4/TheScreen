@@ -56,10 +56,10 @@ public class TheScreenApp extends Application {
     private void initApp4Debug() {
         Logger
                 .init(LOGGER_TAG)
-                .methodCount(3)                 // default 2
-                .logLevel(LogLevel.FULL)        // default LogLevel.FULL
-                .hideThreadInfo()
-                .methodOffset(2);                // default 0
+//                .methodCount(3)
+                .logLevel(LogLevel.FULL);
+//                .hideThreadInfo()
+//                .methodOffset(2);
     }
 
 }
