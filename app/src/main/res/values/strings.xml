@@ -6,6 +6,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="transition_name_poster">transition:poster</string>
+
+    <string name="pref_cate_app">Application</string>
+    <string name="pref_key_region">pref_key_region</string>
+    <string name="pref_list_region">Region</string>
+    <string name="settings">Settings</string>
 
 </resources>

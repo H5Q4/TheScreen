@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/pref_cate_app">
+
+        <ListPreference
+            android:defaultValue="NONE"
+            android:entries="@array/pref_region_titles"
+            android:entryValues="@array/pref_region_values"
+            android:key="@string/pref_key_region"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_list_region"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

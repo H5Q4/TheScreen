@@ -1,5 +1,6 @@
 package com.github.jupittar.thescreen.screen.main;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +26,7 @@ import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.screen.base.BaseActivity;
 import com.github.jupittar.thescreen.screen.movies.MoviesFragment;
+import com.github.jupittar.thescreen.screen.settings.SettingsActivity;
 import com.github.jupittar.thescreen.util.TypefaceUtils;
 
 import java.util.ArrayList;
@@ -140,6 +142,9 @@ public class MainActivity extends BaseActivity
             case R.id.nav_tv:
                 position = 1;
                 break;
+            case R.id.nav_settings:
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                return false;
         }
         mViewPager.setCurrentItem(position);
         mDrawerLayout.closeDrawer(GravityCompat.START);
