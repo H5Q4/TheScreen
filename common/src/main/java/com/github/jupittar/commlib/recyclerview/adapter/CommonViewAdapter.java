@@ -2,59 +2,93 @@ package com.github.jupittar.commlib.recyclerview.adapter;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
+import com.github.jupittar.commlib.recyclerview.BaseViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CommonViewAdapter<T> extends RecyclerView.Adapter<CommonViewHolder> {
+public abstract class CommonViewAdapter<T> extends BaseViewAdapter<T> {
 
-    protected Context mContext;
-    @LayoutRes
-    protected int mLayoutId;
-    protected List<T> mItemList;
+    private static final int ITEM_TYPE_HEADER = 0x111;
+    private static final int ITEM_TYPE_FOOTER = 0x222;
 
-    protected OnItemClickListener mOnItemClickListener;
+    private View mHeaderView;
+    private View mFooterView;
 
     public CommonViewAdapter(Context context, @LayoutRes int layoutId) {
-        this.mContext = context;
-        this.mLayoutId = layoutId;
-        mItemList = new ArrayList<>();
+        super(context, layoutId);
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        mOnItemClickListener = onItemClickListener;
+    public void setHeaderView(@NonNull View view) {
+        this.mHeaderView = view;
+        notifyItemInserted(0);
+    }
+
+    public void setFooterView(@NonNull View view) {
+        this.mFooterView = view;
+        notifyItemInserted(getItemCount() - 1);
     }
 
     @Override
-    public CommonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(mLayoutId, parent, false);
-        final CommonViewHolder holder = new CommonViewHolder(view);
-        if (mOnItemClickListener != null) {
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mOnItemClickListener.onItemClick(v, holder.getLayoutPosition());
-                }
-            });
+    public void onBindViewHolder(BaseViewHolder holder, int position) {
+        if (holder.getItemViewType() != ITEM_TYPE_HEADER
+                && holder.getItemViewType() != ITEM_TYPE_FOOTER) {
+            if (mHeaderView != null) {
+                position--;
+            }
+            T item = getItem(position);
+            convertView(holder, item);
+        }
+    }
+
+    @Override
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        BaseViewHolder holder;
+        if (mHeaderView != null && viewType == ITEM_TYPE_HEADER) {
+            holder = new BaseViewHolder(mHeaderView);
+        } else if (mFooterView != null && viewType == ITEM_TYPE_FOOTER) {
+            holder = new BaseViewHolder(mFooterView);
+        } else {
+            holder = super.onCreateViewHolder(parent, viewType);
         }
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(CommonViewHolder holder, int position) {
-        T item = getDataItem(position);
-        convertView(holder, item);
+    public int getItemViewType(int position) {
+        if (hasHeader() && position == 0) {
+            return ITEM_TYPE_HEADER;
+        }
+
+        if (hasFooter() && position == getItemCount() - 1) {
+            return ITEM_TYPE_FOOTER;
+        }
+
+        return addItemViewType(hasHeader() ? position - 1 : position);
+    }
+
+    @Override
+    public int getItemCount() {
+        int count = super.getItemCount();
+        if (hasHeader()) {
+            count++;
+        }
+        if (hasFooter()) {
+            count++;
+        }
+        return count;
+    }
+
+    public int addItemViewType(int position) {
+        return -1;
     }
 
     private void add(T item) {
-        mItemList.add(item);
-        notifyItemInserted(mItemList.size() - 1);
+        mData.add(item);
+        notifyItemInserted(hasHeader() ? mData.size() : mData.size() - 1);
     }
 
     public void addAll(List<T> list) {
@@ -64,16 +98,16 @@ public abstract class CommonViewAdapter<T> extends RecyclerView.Adapter<CommonVi
     }
 
     public void remove(T item) {
-        int position = mItemList.indexOf(item);
+        int position = mData.indexOf(item);
         if (position > -1) {
-            mItemList.remove(position);
-            notifyItemRemoved(position);
+            mData.remove(position);
+            notifyItemRemoved(hasHeader() ? position + 1 : position);
         }
     }
 
     public void clear() {
-        while (getItemCount() > 0) {
-            remove(getDataItem(0));
+        while (mData.size() > 0) {
+            remove(mData.get(hasHeader() ? 1 : 0));
         }
     }
 
@@ -81,22 +115,11 @@ public abstract class CommonViewAdapter<T> extends RecyclerView.Adapter<CommonVi
         return getItemCount() == 0;
     }
 
-    public T getDataItem(int position) {
-        return mItemList.get(position);
+    public boolean hasHeader() {
+        return mHeaderView != null;
     }
 
-    @Override
-    public int getItemCount() {
-        return mItemList.size();
-    }
-
-    public List<T> getItemList() {
-        return this.mItemList;
-    }
-
-    public abstract void convertView(CommonViewHolder holder, T item);
-
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
+    public boolean hasFooter() {
+        return mFooterView != null;
     }
 }

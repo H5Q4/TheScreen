@@ -5,14 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 
-public class CommonViewHolder extends RecyclerView.ViewHolder {
+public class BaseViewHolder extends RecyclerView.ViewHolder {
 
     /**
      * container of caching views
      */
     private SparseArray<View> mViewSparseArray;
 
-    public CommonViewHolder(View itemView) {
+    public BaseViewHolder(View itemView) {
         super(itemView);
     }
 

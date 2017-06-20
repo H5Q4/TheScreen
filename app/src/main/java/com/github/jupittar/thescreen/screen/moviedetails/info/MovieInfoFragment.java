@@ -28,7 +28,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.github.jupittar.commlib.custom.AspectRatioImageView;
-import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
+import com.github.jupittar.commlib.recyclerview.BaseViewHolder;
 import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
 import com.github.jupittar.commlib.util.ColorUtils;
 import com.github.jupittar.thescreen.AppComponent;
@@ -209,7 +209,7 @@ public class MovieInfoFragment
         adapter.addAll(similarMovies);
         adapter.setOnItemClickListener(((view, position) -> {
             Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
-            intent.putExtra(MovieDetailsActivity.KEY_MOVIE, adapter.getDataItem(position));
+            intent.putExtra(MovieDetailsActivity.KEY_MOVIE, adapter.getItem(position));
             View posterIv = view.findViewById(R.id.iv_movie_poster);
             Pair<View, String> pair = Pair.create(posterIv, getString(R.string.transition_name_poster));
             @SuppressWarnings("unchecked")
@@ -279,7 +279,7 @@ public class MovieInfoFragment
         }
 
         @Override
-        public void convertView(CommonViewHolder holder, Movie item) {
+        public void convertView(BaseViewHolder holder, Movie item) {
             AspectRatioImageView posterIv = holder.getView(R.id.iv_movie_poster);
             posterIv.setAspectRatio(3.0D / 2.0D);
             TextView releaseYearTv = holder.getView(R.id.tv_release_year);

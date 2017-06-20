@@ -3,6 +3,7 @@ package com.github.jupittar.thescreen.screen.movies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -22,9 +23,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.jupittar.commlib.custom.AspectRatioImageView;
-import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
+import com.github.jupittar.commlib.recyclerview.BaseViewHolder;
 import com.github.jupittar.commlib.recyclerview.EndlessScrollListener;
-import com.github.jupittar.commlib.recyclerview.adapter.HFViewAdapter;
+import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.data.entity.PagingInfo;
@@ -32,6 +33,7 @@ import com.github.jupittar.thescreen.data.remote.response.Movie;
 import com.github.jupittar.thescreen.screen.base.LazyFragment;
 import com.github.jupittar.thescreen.screen.moviedetails.MovieDetailsActivity;
 import com.github.jupittar.thescreen.util.Constants;
+import com.github.jupittar.thescreen.util.TypefaceUtils;
 
 import java.util.List;
 
@@ -138,7 +140,7 @@ public class MoviesByTabFragment
         });
         mMoviesAdapter.setOnItemClickListener((view, position) -> {
             Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
-            intent.putExtra(MovieDetailsActivity.KEY_MOVIE, mMoviesAdapter.getDataItem(position));
+            intent.putExtra(MovieDetailsActivity.KEY_MOVIE, mMoviesAdapter.getItem(position));
             View posterIv = view.findViewById(R.id.iv_movie_poster);
             Pair<View, String> pair = Pair.create(posterIv, getString(R.string.transition_name_poster));
             @SuppressWarnings("unchecked")
@@ -187,6 +189,9 @@ public class MoviesByTabFragment
     @Override
     public void showNoMoreMoviesFooter() {
         mFooterLoadingPb.setVisibility(View.GONE);
+        Typeface exo2RegularFont = TypefaceUtils
+                .getTypeface(TypefaceUtils.FONT_EXO2_REGULAR, getActivity());
+        mFooterNoMoreItemsTv.setTypeface(exo2RegularFont);
         mFooterNoMoreItemsTv.setVisibility(View.VISIBLE);
     }
 
@@ -237,14 +242,14 @@ public class MoviesByTabFragment
     //endregion
 
     //region Adapters
-    private class MoviesAdapter extends HFViewAdapter<Movie> {
+    private class MoviesAdapter extends CommonViewAdapter<Movie> {
 
         MoviesAdapter(Context context, @LayoutRes int layoutId) {
             super(context, layoutId);
         }
 
         @Override
-        public void convertView(CommonViewHolder holder, Movie item) {
+        public void convertView(BaseViewHolder holder, Movie item) {
             AspectRatioImageView posterIv = holder.getView(R.id.iv_movie_poster);
             posterIv.setAspectRatio(3.0D / 2.0D);
             String posterPath = String.format("%s%s%s",

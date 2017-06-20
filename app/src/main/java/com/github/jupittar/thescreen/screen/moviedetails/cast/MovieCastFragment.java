@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
+import com.github.jupittar.commlib.recyclerview.BaseViewHolder;
 import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.R;
@@ -111,7 +111,7 @@ public class MovieCastFragment
         }
 
         @Override
-        public void convertView(CommonViewHolder holder, CastBean item) {
+        public void convertView(BaseViewHolder holder, CastBean item) {
             ImageView castIv = holder.getView(R.id.iv_cast);
             TextView castNameTv = holder.getView(R.id.tv_cast_name);
             TextView roleNameTv = holder.getView(R.id.tv_role_name);

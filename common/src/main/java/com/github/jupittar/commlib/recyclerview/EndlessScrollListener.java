@@ -4,12 +4,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.github.jupittar.commlib.recyclerview.adapter.BaseViewAdapter;
 import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
-import com.github.jupittar.commlib.recyclerview.adapter.HFViewAdapter;
 
 public abstract class EndlessScrollListener extends RecyclerView.OnScrollListener {
 
-    private int mPreviousTotal = 0; // the total number of items in the dataset after the last loading.
+    private int mPreviousTotal = 0; // the total number of items in the data set after the last loading.
     private int mVisibleThreshold = 3; // the min amount of items to have below current scroll position before loading more.
     private boolean mLoading = true; // true if still waiting for the last set of data to load
 
@@ -18,11 +18,12 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
         super.onScrolled(recyclerView, dx, dy);
 
         int firstVisibleItem = 0;
-        int visibleItemCount;
+        int visibleItemCount = 0;
         int totalItemCount = 0;
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         visibleItemCount = layoutManager.getChildCount();
+
         if (layoutManager instanceof GridLayoutManager) {
             GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
             firstVisibleItem = gridLayoutManager.findFirstVisibleItemPosition();
@@ -33,16 +34,18 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
             totalItemCount = linearLayoutManager.getItemCount();
         }
 
-        if (adapter instanceof CommonViewAdapter && ((CommonViewAdapter) adapter).isEmpty()) {
-            onDataClear();
+        if (adapter instanceof BaseViewAdapter && ((BaseViewAdapter) adapter).isEmpty()) {
+            mPreviousTotal = 0;
         }
 
-        int headerAndFooterCount;
         if (mLoading) {
-            if (adapter instanceof HFViewAdapter) {
-                headerAndFooterCount = adapter.getItemCount() -
-                        ((HFViewAdapter) adapter).getItemCountIgnoreHF();
-                mPreviousTotal += headerAndFooterCount;
+            if (adapter instanceof CommonViewAdapter) {
+                if (((CommonViewAdapter) adapter).hasHeader()) {
+                    mPreviousTotal++;
+                }
+                if (((CommonViewAdapter) adapter).hasFooter()) {
+                    mPreviousTotal++;
+                }
             }
             if (totalItemCount > mPreviousTotal) {
                 mLoading = false;
@@ -50,19 +53,14 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
             }
         }
 
-        if (!mLoading && totalItemCount - firstVisibleItem - visibleItemCount <= mVisibleThreshold) {
+        if (!mLoading && totalItemCount - firstVisibleItem <=
+                mVisibleThreshold + visibleItemCount) {
             onLoadMore();
             mLoading = true;
         }
 
     }
 
-    /**
-     * When the data is refreshed, invoke this to change mPreviousTotal to 0.
-     */
-    public void onDataClear() {
-        mPreviousTotal = 0;
-    }
 
     public void setVisibleThreshold(int visibleThreshold) {
         mVisibleThreshold = visibleThreshold;

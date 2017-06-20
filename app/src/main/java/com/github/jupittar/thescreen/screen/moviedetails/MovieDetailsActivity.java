@@ -27,7 +27,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.github.jupittar.commlib.custom.FontChangeableTabLayout;
 import com.github.jupittar.commlib.custom.SCViewPager;
-import com.github.jupittar.commlib.recyclerview.CommonViewHolder;
+import com.github.jupittar.commlib.recyclerview.BaseViewHolder;
 import com.github.jupittar.commlib.recyclerview.adapter.CommonViewAdapter;
 import com.github.jupittar.commlib.recyclerview.layoutmanager.PileLayoutManager;
 import com.github.jupittar.commlib.recyclerview.layoutmanager.PileSwipeCallback;
@@ -106,7 +106,7 @@ public class MovieDetailsActivity
         mBackdropRv.setHasFixedSize(true);
         mBackdropRv.setAdapter(mBackdropViewAdapter);
         PileSwipeCallback pileSwipeCallback = new PileSwipeCallback(mBackdropRv,
-                mBackdropViewAdapter.getItemList(),
+                mBackdropViewAdapter.getData(),
                 mBackdropViewAdapter);
         new ItemTouchHelper(pileSwipeCallback).attachToRecyclerView(mBackdropRv);
 
@@ -312,7 +312,7 @@ public class MovieDetailsActivity
         }
 
         @Override
-        public void convertView(CommonViewHolder holder, String url) {
+        public void convertView(BaseViewHolder holder, String url) {
             ImageView backdropIv = holder.getView(R.id.iv_movie_backdrop);
             Glide.with(mContext)
                     .load(url)
