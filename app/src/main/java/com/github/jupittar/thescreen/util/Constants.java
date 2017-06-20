@@ -19,6 +19,7 @@ public class Constants {
     public static final int RETRY_COUNT = 3;  // 3 times
 
     // Event tag
-    public static final String EVENT_TAG_CAST_LOADED = "event_cast_loaded";
+    public static final String EVENT_TAG_REGION_CHANGED = "Event_Region_Changed";
+    public static final String EVENT_TAG_CAST_LOADED = "Event_Cast_Loaded";
 
 }

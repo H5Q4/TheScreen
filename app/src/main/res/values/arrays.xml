@@ -7,7 +7,7 @@
     </string-array>
 
     <string-array name="pref_region_values">
-        <item>NONE</item>
+        <item>SYSTEM</item>
         <item>US</item>
         <item>CN</item>
     </string-array>

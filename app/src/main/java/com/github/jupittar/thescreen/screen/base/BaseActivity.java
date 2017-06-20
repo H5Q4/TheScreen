@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
+import com.github.jupittar.commlib.rxbus.RxBus;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.TheScreenApp;
+import com.github.jupittar.thescreen.util.Constants;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -18,6 +20,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injectDependencies(TheScreenApp.getAppComponent());
+        RxBus.getDefault().subscribe(Constants.EVENT_TAG_REGION_CHANGED, this, busEvent -> {
+            recreate();
+        });
     }
 
     @Override
@@ -28,6 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        RxBus.getDefault().unregister(this);
         mUnbinder.unbind();
         super.onDestroy();
     }

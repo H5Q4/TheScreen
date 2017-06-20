@@ -1,5 +1,7 @@
+plugins {
+    id "me.tatarka.retrolambda" version "3.4.0"
+}
 apply plugin: 'com.android.application'
-//apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -56,6 +58,8 @@ dependencies {
     // Rx
     compile "io.reactivex.rxjava2:rxjava:${libsVersion.rxjava2}"
     compile "io.reactivex.rxjava2:rxandroid:${libsVersion.rxandroid2}"
+    compile "com.jakewharton.rxbinding2:rxbinding:${libsVersion.rxbinding}"
+    compile "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:${libsVersion.rxbinding}"
     // Retrofit2
     compile "com.squareup.okhttp3:okhttp:${libsVersion.okhttp3}"
     compile "com.squareup.retrofit2:retrofit:${libsVersion.retrofit2}"

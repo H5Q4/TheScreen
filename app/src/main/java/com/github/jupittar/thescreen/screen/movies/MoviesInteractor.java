@@ -6,6 +6,7 @@ import com.github.jupittar.thescreen.data.entity.RawResponse;
 import com.github.jupittar.thescreen.data.local.CacheManager;
 import com.github.jupittar.thescreen.data.remote.TmdbService;
 import com.github.jupittar.thescreen.data.remote.response.Movie;
+import com.github.jupittar.thescreen.helper.Utils;
 
 import java.util.Locale;
 
@@ -15,10 +16,12 @@ import io.reactivex.Observable;
 
 public class MoviesInteractor implements MoviesContract.Interactor {
 
-    private static final String CACHE_KEY_FORMAT = "movies_%s_%d"; // TODO: 13/05/2017 Add region to cache key
+    private static final String CACHE_KEY_FORMAT = "%s_movies_%s_%d"; // TODO: 13/05/2017 Add region to cache key
 
     private TmdbService mTmdbService;
     private CacheManager<MoviesWrapper> mCacheManager;
+
+    @Inject Utils mAppUtils;
 
     @Inject
     public MoviesInteractor(
@@ -31,7 +34,7 @@ public class MoviesInteractor implements MoviesContract.Interactor {
     @Override
     public Observable<MoviesWrapper> getMovies(MovieTab tab, int page) {
         String cacheKey = String
-                .format(Locale.ENGLISH, CACHE_KEY_FORMAT, tab.name(), page)
+                .format(Locale.ENGLISH, CACHE_KEY_FORMAT, mAppUtils.getRegion4Api(), tab.name(), page)
                 .toLowerCase();
         return Observable
                 .concat(getLocalMovies(cacheKey), getRemoteMovies(tab, page))
@@ -42,7 +45,7 @@ public class MoviesInteractor implements MoviesContract.Interactor {
     //region Private Helper Methods
     private Observable<MoviesWrapper> getRemoteMovies(MovieTab tab, int page) {
         String cacheKey = String
-                .format(Locale.ENGLISH, CACHE_KEY_FORMAT, tab.name(), page)
+                .format(Locale.ENGLISH, CACHE_KEY_FORMAT, mAppUtils.getRegion4Api(), tab.name(), page)
                 .toLowerCase();
         Observable<RawResponse<Movie>> rawResponseObservable;
         switch (tab) {

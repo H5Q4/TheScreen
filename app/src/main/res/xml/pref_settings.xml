@@ -4,7 +4,7 @@
         android:title="@string/pref_cate_app">
 
         <ListPreference
-            android:defaultValue="NONE"
+            android:defaultValue="SYSTEM"
             android:entries="@array/pref_region_titles"
             android:entryValues="@array/pref_region_values"
             android:key="@string/pref_key_region"
