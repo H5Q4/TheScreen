@@ -7,6 +7,7 @@ import com.github.jupittar.thescreen.data.remote.interceptor.HttpCacheIntercepto
 import com.github.jupittar.thescreen.data.remote.interceptor.HttpLoggingInterceptor;
 import com.github.jupittar.thescreen.data.remote.interceptor.HttpOfflineCacheInterceptor;
 import com.github.jupittar.thescreen.data.remote.interceptor.RetryInterceptor;
+import com.github.jupittar.thescreen.helper.Utils;
 import com.github.jupittar.thescreen.util.Constants;
 import com.google.gson.Gson;
 
@@ -119,8 +120,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public AuthInterceptor provideAuthInterceptor(Context context) {
-        return new AuthInterceptor(context, Constants.API_KEY);
+    public AuthInterceptor provideAuthInterceptor(Utils appUtils) {
+        return new AuthInterceptor(appUtils, Constants.API_KEY);
     }
 
     @Provides

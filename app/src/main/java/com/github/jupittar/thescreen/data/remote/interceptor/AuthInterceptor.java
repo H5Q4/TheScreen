@@ -1,28 +1,21 @@
 package com.github.jupittar.thescreen.data.remote.interceptor;
 
-import android.content.Context;
-
 import com.github.jupittar.thescreen.helper.Utils;
 
 import java.io.IOException;
-
-import javax.inject.Inject;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-@SuppressWarnings("unused")
 public class AuthInterceptor implements Interceptor {
 
-    @Inject Utils mAppUtils;
-
-    private Context mContext;
+    private Utils mAppUtils;
     private String mApiKey;
 
-    public AuthInterceptor(Context context, String apiKey) {
-        mContext = context;
+    public AuthInterceptor(Utils utils, String apiKey) {
+        mAppUtils = utils;
         mApiKey = apiKey;
     }
 
