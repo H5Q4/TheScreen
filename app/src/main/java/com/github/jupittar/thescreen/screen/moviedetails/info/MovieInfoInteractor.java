@@ -22,8 +22,8 @@ public class MovieInfoInteractor implements MovieInfoContract.Interactor {
                 mTmdbService.getMovieDetails(movieId),
                 mTmdbService.getMovieCredits(movieId),
                 mTmdbService.getSimilarMovies(movieId),
-                (movie, credits, movieRawResponse) -> new MovieDetailsWrapper(
-                        movie, credits, movieRawResponse.getResults())
+                (movie, credits, movieRawResponse) ->
+                        new MovieDetailsWrapper(movie, credits, movieRawResponse.getResults())
         );
     }
 

@@ -1,17 +1,15 @@
 package com.github.jupittar.thescreen.screen.moviedetails;
 
-import com.annimon.stream.Stream;
 import com.github.jupittar.thescreen.data.remote.response.Images;
 import com.github.jupittar.thescreen.helper.SchedulerProvider;
 import com.github.jupittar.thescreen.screen.base.BasePresenter;
 import com.github.jupittar.thescreen.util.Constants;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 
 public class MovieDetailsPresenter
@@ -32,27 +30,23 @@ public class MovieDetailsPresenter
     public void showImages(long movieId, String defaultUrl) {
         Disposable disposable = mInteractor
                 .getImages(movieId)
-                .filter(imagesWrapper -> imagesWrapper != null)
-                .map(imagesWrapper -> {
+                .filter(imagesWrapper -> {
                     Images images = imagesWrapper.getImages();
-                    if (images != null) {
-                        List<Images.BackdropsBean> backdrops = images.getBackdrops();
-                        if (backdrops != null && backdrops.size() != 0) {
-                            return Stream.of(backdrops)
-                                    .map(backdropsBean -> concatPosterUrl(backdropsBean.getFilePath()))
-                                    .collect(ArrayList<String>::new, (list, url) -> {
-                                        list.add(0, url);
-                                    });
-                        }
-                        return Collections.singletonList(concatPosterUrl(defaultUrl));
-                    }
-                    return Collections.singletonList(concatPosterUrl(defaultUrl));
+                    return images != null
+                            && images.getBackdrops() != null
+                            && !images.getBackdrops().isEmpty();
                 })
+                .flatMap(imagesWrapper -> Observable.fromIterable(imagesWrapper.getImages().getBackdrops()))
+                .map(backdropsBean -> concatPosterUrl(backdropsBean.getFilePath()))
+                .collect(ArrayList<String>::new, (list, url) -> list.add(0, url))
                 .subscribeOn(mSchedulerProvider.io())
                 .observeOn(mSchedulerProvider.ui())
                 .doOnSubscribe(d -> getMvpView().showLoading())
-                .doOnTerminate(() -> getMvpView().hideLoading())
+                .doFinally(() -> getMvpView().hideLoading())
                 .subscribe(urls -> {
+                    if (urls.size() == 0) {
+                        urls.add(concatPosterUrl(defaultUrl));
+                    }
                     getMvpView().showImages(urls);
                 }, throwable -> {
                     getMvpView().showErrorMessage(throwable);
