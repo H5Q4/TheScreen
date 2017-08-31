@@ -79,4 +79,6 @@ dependencies {
     compile "com.github.matecode:Snacky:${libsVersion.snacky}"
     compile "com.vincentbrison.openlibraries.android:dualcache:${libsVersion.dualcache}"
     compile "com.annimon:stream:${libsVersion.lightWeightStreamApi}"
+
+    compile "cat.ereza:customactivityoncrash:${libsVersion.customActivityOnCrash}"
 }

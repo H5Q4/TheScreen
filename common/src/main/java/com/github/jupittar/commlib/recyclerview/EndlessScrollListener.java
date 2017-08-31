@@ -34,8 +34,9 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
             totalItemCount = linearLayoutManager.getItemCount();
         }
 
-        if (adapter instanceof BaseViewAdapter && ((BaseViewAdapter) adapter).isEmpty()) {
+        if (adapter instanceof BaseViewAdapter && ((BaseViewAdapter) adapter).getData().isEmpty()) {
             mPreviousTotal = 0;
+            return;
         }
 
         if (mLoading) {

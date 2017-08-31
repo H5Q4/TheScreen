@@ -45,11 +45,15 @@ public class MoviesPresenter
                     PagingInfo pagingInfo = moviesWrapper.getPagingInfo();
                     getMvpView().updatePagingInfo(pagingInfo);
 
-                    if (pagingInfo.getCurrentPage() == 1) getMvpView().addLoadingFooter();
-
-                    if (pagingInfo.isLastPage()) getMvpView().showNoMoreMoviesFooter();
-
                     getMvpView().showMovies(movies);
+
+                    if (pagingInfo.getCurrentPage() == 1) {
+                        getMvpView().addLoadingFooter();
+                    }
+
+                    if (pagingInfo.isLastPage()) {
+                        getMvpView().showNoMoreMoviesFooter();
+                    }
                 }, throwable -> {
                     if (isNetworkException(throwable)) {
                         if (getMvpView().isMoviesEmpty()) {

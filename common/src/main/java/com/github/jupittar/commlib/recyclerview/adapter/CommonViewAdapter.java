@@ -32,6 +32,20 @@ public abstract class CommonViewAdapter<T> extends BaseViewAdapter<T> {
         notifyItemInserted(getItemCount() - 1);
     }
 
+    public void removeHeader() {
+        if (hasHeader()) {
+            notifyItemRemoved(0);
+            mHeaderView = null;
+        }
+    }
+
+    public void removeFooter() {
+        if (hasFooter()) {
+            notifyItemRemoved(getItemCount() - 1);
+            mFooterView = null;
+        }
+    }
+
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         if (holder.getItemViewType() != ITEM_TYPE_HEADER

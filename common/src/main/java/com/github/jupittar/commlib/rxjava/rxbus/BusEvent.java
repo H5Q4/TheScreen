@@ -1,4 +1,4 @@
-package com.github.jupittar.commlib.rxbus;
+package com.github.jupittar.commlib.rxjava.rxbus;
 
 public class BusEvent {
 

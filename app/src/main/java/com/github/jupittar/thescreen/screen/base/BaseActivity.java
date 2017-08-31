@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
-import com.github.jupittar.commlib.rxbus.RxBus;
+import com.github.jupittar.commlib.rxjava.rxbus.RxBus;
 import com.github.jupittar.thescreen.AppComponent;
 import com.github.jupittar.thescreen.TheScreenApp;
 import com.github.jupittar.thescreen.util.Constants;

@@ -231,6 +231,7 @@ public class MoviesByTabFragment
     @Override
     public void clearMovies() {
         mMoviesAdapter.clear();
+        mMoviesAdapter.removeFooter();
     }
 
     @Override

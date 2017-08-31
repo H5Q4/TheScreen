@@ -1,4 +1,4 @@
-package com.github.jupittar.commlib.rxbus;
+package com.github.jupittar.commlib.rxjava.rxbus;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,6 +14,8 @@ import io.reactivex.subjects.Subject;
 
 /**
  * A simple event bus implemented by RxJava
+ * @see <a href="https://android.jlelse.eu/how-to-make-an-event-bus-with-rxjava-and-rxandroid-b7e3c0391978">
+ *     How to make an Event Bus with RxJava and RxAndroid</a>
  */
 public class RxBus {
 

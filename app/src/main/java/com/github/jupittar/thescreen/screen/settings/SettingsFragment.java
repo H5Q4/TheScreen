@@ -9,7 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.github.jupittar.commlib.rxbus.RxBus;
+import com.github.jupittar.commlib.rxjava.rxbus.RxBus;
 import com.github.jupittar.commlib.util.AppUtils;
 import com.github.jupittar.thescreen.R;
 import com.github.jupittar.thescreen.util.Constants;

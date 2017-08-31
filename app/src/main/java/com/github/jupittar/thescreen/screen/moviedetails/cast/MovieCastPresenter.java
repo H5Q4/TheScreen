@@ -1,6 +1,6 @@
 package com.github.jupittar.thescreen.screen.moviedetails.cast;
 
-import com.github.jupittar.commlib.rxbus.RxBus;
+import com.github.jupittar.commlib.rxjava.rxbus.RxBus;
 import com.github.jupittar.thescreen.data.remote.response.CastBean;
 import com.github.jupittar.thescreen.screen.base.BasePresenter;
 

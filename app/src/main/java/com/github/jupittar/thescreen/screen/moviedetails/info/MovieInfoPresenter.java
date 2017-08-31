@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
-import com.github.jupittar.commlib.rxbus.RxBus;
+import com.github.jupittar.commlib.rxjava.rxbus.RxBus;
 import com.github.jupittar.thescreen.data.remote.response.Company;
 import com.github.jupittar.thescreen.data.remote.response.CrewBean;
 import com.github.jupittar.thescreen.data.remote.response.Genres;
