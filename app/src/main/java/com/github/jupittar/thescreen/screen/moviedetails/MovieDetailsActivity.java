@@ -39,6 +39,7 @@ import com.github.jupittar.thescreen.data.remote.response.Movie;
 import com.github.jupittar.thescreen.screen.base.BaseActivity;
 import com.github.jupittar.thescreen.screen.moviedetails.cast.MovieCastFragment;
 import com.github.jupittar.thescreen.screen.moviedetails.info.MovieInfoFragment;
+import com.github.jupittar.thescreen.screen.moviedetails.reviews.MovieReviewFragment;
 import com.github.jupittar.thescreen.util.Constants;
 import com.github.jupittar.thescreen.util.TypefaceUtils;
 import com.orhanobut.logger.Logger;
@@ -226,7 +227,7 @@ public class MovieDetailsActivity
         };
         adapter.addPage(MovieInfoFragment.newInstance(mMovie.getId()), "Info");
         adapter.addPage(new MovieCastFragment(), "Cast");
-        adapter.addPage(MovieInfoFragment.newInstance(mMovie.getId()), "Reviews");
+        adapter.addPage(MovieReviewFragment.newInstance(mMovie.getId()), "Reviews");
         mViewPager.setAdapter(adapter);
         mViewPager.setScrollEnabled(false);
         mViewPager.setOffscreenPageLimit(adapter.getCount());

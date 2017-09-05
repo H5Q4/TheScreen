@@ -11,6 +11,8 @@ import com.github.jupittar.thescreen.screen.moviedetails.cast.MovieCastModule;
 import com.github.jupittar.thescreen.screen.moviedetails.cast.MovieCastSubcomponent;
 import com.github.jupittar.thescreen.screen.moviedetails.info.MovieInfoModule;
 import com.github.jupittar.thescreen.screen.moviedetails.info.MovieInfoSubcomponent;
+import com.github.jupittar.thescreen.screen.moviedetails.reviews.MovieReviewModule;
+import com.github.jupittar.thescreen.screen.moviedetails.reviews.MovieReviewSubcomponent;
 import com.github.jupittar.thescreen.screen.movies.MoviesModule;
 import com.github.jupittar.thescreen.screen.movies.MoviesSubcomponent;
 
@@ -35,4 +37,6 @@ public interface AppComponent {
     MovieInfoSubcomponent plus(MovieInfoModule module);
 
     MovieCastSubcomponent plus(MovieCastModule module);
+
+    MovieReviewSubcomponent plus(MovieReviewModule module);
 }

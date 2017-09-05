@@ -4,6 +4,7 @@ import com.github.jupittar.thescreen.data.entity.RawResponse;
 import com.github.jupittar.thescreen.data.remote.response.Credits;
 import com.github.jupittar.thescreen.data.remote.response.Images;
 import com.github.jupittar.thescreen.data.remote.response.Movie;
+import com.github.jupittar.thescreen.data.remote.response.Review;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -36,5 +37,7 @@ public interface TmdbService {
     @GET("movie/{movie_id}/similar")
     Observable<RawResponse<Movie>> getSimilarMovies(@Path("movie_id") long movieId);
 
+    @GET("movie/{movie_id}/reviews")
+    Observable<RawResponse<Review>> getReviews(@Path("movie_id") long movieId);
 
 }
